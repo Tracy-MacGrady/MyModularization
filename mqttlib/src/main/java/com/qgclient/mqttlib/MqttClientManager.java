@@ -24,20 +24,20 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  * Created by Administrator on 2017/12/26.
  */
 
-public class MqttClientUtil {
+public class MqttClientManager {
     private Context context;
     private String clientId;
     private boolean canRepeatConnect = false;
     private MqttCallbackExtended mqttCallback;
     private MqttConnectionStatusReceiver myMqttConnReceiver;
-    private static MqttClientUtil instance;
+    private static MqttClientManager instance;
 
-    private MqttClientUtil() {
+    private MqttClientManager() {
     }
 
-    public static MqttClientUtil getInstance() {
-        if (instance == null) synchronized (MqttClientUtil.class) {
-            if (instance == null) instance = new MqttClientUtil();
+    public static MqttClientManager getInstance() {
+        if (instance == null) synchronized (MqttClientManager.class) {
+            if (instance == null) instance = new MqttClientManager();
         }
         return instance;
     }
@@ -124,7 +124,7 @@ public class MqttClientUtil {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
                 //TODO 连接成功
-                Log.e("MqttClientUtil", "connectComplete ======" + reconnect);
+                Log.e("MqttClientManager", "connectComplete ======" + reconnect);
                 if (reconnect || canRepeatConnect) {
                     MqttCallBackManager.getInstance().callbackConnectStatus(MqttConnectStatusEnum.STATUS_RECONNECT_SUCCESS);
                 } else {
@@ -139,14 +139,14 @@ public class MqttClientUtil {
             @Override
             public void connectionLost(Throwable cause) {
                 //TODO 连接已经断开
-                Log.e("MqttClientUtil", "connection lost======");
+                Log.e("MqttClientManager", "connection lost======");
                 GetMessageTool.clearAllTopic();
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 //TODO 消息到达
-                Log.e("MqttClientUtil", "msg arrived===" + message);
+                Log.e("MqttClientManager", "msg arrived===" + message);
                 Message msg = Message.obtain();
                 msg.obj = new String(message.getPayload());
                 msg.what = 1001;
@@ -156,7 +156,7 @@ public class MqttClientUtil {
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
                 try {
-                    Log.e("MqttClientUtil", "msg delivery===" + token.getMessage());
+                    Log.e("MqttClientManager", "msg delivery===" + token.getMessage());
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }

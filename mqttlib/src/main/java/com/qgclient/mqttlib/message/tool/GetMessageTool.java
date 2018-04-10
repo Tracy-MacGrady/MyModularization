@@ -1,7 +1,7 @@
 package com.qgclient.mqttlib.message.tool;
 
 
-import com.qgclient.mqttlib.MqttClientUtil;
+import com.qgclient.mqttlib.MqttClientManager;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -22,7 +22,7 @@ public class GetMessageTool {
                 if (!subscribeTopicList.contains(topics[i]))
                     subscribeTopicList.add(topics[i]);
                 String topicFilter = topics[i];
-                MqttAsyncClient client = MqttClientUtil.getInstance().getMqttClient();
+                MqttAsyncClient client = MqttClientManager.getInstance().getMqttClient();
                 if (client != null && client.isConnected()) {
                     client.subscribe(topicFilter, qos);
                 }
@@ -38,7 +38,7 @@ public class GetMessageTool {
             for (int i = 0; i < topics.length; i++) {
                 subscribeTopicList.remove(topics[i]);
             }
-            MqttAsyncClient client = MqttClientUtil.getInstance().getMqttClient();
+            MqttAsyncClient client = MqttClientManager.getInstance().getMqttClient();
             if (client != null && client.isConnected()) {
                 client.unsubscribe(topics);
             }

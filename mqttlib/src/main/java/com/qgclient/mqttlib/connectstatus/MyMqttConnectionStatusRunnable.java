@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Log;
 
-import com.qgclient.mqttlib.MqttClientUtil;
+import com.qgclient.mqttlib.MqttClientManager;
 
 /**
  * Created by 李健健 on 2017/7/7.
@@ -40,7 +40,7 @@ public class MyMqttConnectionStatusRunnable implements Runnable {
             try {
                 Thread.sleep(5000);
                 if (checkNet(context)) {
-                    if (MqttClientUtil.getInstance().getMqttClient() != null && !MqttClientUtil.getInstance().getMqttClient().isConnected()) {
+                    if (MqttClientManager.getInstance().getMqttClient() != null && !MqttClientManager.getInstance().getMqttClient().isConnected()) {
                         handler.sendEmptyMessage(MqttConnectionStatusService.REPEAT_CODE);
                     }
                 }
