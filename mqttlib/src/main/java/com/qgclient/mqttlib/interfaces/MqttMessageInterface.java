@@ -1,15 +1,17 @@
 package com.qgclient.mqttlib.interfaces;
 
+import com.qgclient.mqttlib.enums.MqttMessageSendStatusEnum;
+
 /**
  * Created by 李健健 on 2017/6/22.
  */
 
 public interface MqttMessageInterface<T> {
-    void parseArrivedMsg(String msgData);
+    void parseMsgFromString(MqttMessageSendStatusEnum statusEnum, String msgValue);
 
-    void msgArrived(T msgData);
+    void msgArrived(T msgModelInfo);
 
-    void msgSendSuccess();
+    void msgSendSuccess(T msgModelInfo);
 
-    void msgSendFailure();
+    void msgSendFailure(T msgModelInfo);
 }

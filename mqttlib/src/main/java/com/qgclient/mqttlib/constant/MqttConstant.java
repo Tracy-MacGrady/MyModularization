@@ -15,22 +15,16 @@ public class MqttConstant {
     public static String MQTT_ACCESSKEY;//= "LTAIZ7Tin7wHeWVz";//"LTAIqEL2iCGLT8KY";
     public static String MQTT_SECRETKEY;//="r9vPWSIRBvz4iaqgvDVj0z5ChLfqax";//"Lmr4BCf5WMEbdj8ih6yljx3YMaq7OP";
 
-
-    public static void init(String broker, String topic, String groupId) {
-        MQTT_BROKER = broker;
-        MQTT_TOPIC = topic;
-        MQTT_GROUPID = groupId;
-    }
-
-    public static void init(String broker, String topic, String groupId, String accessKey, String secretKey) {
-        MQTT_BROKER = broker;
-        MQTT_TOPIC = topic;
-        MQTT_GROUPID = groupId;
-        MQTT_ACCESSKEY = accessKey;
-        MQTT_SECRETKEY = secretKey;
-    }
-
     public static boolean hasInit() {
         return TextUtils.isEmpty(MQTT_BROKER) || TextUtils.isEmpty(MQTT_TOPIC) || TextUtils.isEmpty(MQTT_GROUPID) || TextUtils.isEmpty(MQTT_ACCESSKEY) || TextUtils.isEmpty(MQTT_SECRETKEY);
+    }
+
+    public static void init(MqttConstantParamsEntity entity) {
+        if (entity == null) return;
+        MQTT_BROKER = entity.getMqttBroker();
+        MQTT_TOPIC = entity.getMqttTopic();
+        MQTT_GROUPID = entity.getMqttGroupid();
+        MQTT_ACCESSKEY = entity.getMqttAccesskey();
+        MQTT_SECRETKEY = entity.getMqttSecretkey();
     }
 }

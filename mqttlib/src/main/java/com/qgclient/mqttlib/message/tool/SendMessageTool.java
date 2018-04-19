@@ -7,10 +7,10 @@ import com.qgclient.mqttlib.MqttCallBackManager;
 import com.qgclient.mqttlib.MqttClientManager;
 import com.qgclient.mqttlib.constant.MqttConstant;
 import com.qgclient.mqttlib.enums.MqttMessageSendStatusEnum;
+import com.qgclient.mqttlib.message.MqttTopicAndMsgValEntity;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -33,7 +33,7 @@ public class SendMessageTool {
         return instance;
     }
 
-    public void sendToTopic(Context context, String messageValue, String... topics) {
+    public void sendToTopic(Context context, final String messageValue, String... secondTopics) {
         try {
             MqttMessage message = new MqttMessage(messageValue.getBytes());
             message.setQos(2);
@@ -42,32 +42,57 @@ public class SendMessageTool {
              *消息发送到某个主题Topic，所有订阅这个Topic的设备都能收到这个消息。
              * 遵循MQTT的发布订阅规范，Topic也可以是多级Topic。此处设置了发送到二级topic
              */
-            MqttAsyncClient client = MqttClientManager.getInstance().getMqttClient();
-            if (client != null) {
-                if (!client.isConnected()) {
-                    MqttClientManager.getInstance().restartMqttClientConnect();
-                }
-                for (int i = 0; i < topics.length; i++) {
-                    if (context != null) {
-                        client.publish(topics[i], message, context, new IMqttActionListener() {
-                            @Override
-                            public void onSuccess(IMqttToken asyncActionToken) {
-                                try {
-                                    String msg = new String(asyncActionToken.getResponse().getPayload());
-                                    Log.e("sendToTopic", "msg send success msg data is===" + msg);
-                                    MqttCallBackManager.getInstance().callbackMessage(msg, MqttMessageSendStatusEnum.STATUS_SEND_SUCCESS);
-                                } catch (MqttException e) {
-                                    e.printStackTrace();
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                                MqttCallBackManager.getInstance().callbackMessage(null, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+            for (int i = 0; i < secondTopics.length; i++) {
+                String topic = MqttConstant.MQTT_TOPIC + "/" + secondTopics[i];
+                if (!MqttClientManager.getInstance().isOnLine()) {
+                    MqttClientManager.getInstance().restartMqttClientConnect();
+                    MqttTopicAndMsgValEntity entity = new MqttTopicAndMsgValEntity();
+                    entity.setTopic(topic);
+                    entity.setMessage(messageValue);
+                    MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+                } else if (context != null) {
+                    MqttClientManager.getInstance().getMqttClient().publish(topic, message, context, new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            try {
+                                MqttTopicAndMsgValEntity entity;
+                                if (asyncActionToken == null) entity = null;
+                                else {
+                                    String msg = new String(asyncActionToken.getResponse().getPayload());
+                                    entity = new MqttTopicAndMsgValEntity();
+                                    entity.setTopic(asyncActionToken.getTopics()[0]);
+                                    if (asyncActionToken == null || asyncActionToken.getTopics() == null || asyncActionToken.getTopics().length <= 0)
+                                        entity.setTopic("");
+                                    else entity.setMessage(msg);
+                                }
+                                MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_SUCCESS);
+                            } catch (MqttException e) {
+                                e.printStackTrace();
                             }
-                        });
-                    } else client.publish(topics[i], message);
-                }
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            try {
+                                MqttTopicAndMsgValEntity entity;
+                                if (asyncActionToken == null) entity = null;
+                                else {
+                                    String msg = new String(asyncActionToken.getResponse().getPayload());
+                                    entity = new MqttTopicAndMsgValEntity();
+                                    entity.setTopic(asyncActionToken.getTopics()[0]);
+                                    if (asyncActionToken == null || asyncActionToken.getTopics() == null || asyncActionToken.getTopics().length <= 0)
+                                        entity.setTopic("");
+                                    else entity.setMessage(msg);
+                                }
+                                MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+                            } catch (MqttException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } else
+                    MqttClientManager.getInstance().getMqttClient().publish(topic, message);
             }
         } catch (MqttException e) {
             e.printStackTrace();
@@ -83,20 +108,30 @@ public class SendMessageTool {
          * 如果发送P2P消息，二级Topic必须是“p2p”,三级topic是目标的ClientID
          * 此处设置的三级topic需要是接收方的ClientID
          */
-        MqttAsyncClient client = MqttClientManager.getInstance().getMqttClient();
-        if (client != null) {
-            if (!client.isConnected()) {
-                MqttClientManager.getInstance().restartMqttClientConnect();
-            }
-            String topic = MqttConstant.MQTT_TOPIC + "/p2p/" + consumerClientId;
+        String topic = MqttConstant.MQTT_TOPIC + "/p2p/" + consumerClientId;
+        if (!MqttClientManager.getInstance().isOnLine()) {
+            MqttClientManager.getInstance().restartMqttClientConnect();
+            MqttTopicAndMsgValEntity entity = new MqttTopicAndMsgValEntity();
+            entity.setTopic(topic);
+            entity.setMessage(messageValue);
+            MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+        } else {
             if (context != null) {
-                client.publish(topic, message, context, new IMqttActionListener() {
+                MqttClientManager.getInstance().getMqttClient().publish(topic, message, context, new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
                         try {
-                            String msg = new String(asyncActionToken.getResponse().getPayload());
-                            Log.e("sendToTopic", "msg send success msg data is===" + msg);
-                            MqttCallBackManager.getInstance().callbackMessage(msg, MqttMessageSendStatusEnum.STATUS_SEND_SUCCESS);
+                            MqttTopicAndMsgValEntity entity;
+                            if (asyncActionToken == null) entity = null;
+                            else {
+                                String msg = new String(asyncActionToken.getResponse().getPayload());
+                                entity = new MqttTopicAndMsgValEntity();
+                                entity.setTopic(asyncActionToken.getTopics()[0]);
+                                if (asyncActionToken == null || asyncActionToken.getTopics() == null || asyncActionToken.getTopics().length <= 0)
+                                    entity.setTopic("");
+                                else entity.setMessage(msg);
+                            }
+                            MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_SUCCESS);
                         } catch (MqttException e) {
                             e.printStackTrace();
                         }
@@ -104,10 +139,24 @@ public class SendMessageTool {
 
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                        MqttCallBackManager.getInstance().callbackMessage(null, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+                        try {
+                            MqttTopicAndMsgValEntity entity;
+                            if (asyncActionToken == null) entity = null;
+                            else {
+                                String msg = new String(asyncActionToken.getResponse().getPayload());
+                                entity = new MqttTopicAndMsgValEntity();
+                                entity.setTopic(asyncActionToken.getTopics()[0]);
+                                if (asyncActionToken == null || asyncActionToken.getTopics() == null || asyncActionToken.getTopics().length <= 0)
+                                    entity.setTopic("");
+                                else entity.setMessage(msg);
+                            }
+                            MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_SEND_FAILURE);
+                        } catch (MqttException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
-            } else client.publish(topic, message);
+            } else MqttClientManager.getInstance().getMqttClient().publish(topic, message);
         }
     }
 }

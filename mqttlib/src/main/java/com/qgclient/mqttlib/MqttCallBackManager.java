@@ -1,11 +1,14 @@
 package com.qgclient.mqttlib;
 
+import com.qgclient.mqttlib.constant.MqttConstant;
 import com.qgclient.mqttlib.enums.MqttConnectStatusEnum;
 import com.qgclient.mqttlib.enums.MqttMessageSendStatusEnum;
 import com.qgclient.mqttlib.interfaces.MqttClientConnectStatusInterface;
 import com.qgclient.mqttlib.interfaces.MqttMessageInterface;
+import com.qgclient.mqttlib.message.MqttTopicAndMsgValEntity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,8 +17,8 @@ import java.util.List;
  */
 
 public class MqttCallBackManager {
+    private HashMap<String, List<MqttMessageInterface>> messageListenerMap;
     private List<MqttClientConnectStatusInterface> connectStatusListeners;
-    private List<MqttMessageInterface> messageListeners;
     private static volatile MqttCallBackManager instance;
 
     private MqttCallBackManager() {
@@ -38,30 +41,31 @@ public class MqttCallBackManager {
         connectStatusListeners.remove(listener);
     }
 
-    public synchronized void addMessageListener(MqttMessageInterface listener) {
-        if (messageListeners == null) messageListeners = new ArrayList<>();
-        messageListeners.add(listener);
+    public synchronized void addMessageListener(String secondTopic, MqttMessageInterface listener) {
+        String key = MqttConstant.MQTT_TOPIC + secondTopic;
+        if (messageListenerMap == null) messageListenerMap = new HashMap<>();
+        List<MqttMessageInterface> list = messageListenerMap.get(key);
+        if (list == null) list = new ArrayList<>();
+        list.add(listener);
+        messageListenerMap.put(key, list);
     }
 
-    public synchronized void removeMessageListener(MqttMessageInterface listener) {
-        if (messageListeners == null) return;
-        messageListeners.remove(listener);
+    public synchronized void removeMessageListener(String secondTopic, MqttMessageInterface listener) {
+        if (messageListenerMap == null) return;
+        String key = MqttConstant.MQTT_TOPIC + secondTopic;
+        List<MqttMessageInterface> list = messageListenerMap.get(key);
+        if (list == null) return;
+        list.remove(listener);
+        if (list.size() == 0) messageListenerMap.remove(secondTopic);
+        else messageListenerMap.put(key, list);
     }
 
-    public synchronized void callbackMessage(String msgData, MqttMessageSendStatusEnum msgStatusEnum) {
-        if (messageListeners == null || messageListeners.size() == 0) return;
-        for (int i = 0; i < messageListeners.size(); i++) {
-            switch (msgStatusEnum) {
-                case STATUS_MSG_ARRIVED:
-                    messageListeners.get(i).parseArrivedMsg(msgData);
-                    break;
-                case STATUS_SEND_SUCCESS:
-                    messageListeners.get(i).msgSendSuccess();
-                    break;
-                case STATUS_SEND_FAILURE:
-                    messageListeners.get(i).msgSendFailure();
-                    break;
-            }
+    public synchronized void callbackMessage(MqttTopicAndMsgValEntity entity, MqttMessageSendStatusEnum msgStatusEnum) {
+        if (messageListenerMap == null || messageListenerMap.size() == 0 || entity == null) return;
+        List<MqttMessageInterface> list = messageListenerMap.get(entity.getTopic());
+        if (list == null || list.size() == 0) return;
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).parseMsgFromString(msgStatusEnum, entity.getMessage());
         }
     }
 
