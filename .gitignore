@@ -9,3 +9,9 @@
 .externalNativeBuild
 .idea
 gradle
+.gitignore
+build.gradle
+libs/
+proguard-rules.pro
+src/main/AndroidManifest.xml
+src/main/res/
