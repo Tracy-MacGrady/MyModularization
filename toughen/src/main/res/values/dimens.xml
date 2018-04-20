@@ -1,0 +1,49 @@
+<resources>
+    <!--text size value-->
+    <dimen name="text_size_30px">10sp</dimen>
+    <dimen name="text_size_36px">12sp</dimen>
+    <dimen name="text_size_40px">13sp</dimen>
+    <dimen name="text_size_44px">14sp</dimen>
+    <dimen name="text_size_48px">16sp</dimen>
+    <dimen name="text_size_54px">18sp</dimen>
+    <dimen name="text_size_60px">20sp</dimen>
+    <dimen name="text_size_75px">25sp</dimen>
+    <dimen name="text_size_90px">30sp</dimen>
+    <!--margin value-->
+    <dimen name="margin_l">8dp</dimen>
+    <dimen name="margin_xl">16dp</dimen>
+    <dimen name="margin_xxl">24dp</dimen>
+    <dimen name="margin_xxxl">32dp</dimen>
+    <dimen name="margin_xxxxl">40dp</dimen>
+    <!--padding value-->
+    <dimen name="padding_l">6dp</dimen>
+    <dimen name="padding_xl">12dp</dimen>
+    <dimen name="padding_xxl">18dp</dimen>
+    <dimen name="padding_xxxl">24dp</dimen>
+    <dimen name="padding_xxxxl">30dp</dimen>
+    <!--normal view height value  常规控件高度-->
+    <dimen name="view_height_line">2px</dimen>
+    <dimen name="view_height_l">20dp</dimen>
+    <dimen name="view_height_xl">30dp</dimen>
+    <dimen name="view_height_xxl">42dp</dimen>
+    <dimen name="view_height_xxxl">50dp</dimen><!--首页底部导航栏高度-->
+    <dimen name="view_height_xxxxl">70dp</dimen>
+    <dimen name="view_height_titlebar">50dp</dimen><!--标题栏高度-->
+    <!--view width value  常规控件宽度度-->
+    <dimen name="view_width_xxl">70dp</dimen>
+    <dimen name="view_width_xxxl">90dp</dimen>
+    <!--角度-->
+    <dimen name="radius_value">4dp</dimen>
+
+    <dimen name="message_ui_image_height">120dp</dimen>
+    <dimen name="image_avatar_height_l">40dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="find_viewpager_height">150dp</dimen>
+    <dimen name="item_news_img_height">150dp</dimen>
+    <dimen name="view_width_chat_send_button">70dp</dimen>
+    <dimen name="view_width_news_item_follow_view">64dp</dimen>
+    <dimen name="view_width_register_getvcode_view">80dp</dimen>
+
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxl"
+        android:layout_margin="@dimen/margin_xl"
+        android:background="@drawable/selector_login_loginview_background"
+        android:text="开启"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/text_size_36px" />
+</LinearLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxxl"
+        android:paddingLeft="@dimen/padding_xxl"
+        android:paddingRight="@dimen/padding_xxl">
+
+        <ImageView
+            android:id="@+id/head_img_view"
+            android:layout_width="@dimen/view_height_xxl"
+            android:layout_height="@dimen/view_height_xxl"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_avatar_default" />
+
+        <View
+            android:id="@+id/tip_view"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/publish_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tip_view"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_toRightOf="@id/head_img_view"
+            android:text="梦的延长线"
+            android:textColor="@color/color_text"
+            android:textSize="@dimen/text_size_44px" />
+
+        <TextView
+            android:id="@+id/publish_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tip_view"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_toRightOf="@id/head_img_view"
+            android:text="3小时前"
+            android:textColor="@color/color_text_hint"
+            android:textSize="@dimen/text_size_30px" />
+
+        <TextView
+            android:id="@+id/follow_view"
+            android:layout_width="@dimen/view_width_news_item_follow_view"
+            android:layout_height="@dimen/view_height_xl"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_item_news_follow_view_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/follow"
+            android:textColor="@color/color_text_hint"
+            android:textSize="@dimen/text_size_40px" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_news_img_height"
+        android:scaleType="centerCrop"
+        android:src="@drawable/morning_beijing" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_l"
+        android:paddingLeft="@dimen/padding_xxl"
+        android:paddingRight="@dimen/padding_xxl"
+        android:paddingTop="@dimen/padding_xl">
+
+        <TextView
+            android:id="@+id/lable_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="lable"
+            android:textColor="@color/color_text_hint"
+            android:textSize="@dimen/text_size_40px" />
+
+        <TextView
+            android:id="@+id/follow_num_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:text="关注：321"
+            android:textColor="@color/color_text_hint"
+            android:textSize="@dimen/text_size_36px" />
+
+        <TextView
+            android:id="@+id/comment_num_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:layout_toLeftOf="@id/follow_num_view"
+            android:clickable="true"
+            android:text="评论：1256"
+            android:textColor="@color/color_text_hint"
+            android:textSize="@dimen/text_size_36px" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingBottom="@dimen/padding_xl"
+        android:paddingLeft="@dimen/padding_xxl"
+        android:paddingRight="@dimen/padding_xxl"
+        android:text="回忆总是那么的美好，美好到每当你回忆的时候总要落泪。向往总是那么的遥远，遥远到每当你向往的时候总要迷茫。"
+        android:textColor="@color/color_text_hint"
+        android:textSize="@dimen/text_size_36px" />
+</merge>

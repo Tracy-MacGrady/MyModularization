@@ -1,11 +1,59 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/color_background</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation</item>
     </style>
 
+    <style name="AppTheme.SplashTheme" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@drawable/morning_beijing</item>
+    </style>
+
+    <style name="dialog.is_transparent" parent="dialog">
+        <item name="android:windowIsTranslucent">false</item><!--是否半透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--是否背景模糊化处理-->
+    </style>
+
+    <style name="dialog.is_not_transparent" parent="dialog">
+        <item name="android:windowIsTranslucent">true</item><!--是否半透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--是否背景模糊化处理-->
+    </style>
+
+    <style name="dialog.is_not_transparent.memorandum_dialog" parent="dialog.is_not_transparent">
+        <item name="android:windowBackground">@color/color_background</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否悬浮在activity之上-->
+        <item name="android:windowIsTranslucent">true</item><!--是否半透明-->
+        <item name="android:windowNoTitle">true</item> <!--是否包含title-->
+        <item name="android:backgroundDimEnabled">true</item><!--是否背景模糊化处理-->
+        <item name="android:windowBackground">@color/color_transparent</item><!--背景-->
+    </style>
+
+    <style name="Animation">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+        <item name="android:taskCloseEnterAnimation">@null</item>
+        <item name="android:taskCloseExitAnimation">@null</item>
+        <item name="android:taskToFrontEnterAnimation">@null</item>
+        <item name="android:taskToFrontExitAnimation">@null</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
+    </style>
+
+    <style name="Animation.LoginActivity_IN" parent="AppTheme">
+        <item name="android:activityOpenEnterAnimation">@anim/anim_activity_in_loginactivity</item>
+    </style>
 </resources>

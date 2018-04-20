@@ -61,12 +61,12 @@ public class SPUtils {
         editor.apply();
     }
 
-    public String getSting(Context context, String mySPFileName, String keyValue) {
+    public String getString(Context context, String mySPFileName, String keyValue) {
         SharedPreferences sp = getSharedPreferences(context, TextUtils.isEmpty(mySPFileName) ? spFileName : mySPFileName);
         return sp.getString(keyValue, null);
     }
 
-    public Set<String> getStingSet(Context context, String mySPFileName, String keyValue) {
+    public Set<String> getStringSet(Context context, String mySPFileName, String keyValue) {
         SharedPreferences sp = getSharedPreferences(context, TextUtils.isEmpty(mySPFileName) ? spFileName : mySPFileName);
         return sp.getStringSet(keyValue, null);
     }

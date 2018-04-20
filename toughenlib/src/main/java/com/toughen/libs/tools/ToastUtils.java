@@ -17,7 +17,7 @@ public class ToastUtils {
     private ToastUtils() {
     }
 
-    private static void showShort(Context context, String showValue) {
+    public static void showShort(Context context, String showValue) {
         if (shortTast == null) {
             shortTast = Toast.makeText(context, showValue, Toast.LENGTH_SHORT);
         }
@@ -25,7 +25,7 @@ public class ToastUtils {
         shortTast.show();
     }
 
-    private static void showLong(Context context, String showValue) {
+    public static void showLong(Context context, String showValue) {
         if (longTast == null) {
             longTast = Toast.makeText(context, showValue, Toast.LENGTH_LONG);
         }

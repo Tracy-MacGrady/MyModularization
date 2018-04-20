@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/view_height_xxxl"
+    android:background="@drawable/selector_item_click_bg_color"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_xl"
+    android:paddingRight="@dimen/padding_xl">
+
+    <TextView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="大多数非"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_48px" />
+
+    <TextView
+        android:id="@+id/date_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4px"
+        android:text="山东分公司分公司"
+        android:textColor="@color/color_text_hint"
+        android:textSize="@dimen/text_size_40px" />
+</LinearLayout>

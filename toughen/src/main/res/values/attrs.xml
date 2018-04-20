@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyTitleBarView">
+        <attr name="title_name" format="string|reference" />
+        <attr name="left_img_res" format="reference" />
+        <attr name="right_img_res" format="reference" />
+        <attr name="left_text_val" format="reference|string" />
+        <attr name="right_text_val" format="reference|string" />
+        <attr name="show_left_img" format="boolean" />
+        <attr name="show_right_img" format="boolean" />
+        <attr name="show_left_text" format="boolean" />
+        <attr name="show_right_text" format="boolean" />
+    </declare-styleable>
+</resources>

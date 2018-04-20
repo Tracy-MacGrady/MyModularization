@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_l">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="标题"
+        android:textColor="@color/color_main_normal"
+        android:textSize="@dimen/text_size_48px" />
+
+    <TextView
+        android:id="@+id/dialog_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/padding_l"
+        android:padding="@dimen/padding_xl"
+        android:text="标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题"
+        android:textColor="@color/color_main_normal"
+        android:textSize="@dimen/text_size_40px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_l"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_l"
+        android:paddingLeft="@dimen/padding_l"
+        android:paddingRight="@dimen/padding_l">
+
+        <TextView
+            android:id="@+id/ok_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/view_height_xxl"
+            android:layout_weight="1"
+            android:background="@drawable/selector_login_forget_view_background"
+            android:gravity="center"
+            android:text="@string/ok_val"
+            android:textSize="@dimen/text_size_48px" />
+
+        <View
+            android:layout_width="@dimen/padding_l"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/cancel_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/view_height_xxl"
+            android:layout_weight="1"
+            android:background="@drawable/selector_login_forget_view_background"
+            android:gravity="center"
+            android:text="@string/cancel_val"
+            android:textSize="@dimen/text_size_48px" />
+    </LinearLayout>
+</LinearLayout>

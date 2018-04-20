@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_main_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_xl">
+
+            <TextView
+                android:id="@+id/memorandum_title_tip_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/memorandumtitle"
+                android:textColor="@color/color_text_hint"
+                android:textSize="@dimen/text_size_44px" />
+
+            <TextView
+                android:id="@+id/memorandum_title_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/memorandum_title_tip_view"
+                android:layout_marginLeft="@dimen/margin_l"
+                android:layout_toRightOf="@id/memorandum_title_tip_view"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_44px" />
+
+            <TextView
+                android:id="@+id/memorandum_createtime_tip_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/memorandum_title_tip_view"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:text="@string/create_time"
+                android:textColor="@color/color_text_hint"
+                android:textSize="@dimen/text_size_44px" />
+
+            <TextView
+                android:id="@+id/memorandum_createtime_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/memorandum_createtime_tip_view"
+                android:layout_marginLeft="@dimen/margin_l"
+                android:layout_toRightOf="@id/memorandum_createtime_tip_view"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_44px" />
+
+            <TextView
+                android:id="@+id/memorandum_content_tip_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/memorandum_createtime_tip_view"
+                android:layout_marginTop="@dimen/margin_xl"
+                android:text="@string/memorandum_content"
+                android:textColor="@color/color_text_hint"
+                android:textSize="@dimen/text_size_44px" />
+
+            <TextView
+                android:id="@+id/memorandum_content_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/memorandum_content_tip_view"
+                android:layout_marginLeft="@dimen/margin_l"
+                android:layout_toRightOf="@id/memorandum_content_tip_view"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_44px" />
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

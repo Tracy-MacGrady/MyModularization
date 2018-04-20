@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_chat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
+
+    <com.zx.toughen.view.MyTitleBarView
+        android:id="@+id/titlebar_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_titlebar"
+        app:left_img_res="@drawable/selector_return_home"
+        app:show_left_img="true"
+        app:title_name="消息详情" />
+
+    <LinearLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_white"
+        android:gravity="center"
+        android:minHeight="@dimen/view_height_xxxl"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_xl">
+
+        <EditText
+            android:id="@+id/content_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/view_height_xxl"
+            android:layout_marginRight="@dimen/margin_l"
+            android:layout_weight="1"
+            android:background="@drawable/selector_edit_background"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_l"
+            android:paddingRight="@dimen/padding_l" />
+
+        <TextView
+            android:id="@+id/send_view"
+            android:layout_width="@dimen/view_width_chat_send_button"
+            android:layout_height="@dimen/view_height_xxl"
+            android:background="@drawable/selector_login_loginview_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/send"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/text_size_44px" />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_view"
+        android:layout_below="@id/titlebar_view"
+        android:background="@color/color_transparent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_transparent"
+            android:overScrollMode="never"
+            android:padding="@dimen/padding_xl" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

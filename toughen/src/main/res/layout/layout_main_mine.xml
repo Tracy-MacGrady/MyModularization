@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/userinfo_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxxl"
+        android:layout_marginBottom="@dimen/margin_xl"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl">
+
+        <ImageView
+            android:layout_width="@dimen/view_height_xxl"
+            android:layout_height="@dimen/view_height_xxl"
+            android:src="@drawable/ic_avatar_default" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:drawableRight="@drawable/icon_arrow"
+            android:text="特雷西-麦克格雷迪"
+            android:textColor="@color/color_text"
+            android:textSize="@dimen/text_size_44px" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_home_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxl"
+        android:layout_marginTop="@dimen/view_height_line"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:drawableRight="@drawable/icon_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:text="@string/userhome"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+
+    <TextView
+        android:id="@+id/my_follow_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxl"
+        android:layout_marginTop="@dimen/view_height_line"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:drawableRight="@drawable/icon_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:text="@string/myfollow"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+
+    <TextView
+        android:id="@+id/memorandum_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxl"
+        android:layout_marginTop="@dimen/view_height_line"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:drawableRight="@drawable/icon_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:text="@string/memorandumlist"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+
+    <TextView
+        android:id="@+id/feedback_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxl"
+        android:layout_marginTop="@dimen/view_height_line"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:drawableRight="@drawable/icon_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:text="@string/feedback"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+
+    <TextView
+        android:id="@+id/setting_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_xxxl"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:background="@drawable/selector_item_click_bg_color"
+        android:drawableRight="@drawable/icon_arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:text="@string/setting"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/view_height_xxxxl"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/selector_item_click_bg_color"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/padding_xl"
+    android:paddingRight="@dimen/padding_xl">
+
+    <ImageView
+        android:id="@+id/message_item_avatar_view"
+        android:layout_width="@dimen/image_avatar_height_l"
+        android:layout_height="@dimen/image_avatar_height_l"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_avatar_default" />
+
+    <View
+        android:id="@+id/tip_view"
+        android:layout_width="1dp"
+        android:layout_height="3dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/message_item_nickname_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tip_view"
+        android:layout_marginLeft="@dimen/margin_l"
+        android:layout_toRightOf="@id/message_item_avatar_view"
+        android:ellipsize="middle"
+        android:text="特雷西-麦克格雷迪"
+        android:textColor="@color/color_text"
+        android:textSize="@dimen/text_size_44px" />
+
+    <TextView
+        android:id="@+id/message_item_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tip_view"
+        android:layout_marginLeft="@dimen/margin_l"
+        android:layout_toRightOf="@id/message_item_avatar_view"
+        android:maxLines="1"
+        android:text="今晚有空一起吃饭去"
+        android:textColor="@color/color_text_hint"
+        android:textSize="@dimen/text_size_36px" />
+</RelativeLayout>
