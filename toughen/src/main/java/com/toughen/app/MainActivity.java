@@ -1,4 +1,4 @@
-package com.toughen.modularization;
+package com.toughen.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
