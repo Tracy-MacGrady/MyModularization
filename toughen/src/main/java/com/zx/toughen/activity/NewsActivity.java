@@ -2,6 +2,8 @@ package com.zx.toughen.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -10,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.R;
 import com.zx.toughen.adapter.NewsAdapter;
 import com.zx.toughen.entity.NewsEntity;
 import com.zx.toughen.listenerinterface.MyLoadDataAnimRefreshInterface;
@@ -39,13 +42,8 @@ public class NewsActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isResumed) {
-            isResumed = true;
-            initValue();
-        }
     }
 
-    @Override
     public void initView() {
         initTitleView();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout);
@@ -68,7 +66,6 @@ public class NewsActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    @Override
     public void initValue() {
         List<NewsEntity> list = new ArrayList<>();
         for (int i = 0; i < 18; i++) {

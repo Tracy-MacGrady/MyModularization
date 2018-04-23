@@ -3,14 +3,10 @@ package com.zx.toughen.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.zx.toughen.utils.emchat.EMMessageSendUtil;
 
 import com.zx.toughen.constant.Constant;
 import com.zx.toughen.entity.MessageEntity;
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.view.MyTitleBarView;
 

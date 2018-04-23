@@ -1,30 +1,34 @@
 package com.zx.toughen.dialog;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import toughen.zx.com.R;
-
-import com.zx.toughenlib.base.BaseProgressDialog;
-import com.zx.toughenlib.tools.ScreenTool;
-import com.zx.toughenlib.tools.LogUtil;
+import com.toughen.libs.tools.DensityUtils;
+import com.zx.toughen.R;
 
 /**
  * Created by 李健健 on 2017/3/20.
  */
 
-public class MyProgressDialog extends BaseProgressDialog {
+public class MyProgressDialog extends Dialog {
     private TextView tipContentView;
 
     public MyProgressDialog(Context context) {
         super(context, R.style.dialog_is_not_transparent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_progress_layout);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
-        setContentView(R.layout.dialog_progress_layout);
     }
 
     @Override
@@ -33,8 +37,8 @@ public class MyProgressDialog extends BaseProgressDialog {
         tipContentView = (TextView) view.findViewById(R.id.tip_content_view);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        int height = ScreenTool.getScreenHeight(getContext());
-        int width = ScreenTool.getScreenWidth(getContext());
+        float height = DensityUtils.getInstance().getScreenHeightPX(getContext());
+        float width = DensityUtils.getInstance().getScreenWidthPX(getContext());
         if (height > width) {
             params.width = (int) (width * 0.6);
         } else {
@@ -45,7 +49,6 @@ public class MyProgressDialog extends BaseProgressDialog {
         super.setContentView(view, params);
     }
 
-    @Override
     public void setContentValue(String contentValue) {
         if (tipContentView == null) return;
         tipContentView.setText(contentValue);

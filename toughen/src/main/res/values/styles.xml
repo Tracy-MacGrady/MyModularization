@@ -15,21 +15,17 @@
         <item name="android:windowBackground">@drawable/morning_beijing</item>
     </style>
 
-    <style name="dialog.is_transparent" parent="dialog">
+    <style name="Dialog.is_transparent" parent="Dialog">
         <item name="android:windowIsTranslucent">false</item><!--是否半透明-->
         <item name="android:backgroundDimEnabled">false</item><!--是否背景模糊化处理-->
     </style>
 
-    <style name="dialog.is_not_transparent" parent="dialog">
+    <style name="Dialog.is_not_transparent" parent="Dialog">
         <item name="android:windowIsTranslucent">true</item><!--是否半透明-->
         <item name="android:backgroundDimEnabled">true</item><!--是否背景模糊化处理-->
     </style>
 
-    <style name="dialog.is_not_transparent.memorandum_dialog" parent="dialog.is_not_transparent">
-        <item name="android:windowBackground">@color/color_background</item>
-    </style>
-
-    <style name="dialog" parent="@android:style/Theme.Dialog">
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowIsFloating">true</item><!--是否悬浮在activity之上-->
         <item name="android:windowIsTranslucent">true</item><!--是否半透明-->

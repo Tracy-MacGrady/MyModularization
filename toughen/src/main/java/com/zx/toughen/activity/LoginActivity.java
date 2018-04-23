@@ -5,18 +5,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
-import com.zx.toughen.application.MyApplication;
-import com.zx.toughen.dialog.MyProgressDialog;
-import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
-import com.zx.toughen.http.HttpRequestTool;
-import com.zx.toughen.utils.emchat.EMChatUtil;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private View allLayout;

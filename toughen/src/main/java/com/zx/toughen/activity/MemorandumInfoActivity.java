@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.MemorandumAuthListenerInterface;
 

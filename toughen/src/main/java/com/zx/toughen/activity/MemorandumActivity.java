@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.constant.IntentConstant;

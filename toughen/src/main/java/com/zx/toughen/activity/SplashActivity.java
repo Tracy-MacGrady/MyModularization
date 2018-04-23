@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.R;
 
 import java.util.ArrayList;

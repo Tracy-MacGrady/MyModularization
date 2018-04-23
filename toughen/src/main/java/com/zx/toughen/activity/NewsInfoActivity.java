@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.toughen.libs.base.BaseActivity;
+import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.entity.CommentEntity;
 import com.zx.toughen.entity.NewsEntity;
@@ -69,7 +69,6 @@ public class NewsInfoActivity extends BaseActivity implements View.OnClickListen
         this.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    @Override
     public void initValue() {
         List<CommentEntity> list = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
