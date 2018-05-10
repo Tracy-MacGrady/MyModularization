@@ -3,15 +3,8 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
 /build
-/captures
-.externalNativeBuild
+build
 .idea
 gradle
-.gitignore
-build.gradle
-libs/
 proguard-rules.pro
-src/main/AndroidManifest.xml
-src/main/res/
