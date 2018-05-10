@@ -1,1 +1,1 @@
-include ':toughenlib', ':toughen'
+include ':toughenlib', ':toughen', ':mqttlib'
