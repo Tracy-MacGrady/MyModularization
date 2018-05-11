@@ -27,6 +27,10 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${LIB_SDK_VERSION}"
     implementation "com.android.support:appcompat-v7:${LIB_SDK_VERSION}"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    //友盟统计
+    implementation 'com.umeng.analytics:analytics:latest.integration'
+    //bugly错误日志统计
+    implementation 'com.tencent.bugly:crashreport:2.6.0'
 
     implementation project(':toughenlib')
 //    implementation project(':mqtt-util')

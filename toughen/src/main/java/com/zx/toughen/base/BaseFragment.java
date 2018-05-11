@@ -1,11 +1,8 @@
 package com.zx.toughen.base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
-import com.toughen.libs.tools.ActivityManagerUtils;
-import com.umeng.analytics.MobclickAgent;
 import com.zx.toughen.dialog.MyProgressDialog;
 
 /**
@@ -14,6 +11,7 @@ import com.zx.toughen.dialog.MyProgressDialog;
 
 public abstract class BaseFragment extends Fragment {
     private MyProgressDialog progressDialog;
+    protected View view;
 
     /**
      * 该方法需再次在BaseActivity子类中调用

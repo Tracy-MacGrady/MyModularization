@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.zx.toughen.R;
 import com.zx.toughen.activity.FindManActivity;
 import com.zx.toughen.activity.HelpActivity;
 import com.zx.toughen.activity.NewsActivity;
@@ -13,19 +14,15 @@ import com.zx.toughen.activity.NewsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import toughen.zx.com.R;
 
 import com.zx.toughen.activity.EventsActivity;
 import com.zx.toughen.activity.GetHelpActivity;
 
-import com.zx.toughen.activity.VoiceCommandActivity;
-import com.zx.toughenlib.view.MyBannerView;
 
 /**
  * Created by 李健健 on 2017/2/27.
  */
 public class MainFindUI extends FrameLayout implements View.OnClickListener {
-    private MyBannerView bannerView;
 
     public MainFindUI(Context context) {
         super(context);
@@ -38,7 +35,7 @@ public class MainFindUI extends FrameLayout implements View.OnClickListener {
     }
 
     private void initView() {
-        bannerView = (MyBannerView) findViewById(R.id.banner_view);
+//        bannerView = (MyBannerView) findViewById(R.id.banner_view);
         List<View> list = new ArrayList<>();
         int i = 0;
         while (i < 5) {
@@ -48,7 +45,7 @@ public class MainFindUI extends FrameLayout implements View.OnClickListener {
             list.add(imageView);
             i++;
         }
-        bannerView.setViewList(list);
+//        bannerView.setViewList(list);
         setListener();
     }
 
@@ -80,7 +77,7 @@ public class MainFindUI extends FrameLayout implements View.OnClickListener {
                 getContext().startActivity(new Intent(getContext(), HelpActivity.class));
                 break;
             case R.id.voice_view:
-                getContext().startActivity(new Intent(getContext(), VoiceCommandActivity.class));
+//                getContext().startActivity(new Intent(getContext(), VoiceCommandActivity.class));
                 break;
         }
     }

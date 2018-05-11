@@ -3,6 +3,8 @@ package com.zx.toughen.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.toughen.libs.tools.ActivityManagerUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -14,6 +16,8 @@ import com.zx.toughen.dialog.MyProgressDialog;
 
 public abstract class BaseFragmentActivity extends FragmentActivity {
     private MyProgressDialog progressDialog;
+    protected FragmentManager fragmentManager;
+    protected FragmentTransaction fragmentTransaction;
 
     /**
      * 该方法需再次在BaseActivity子类中调用
@@ -32,6 +36,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         ActivityManagerUtils.getInstance().addActivity(this);
     }
 

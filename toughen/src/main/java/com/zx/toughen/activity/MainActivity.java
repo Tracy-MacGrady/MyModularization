@@ -1,6 +1,7 @@
 package com.zx.toughen.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -8,20 +9,24 @@ import android.widget.LinearLayout;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
+import com.zx.toughen.base.BaseFragmentActivity;
+import com.zx.toughen.fragment.MainFindFragment;
+import com.zx.toughen.fragment.MainMessageFragment;
+import com.zx.toughen.fragment.MainMineFragment;
 import com.zx.toughen.ui.MainFindUI;
 import com.zx.toughen.ui.MainMessageUI;
 import com.zx.toughen.ui.MainMineUI;
 import com.zx.toughen.view.MyTitleBarView;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
     //View
     private MyTitleBarView titleBarView;
     private FrameLayout contentLayout;
     private LinearLayout messageView, findView, mineView;
-    private MainMessageUI messageUI;
-    private MainFindUI findUI;
-    private MainMineUI mineUI;
+    private MainMessageFragment mainMessageFragment;
+    private MainFindFragment mainFindFragment;
+    private MainMineFragment mainMineFragment;
 
     //Data
     private long lastPressedBack = 0;//返回键上次点击的时间
@@ -42,11 +47,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
-        titleBarView = (MyTitleBarView) findViewById(R.id.titlebar_view);
-        contentLayout = (FrameLayout) findViewById(R.id.content_layout);
-        messageView = (LinearLayout) findViewById(R.id.message_view);
-        findView = (LinearLayout) findViewById(R.id.find_view);
-        mineView = (LinearLayout) findViewById(R.id.mine_view);
+        titleBarView = findViewById(R.id.titlebar_view);
+        contentLayout = findViewById(R.id.content_layout);
+        messageView = findViewById(R.id.message_view);
+        findView = findViewById(R.id.find_view);
+        mineView = findViewById(R.id.mine_view);
         clickMessageView();
     }
 
@@ -89,18 +94,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (caseNum) {
             case 0:
                 titleName = getString(R.string.message);
-                if (messageUI == null) messageUI = new MainMessageUI(this);
-                contentLayout.addView(messageUI);
+                if (mainMessageFragment == null)
+                    mainMessageFragment = MainMessageFragment.newInstance();
+                fragmentTransaction.replace(R.id.content_layout, mainMessageFragment);
+                fragmentTransaction.commit();
                 break;
             case 1:
                 titleName = getString(R.string.find);
-                if (findUI == null) findUI = new MainFindUI(this);
-                contentLayout.addView(findUI);
+                if (mainFindFragment == null) mainFindFragment = MainFindFragment.newInstance();
+                fragmentTransaction.replace(R.id.content_layout, mainFindFragment);
+                fragmentTransaction.commit();
                 break;
             case 2:
                 titleName = getString(R.string.mine);
-                if (mineUI == null) mineUI = new MainMineUI(this);
-                contentLayout.addView(mineUI);
+                if (mainMineFragment == null) mainMineFragment = MainMineFragment.newInstance();
+                fragmentTransaction.replace(R.id.content_layout, mainMineFragment);
+                fragmentTransaction.commit();
                 break;
         }
         titleBarView.setTitleViewValue(titleName);

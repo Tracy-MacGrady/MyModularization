@@ -2,18 +2,15 @@ package com.zx.toughen.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import toughen.zx.com.R;
-
+import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.MyTitleBarViewListenerInterface;
-import com.zx.toughenlib.tools.CommonTool;
 
 /**
  * Created by 李健健 on 2017/7/31.
@@ -39,14 +36,14 @@ public class MyTitleBarView extends RelativeLayout implements View.OnClickListen
         init(context);
         TypedArray arrays = context.obtainStyledAttributes(attrs, R.styleable.MyTitleBarView, defStyleAttr, 0);
         String titleValue = arrays.getString(R.styleable.MyTitleBarView_title_name);
-        if (CommonTool.EmptyOfString(titleValue)) {
+        if (TextUtils.isEmpty(titleValue)) {
             int resId = arrays.getResourceId(R.styleable.MyTitleBarView_title_name, 0);
             if (resId != 0) titleValue = context.getString(resId);
         }
         titleView.setText(titleValue);
         if (arrays.getBoolean(R.styleable.MyTitleBarView_show_left_text, false)) {
             String leftTextVal = arrays.getString(R.styleable.MyTitleBarView_left_text_val);
-            if (CommonTool.EmptyOfString(leftTextVal)) {
+            if (TextUtils.isEmpty(leftTextVal)) {
                 int resId = arrays.getResourceId(R.styleable.MyTitleBarView_left_text_val, 0);
                 if (resId != 0) leftTextVal = context.getString(resId);
             }
@@ -55,7 +52,7 @@ public class MyTitleBarView extends RelativeLayout implements View.OnClickListen
         }
         if (arrays.getBoolean(R.styleable.MyTitleBarView_show_right_text, false)) {
             String rightTextVal = arrays.getString(R.styleable.MyTitleBarView_right_text_val);
-            if (CommonTool.EmptyOfString(rightTextVal)) {
+            if (TextUtils.isEmpty(rightTextVal)) {
                 int resId = arrays.getResourceId(R.styleable.MyTitleBarView_right_text_val, 0);
                 if (resId != 0) rightTextVal = context.getString(resId);
             }
