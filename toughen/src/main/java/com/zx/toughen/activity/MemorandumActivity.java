@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.toughen.libs.libtools.ToughenGson;
+import com.toughen.libs.libtools.gson.ToughenTypeToken;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.R;
@@ -68,11 +68,12 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
         for (int i = 0; i < 18; i++) {
             list1.add(new MemorandumEntity("title" + i, "time" + System.currentTimeMillis(), "sdddddddddddfff", i % 2 == 0));
         }
-        SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, new Gson().toJson(list1), Constant.MEMORANDUM_SP_KEY);
-        Type type = new TypeToken<List<MemorandumEntity>>() {
-        }.getType();
+        SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, ToughenGson.toJson(list1), Constant.MEMORANDUM_SP_KEY);
+
         String val = SPUtils.getInstance().getString(this, Constant.MEMORANDUM_SP_FILE_NAME, Constant.MEMORANDUM_SP_KEY);
-        List<MemorandumEntity> list = new Gson().fromJson(val, type);
+        Type type = new ToughenTypeToken<List<MemorandumEntity>>() {
+        }.getType();
+        List<MemorandumEntity> list = ToughenGson.fromGson(val, type);
         if (list != null && list.size() > 0) {
             adapter.setList(list);
         }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import toughen.zx.com.R;
+import com.zx.toughen.R;
 import com.zx.toughen.activity.ChatRoomActivity;
 import com.zx.toughen.constant.Constant;
 import com.zx.toughen.entity.MessageEntity;

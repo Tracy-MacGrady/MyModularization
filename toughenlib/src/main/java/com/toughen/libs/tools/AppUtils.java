@@ -1,6 +1,7 @@
 package com.toughen.libs.tools;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -77,5 +78,15 @@ public class AppUtils {
         InputMethodManager manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
-    
+
+    public String getNowProcessName(Context context, int pid) {
+        String processName = "";
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
+            if (process.pid == pid) {
+                processName = process.processName;
+            }
+        }
+        return processName;
+    }
 }

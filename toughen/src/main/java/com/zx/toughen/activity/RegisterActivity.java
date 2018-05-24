@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import toughen.zx.com.R;
+import com.zx.toughen.R;
+import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.listenerinterface.MyTitleBarViewListenerInterface;
 import com.zx.toughen.view.MyTitleBarView;
-import com.zx.toughenlib.base.BaseActivity;
-import com.zx.toughenlib.tools.httputil.MyHttpRequestTool;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private MyTitleBarView titleBarView;
@@ -36,7 +35,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.register_view).setOnClickListener(this);
     }
 
-    @Override
     public void initValue() {
 
     }
@@ -65,7 +63,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_view:
-registerMethod();
+                registerMethod();
                 break;
             case R.id.get_vcode_view:
 

@@ -11,6 +11,10 @@ public class LogUtils {
     public static String TAG = "DebugUtils===";
     public static boolean CAN_SHOW_LOG = true;
 
+    public static void setCanShowLog(boolean canShowLog) {
+        CAN_SHOW_LOG = canShowLog;
+    }
+
     public static void v(String log) {
         if (CAN_SHOW_LOG) Log.v(TAG, log);
     }

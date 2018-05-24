@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.zx.toughen"
         minSdkVersion MIN_SDK_VERSION as int
         targetSdkVersion TARGET_SDK_VERSION as int
@@ -33,6 +34,5 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:2.6.0'
 
     implementation project(':toughenlib')
-//    implementation project(':mqtt-util')
 
 }

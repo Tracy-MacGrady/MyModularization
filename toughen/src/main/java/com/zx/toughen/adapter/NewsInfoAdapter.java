@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zx.toughen.R;
 import com.zx.toughen.entity.CommentEntity;
 import com.zx.toughen.entity.NewsEntity;
 
 import java.util.List;
 
-import toughen.zx.com.R;
 
 /**
  * Created by 李健健 on 2017/4/19.

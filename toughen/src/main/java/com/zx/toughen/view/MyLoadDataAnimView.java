@@ -3,18 +3,15 @@ package com.zx.toughen.view;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.MyLoadDataAnimRefreshInterface;
 
-import toughen.zx.com.R;
 
 /**
  * Created by 李健健 on 2017/9/25.

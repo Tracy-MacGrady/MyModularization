@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import toughen.zx.com.R;
+import com.zx.toughen.R;
 import com.zx.toughen.activity.MemorandumActivity;
 
 /**

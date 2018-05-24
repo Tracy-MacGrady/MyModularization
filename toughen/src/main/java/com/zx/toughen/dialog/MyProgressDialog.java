@@ -20,7 +20,7 @@ public class MyProgressDialog extends Dialog {
     private TextView tipContentView;
 
     public MyProgressDialog(Context context) {
-        super(context, R.style.dialog_is_not_transparent);
+        super(context, R.style.Dialog_is_not_transparent);
     }
 
     @Override

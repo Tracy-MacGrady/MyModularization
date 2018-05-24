@@ -8,9 +8,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import toughen.zx.com.R;
+import com.toughen.libs.tools.DensityUtils;
+import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.OkCancelDialogListenerInterface;
-import com.zx.toughenlib.tools.ScreenTool;
 
 /**
  * Created by 李健健 on 2017/3/15.
@@ -22,7 +22,7 @@ public class OkCancelDialog extends Dialog implements View.OnClickListener {
     private OkCancelDialogListenerInterface listener;
 
     public OkCancelDialog(Context context) {
-        super(context, R.style.dialog_is_transparent);
+        super(context, R.style.Dialog_is_transparent);
         setContentView(R.layout.dialog_ok_cancle_layout);
     }
 
@@ -34,8 +34,8 @@ public class OkCancelDialog extends Dialog implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = getWindow();
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        int height = ScreenTool.getScreenHeight(getContext());
-        int width = ScreenTool.getScreenWidth(getContext());
+        float height = DensityUtils.getInstance().getScreenHeightPX(getContext());
+        float width = DensityUtils.getInstance().getScreenWidthPX(getContext());
         if (height > width) {
             params.width = (int) (width * 0.8);
         } else {

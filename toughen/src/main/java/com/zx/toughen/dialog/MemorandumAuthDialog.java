@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.toughen.libs.tools.DensityUtils;
+import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.MemorandumAuthListenerInterface;
-import com.zx.toughenlib.tools.ScreenTool;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import toughen.zx.com.R;
 
 /**
  * Created by 李健健 on 2017/4/12.
@@ -28,7 +27,7 @@ public class MemorandumAuthDialog extends Dialog implements View.OnClickListener
     private MemorandumAuthListenerInterface listener;
 
     public MemorandumAuthDialog(Context context) {
-        super(context, R.style.dialog_is_not_transparent_memorandum_dialog);
+        super(context, R.style.Dialog_is_not_transparent);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setContentView(R.layout.dialog_memorandum_auth);
@@ -40,7 +39,7 @@ public class MemorandumAuthDialog extends Dialog implements View.OnClickListener
         initView(view);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        params.width = ScreenTool.getScreenWidth(getContext());
+        params.width = (int) DensityUtils.getInstance().getScreenWidthPX(getContext());
         params.gravity = Gravity.BOTTOM;
         getWindow().setAttributes(params);
         super.setContentView(view, params);

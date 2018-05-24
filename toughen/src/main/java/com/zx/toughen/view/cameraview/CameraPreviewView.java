@@ -12,15 +12,16 @@ import android.view.SurfaceView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.toughen.libs.tools.DensityUtils;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.zx.toughenlib.tools.ScreenTool;
+import static com.toughen.libs.tools.LogUtils.TAG;
 
-import static com.hyphenate.chat.EMGDLocation.TAG;
 
 /**
  * Created by 李健健 on 2017/4/17.
@@ -49,8 +50,8 @@ public class CameraPreviewView extends SurfaceView implements SurfaceHolder.Call
 
     private void init(Context context) {
         this.context = context;
-        this.screenHeight = ScreenTool.getScreenHeight(context);
-        this.screenWidth = ScreenTool.getScreenWidth(context);
+        this.screenHeight = (int) DensityUtils.getInstance().getScreenHeightPX(context);
+        this.screenWidth = (int) DensityUtils.getInstance().getScreenWidthPX(context);
         this.surfaceHolder = getHolder();
         this.surfaceHolder.addCallback(this);
         this.surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

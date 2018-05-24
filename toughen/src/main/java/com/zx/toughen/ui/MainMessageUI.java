@@ -10,13 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import toughen.zx.com.R;
+import com.zx.toughen.R;
 import com.zx.toughen.adapter.MessageListAdapter;
 import com.zx.toughen.entity.MessageEntity;
 import com.zx.toughen.entity.UserInfo;
@@ -55,11 +52,11 @@ public class MainMessageUI extends FrameLayout {
         @Override
         protected List<String> doInBackground(String... params) {
             List<String> usernames = null;
-            try {
-                usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
-            } catch (HyphenateException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+//            } catch (HyphenateException e) {
+//                e.printStackTrace();
+//            }
             return usernames;
         }
 
