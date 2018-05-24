@@ -1,5 +1,7 @@
 package com.toughen.libs.download;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.toughen.libs.download.database.DownloadDBEntity;
@@ -17,6 +19,7 @@ public class DownloadThread extends Thread {
 
     private static final String TAG = "DownloadThread";
     private static final int TIME_OUT = 50000;
+    private Handler handler;
     private DownloadDBEntity entity;
 
     public DownloadThread(DownloadDBEntity entity) {
@@ -84,6 +87,10 @@ public class DownloadThread extends Thread {
                         entity.setDownloadLength(entity.getDownloadLength() + len);
                         DownloadDBManager.getInstance().update(entity);
                     }
+                    Message msg = Message.obtain();
+                    msg.what = 1;
+                    msg.obj = len;
+                    handler.sendMessage(msg);
                 }
             }
             DownloadDBManager.getInstance().delete(entity);
@@ -100,5 +107,9 @@ public class DownloadThread extends Thread {
 
     public void stopDownload() {
         this.interrupt();
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 }

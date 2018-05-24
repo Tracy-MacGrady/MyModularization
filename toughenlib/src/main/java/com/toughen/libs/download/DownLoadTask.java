@@ -1,5 +1,7 @@
 package com.toughen.libs.download;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
 import com.toughen.libs.download.database.DownloadDBEntity;
@@ -16,10 +18,13 @@ public class DownLoadTask extends Thread {
     private List<DownloadThread> threads = new ArrayList<>();
     private String downloadPath;
     private String fileSavePath;
+    private Handler handler;
+    private int fileLength;
 
-    public DownLoadTask(String downloadUrl, String savePath) {
+    public DownLoadTask(String downloadUrl, String savePath, Handler handler) {
         this.downloadPath = downloadUrl;
         this.fileSavePath = savePath;
+        this.handler = handler;
     }
 
     @Override
@@ -28,19 +33,27 @@ public class DownLoadTask extends Thread {
     }
 
     private void startTask() {
+        fileLength = 0;
+        threads.clear();
         List<DownloadDBEntity> dbEntities = DownloadDBManager.getInstance().selectList(downloadPath);
         if (dbEntities == null || dbEntities.size() == 0) {
             createDownloadInfo(downloadPath, fileSavePath);
         } else {
-            threads.clear();
             for (int i = 0, size = dbEntities.size(); i < size; i++) {
-                threads.add(new DownloadThread(dbEntities.get(i)));
+                DownloadDBEntity entity = dbEntities.get(i);
+                threads.add(new DownloadThread(entity));
+                fileLength += entity.getThreadSaveFileLength();
             }
         }
+        Message msg = Message.obtain();
+        msg.what = 0;
+        msg.obj = fileLength;
+        handler.sendMessage(msg);
         for (int i = 0, size = threads.size(); i < size; i++) {
             DownloadThread thread = threads.get(i);
             if (thread.getEntity() != null) {
                 if (!thread.getEntity().isDownloadFinished()) {
+                    thread.setHandler(handler);
                     thread.start();
                 } else DownloadDBManager.getInstance().delete(thread.getEntity());
             }
@@ -58,9 +71,8 @@ public class DownLoadTask extends Thread {
                     connection = (HttpURLConnection) url.openConnection();
                 }
             }
-            int fileLength = connection.getContentLength();
+            fileLength = connection.getContentLength();
             int downloadSize = fileLength / max_thread_num;
-            threads.clear();
             for (int i = 0; i < max_thread_num; i++) {
                 DownloadDBEntity entity = new DownloadDBEntity();
                 if (i == max_thread_num - 1) {

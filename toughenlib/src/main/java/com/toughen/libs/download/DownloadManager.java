@@ -1,6 +1,9 @@
 package com.toughen.libs.download;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
 import com.toughen.libs.download.database.DownloadDBManager;
 
@@ -28,7 +31,21 @@ public class DownloadManager {
     }
 
     public void startDownload(String downloadURL, String savePath) {
-        DownLoadTask task = new DownLoadTask(downloadURL, savePath);
+        DownLoadTask task = new DownLoadTask(downloadURL, savePath, handler);
         task.start();
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public synchronized void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Log.e(DownloadManager.class.getSimpleName(), "this is download file length=" + msg.obj);
+                    break;
+                case 1:
+                    Log.e(DownloadManager.class.getSimpleName(), "this is download file progress length=" + msg.obj);
+                    break;
+            }
+        }
+    };
 }

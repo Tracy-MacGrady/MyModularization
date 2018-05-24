@@ -68,4 +68,8 @@ public class DownloadDBEntity {
     public boolean isDownloadFinished() {
         return downloadLength > 0 && downloadLength >= endLocation - startLocation;
     }
+
+    public int getThreadSaveFileLength() {
+        return endLocation - startLocation;
+    }
 }
