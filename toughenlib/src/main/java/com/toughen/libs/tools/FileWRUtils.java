@@ -16,11 +16,8 @@ import java.io.OutputStreamWriter;
  * @文件读取、写入工具类
  */
 public class FileWRUtils {
-    private static String TAG = FileWRUtils.class.getName();
-    private static OutputStream outStream;
-    private static OutputStreamWriter outStreamWriter;
-    private static BufferedWriter bufferWriter;
-    private volatile static FileWRUtils fileWRTool;
+    private static String TAG = FileWRUtils.class.getSimpleName();
+    private volatile static FileWRUtils instance;
 
     private FileWRUtils() {
     }
@@ -30,12 +27,12 @@ public class FileWRUtils {
      * @说明 实例化FileWRTool
      */
     public static FileWRUtils getInstance() {
-        if (fileWRTool == null) {
+        if (instance == null) {
             synchronized (FileWRUtils.class) {
-                fileWRTool = new FileWRUtils();
+                if (instance == null) instance = new FileWRUtils();
             }
         }
-        return fileWRTool;
+        return instance;
     }
 
     /**
@@ -51,9 +48,9 @@ public class FileWRUtils {
             if (!fileExit(file)) {
                 createFile(file);
             }
-            outStream = new FileOutputStream(file, isAppend);
-            outStreamWriter = new OutputStreamWriter(outStream);
-            bufferWriter = new BufferedWriter(outStreamWriter);
+            FileOutputStream outStream = new FileOutputStream(file, isAppend);
+            OutputStreamWriter outStreamWriter = new OutputStreamWriter(outStream);
+            BufferedWriter bufferWriter = new BufferedWriter(outStreamWriter);
             bufferWriter.write(val);
             bufferWriter.flush();
             bufferWriter.close();
@@ -82,7 +79,7 @@ public class FileWRUtils {
         try {
             File file = new File(savePath, name);
             if (!fileExit(file)) createFile(file);
-            outStream = new FileOutputStream(file);
+            FileOutputStream outStream = new FileOutputStream(file);
             BufferedOutputStream bos = new BufferedOutputStream(outStream);
             Bitmap bitmap = ImageUtils.getCompressBitmap(imagePath, 480,
                     800);
