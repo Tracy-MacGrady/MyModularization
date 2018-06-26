@@ -1,6 +1,7 @@
 package com.qingguo.downloadlib;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -68,22 +69,36 @@ public class DownloadManager {
 
     private Handler handler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {
+        public synchronized void handleMessage(Message msg) {
             switch (msg.what) {
                 case DownloadConstant.DOWNLOAD_GET_FILELENGTH:
-                    Log.e(DownloadManager.class.getSimpleName(), "this is download file length=" + msg.obj);
+                    Log.e(DownloadManager.class.getSimpleName(), "DOWNLOAD_GET_FILELENGTH" + msg.obj);
                     break;
                 case DownloadConstant.DOWNLOAD_PROGRESS:
-                    DownloadDBEntity entity = (DownloadDBEntity) msg.obj;
+                    Bundle bundle = msg.getData();
+                    String DownloadPath = bundle.getString("DownloadPath");
+                    String FileSaveName = bundle.getString("FileSaveName");
+                    long readLen = bundle.getLong("readLen");
+                    DownloadDBEntity entity = DownloadDBManager.getInstance().selectByFileName(DownloadPath, FileSaveName);
+                    entity.setDownloadLength(entity.getDownloadLength() + readLen);
                     DownloadDBManager.getInstance().update(entity);
-                    Log.e(DownloadManager.class.getSimpleName(), "this is download file progress length=" + entity.getDownloadLength());
+                    Log.e(DownloadManager.class.getSimpleName(), "DOWNLOAD_PROGRESS= " + entity.getDownloadLength());
                     break;
                 case DownloadConstant.DOWNLOAD_FINISH:
-                    continueRun();
+//                    continueRun();
+                    break;
+                case DownloadConstant.THREAD_DOWNLOAD_FINISH:
+                    DownloadDBEntity entity2 = (DownloadDBEntity) msg.obj;
+                    entity2 = DownloadDBManager.getInstance().selectByFileName(entity2.getDownloadPath(), entity2.getFileSaveName());
+                    Log.e(DownloadManager.class.getSimpleName(), "THREAD_DOWNLOAD_FINISH" + entity2.isDownloadFinished());
+                    if (entity2.isDownloadFinished()) {
+                        DownloadDBManager.getInstance().delete(entity2);
+//                        continueRun();
+                    }
                     break;
                 case DownloadConstant.DOWNLOAD_FILE_NOT_EXIT:
                     if (downloadFinishListener != null) downloadFinishListener.fileNotExit(msg.obj);
-                    continueRun();
+//                    continueRun();
                     break;
             }
         }

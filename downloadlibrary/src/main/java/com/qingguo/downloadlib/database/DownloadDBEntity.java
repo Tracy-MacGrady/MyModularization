@@ -6,9 +6,10 @@ public class DownloadDBEntity {
     private String fileSavePath;//文件本地存储地址
     private String downloadPath;//文件下载地址
     private int threadID;//对应的下载线程ID
-    private int downloadLength;//对应单个下载线程中文件已经下载的长度
-    private int endLocation;//单个线程下载文件的结束位置
-    private int startLocation;//单个线程下载文件的开始位置
+    private long downloadLength;//对应单个下载线程中文件已经下载的长度
+    private long endLocation;//单个线程下载文件的结束位置
+    private long startLocation;//单个线程下载文件的开始位置
+    private long fileLength;//文件总长度
 
     public int getId() {
         return id;
@@ -50,35 +51,40 @@ public class DownloadDBEntity {
         this.fileSavePath = fileSavePath;
     }
 
-    public int getDownloadLength() {
+    public long getDownloadLength() {
         return downloadLength;
     }
 
-    public void setDownloadLength(int downloadLength) {
+    public void setDownloadLength(long downloadLength) {
         this.downloadLength = downloadLength;
     }
 
-    public int getEndLocation() {
+    public long getEndLocation() {
         return endLocation;
     }
 
-    public void setEndLocation(int endLocation) {
+    public void setEndLocation(long endLocation) {
         this.endLocation = endLocation;
     }
 
-    public int getStartLocation() {
+    public long getStartLocation() {
         return startLocation;
     }
 
-    public void setStartLocation(int startLocation) {
+    public void setStartLocation(long startLocation) {
         this.startLocation = startLocation;
     }
 
-    public boolean isDownloadFinished() {
-        return downloadLength > 0 && downloadLength >= endLocation - startLocation;
+    public long getFileLength() {
+        return fileLength;
     }
 
-    public int getThreadSaveFileLength() {
-        return endLocation - startLocation;
+    public void setFileLength(long fileLength) {
+        this.fileLength = fileLength;
     }
+
+    public boolean isDownloadFinished() {
+        return downloadLength > 0 && downloadLength >= fileLength;
+    }
+
 }

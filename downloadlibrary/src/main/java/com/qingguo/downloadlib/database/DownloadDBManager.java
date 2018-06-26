@@ -63,4 +63,11 @@ public class DownloadDBManager {
     public void setDownloadDBDao(DownloadDBDao dao) {
         this.downloadDBDao = dao;
     }
+
+    public DownloadDBEntity selectByFileName(String downloadPath, String fileSaveName) {
+        if (downloadDBDao == null) return null;
+        List<DownloadDBEntity> list = downloadDBDao.selectList(db, downloadPath, fileSaveName);
+        if (list == null) return null;
+        return list.get(0);
+    }
 }

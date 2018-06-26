@@ -28,6 +28,7 @@ public class DownloadDBDao {
         contentValues.put("DOWNLOADLENGTH", entity.getDownloadLength());
         contentValues.put("ENDLOCATION", entity.getEndLocation());
         contentValues.put("STARTLOCATION", entity.getStartLocation());
+        contentValues.put("FILELENGTH", entity.getFileLength());
         return db.insert(DownloadDBEntity.class.getSimpleName().toUpperCase(), null, contentValues);
     }
 
@@ -56,6 +57,7 @@ public class DownloadDBDao {
                 entity.setThreadID(cursor.getInt(cursor.getColumnIndex("THREADID")));
                 entity.setId(cursor.getInt(cursor.getColumnIndex("ID")));
                 entity.setStartLocation(cursor.getInt(cursor.getColumnIndex("STARTLOCATION")));
+                entity.setFileLength(cursor.getInt(cursor.getColumnIndex("FILELENGTH")));
                 list.add(entity);
                 cursor.moveToNext();
             }

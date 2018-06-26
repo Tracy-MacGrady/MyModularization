@@ -1,5 +1,6 @@
 package com.qingguo.downloadlib;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -71,18 +72,20 @@ public class DownloadThread extends Thread {
                     long lastTime = System.currentTimeMillis();
                     while ((readLen = bis.read(buffer)) != -1 && !this.isInterrupted()) {
                         file.write(buffer, 0, readLen);
-                        entity.setDownloadLength(entity.getDownloadLength() + readLen);
                         long timeSpace = System.currentTimeMillis() - lastTime;
                         if (timeSpace > 700) {
                             lastTime = System.currentTimeMillis();
                             Log.e("time==", "TIME===" + timeSpace);
                             Message msg = Message.obtain();
                             msg.what = DownloadConstant.DOWNLOAD_PROGRESS;
-                            msg.obj = entity;
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("readLen", readLen);
+                            bundle.putString("DownloadPath", entity.getDownloadPath());
+                            bundle.putString("FileSaveName", entity.getFileSaveName());
+                            msg.setData(bundle);
                             handler.sendMessage(msg);
                         }
                     }
-                    DownloadDBManager.getInstance().delete(entity);
                     file.close();
                     bis.close();
                     is.close();
@@ -97,11 +100,10 @@ public class DownloadThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (entity.isDownloadFinished()) {
-                Message msg = Message.obtain();
-                msg.what = DownloadConstant.DOWNLOAD_FINISH;
-                handler.sendMessage(msg);
-            }
+            Message msg = Message.obtain();
+            msg.what = DownloadConstant.THREAD_DOWNLOAD_FINISH;
+            msg.obj = entity;
+            handler.sendMessage(msg);
             if (conn != null) conn.disconnect();
         }
     }

@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DownLoadTask {
-    private int max_thread_num = 1;
+    private int max_thread_num = 3;
     private List<DownloadThread> threads = new ArrayList<>();
     private String downloadPath;
     private String fileSavePath;
     private String saveName;
     private Handler handler;
-    private int fileLength;
+    private long fileLength;
 
     public DownLoadTask(String downloadUrl, String savePath, String saveName) {
         this.downloadPath = downloadUrl;
@@ -44,7 +44,7 @@ public class DownLoadTask {
             for (int i = 0, size = dbEntities.size(); i < size; i++) {
                 DownloadDBEntity entity = dbEntities.get(i);
                 threads.add(new DownloadThread(entity));
-                fileLength += entity.getThreadSaveFileLength();
+                fileLength = entity.getFileLength();
             }
             startThread();
         }
@@ -112,7 +112,7 @@ public class DownLoadTask {
             super.handleMessage(msg);
             if (msg.what == 100) {
                 fileLength = (int) msg.obj;
-                int downloadSize = fileLength / max_thread_num;
+                long downloadSize = fileLength / max_thread_num;
                 for (int i = 0; i < max_thread_num; i++) {
                     DownloadDBEntity entity = new DownloadDBEntity();
                     if (i == max_thread_num - 1) {
@@ -121,14 +121,14 @@ public class DownLoadTask {
                         entity.setEndLocation((i + 1) * downloadSize);
                     }
                     entity.setFileSaveName(saveName);
-                    entity.setDownloadLength(0);
                     entity.setDownloadPath(downloadPath);
                     entity.setStartLocation(i * downloadSize);
                     entity.setFileSavePath(fileSavePath);
                     entity.setThreadID(i);
+                    entity.setFileLength(fileLength);
                     DownloadDBManager.getInstance().insert(entity);
                     threads.add(new DownloadThread(entity));
-                }//05-25 18:45:12.101 5003-5084/com.qingguo.antcallservice D/DownloadThread: 线程_0_正在下载【开始位置 : 0，结束位置：10366684】
+                }
                 startThread();
             }
         }
@@ -138,7 +138,4 @@ public class DownLoadTask {
         this.handler = handler;
     }
 
-    public String getSaveName() {
-        return saveName;
-    }
 }
