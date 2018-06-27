@@ -50,35 +50,9 @@ public class MainFindUI extends FrameLayout implements View.OnClickListener {
     }
 
     private void setListener() {
-        findViewById(R.id.news_view).setOnClickListener(this);
-        findViewById(R.id.find_man_view).setOnClickListener(this);
-        findViewById(R.id.events_view).setOnClickListener(this);
-        findViewById(R.id.get_help_view).setOnClickListener(this);
-        findViewById(R.id.help_view).setOnClickListener(this);
-        findViewById(R.id.voice_view).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.news_view:
-                getContext().startActivity(new Intent(getContext(), NewsActivity.class));
-                break;
-            case R.id.find_man_view:
-                getContext().startActivity(new Intent(getContext(), FindManActivity.class));
-                break;
-            case R.id.events_view:
-                getContext().startActivity(new Intent(getContext(), EventsActivity.class));
-                break;
-            case R.id.get_help_view:
-                getContext().startActivity(new Intent(getContext(), GetHelpActivity.class));
-                break;
-            case R.id.help_view:
-                getContext().startActivity(new Intent(getContext(), HelpActivity.class));
-                break;
-            case R.id.voice_view:
-//                getContext().startActivity(new Intent(getContext(), VoiceCommandActivity.class));
-                break;
-        }
     }
 }

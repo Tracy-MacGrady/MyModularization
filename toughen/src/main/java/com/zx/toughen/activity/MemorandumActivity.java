@@ -71,12 +71,9 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
         SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, ToughenGson.toJson(list1), Constant.MEMORANDUM_SP_KEY);
 
         String val = SPUtils.getInstance().getString(this, Constant.MEMORANDUM_SP_FILE_NAME, Constant.MEMORANDUM_SP_KEY);
-        Type type = new ToughenTypeToken<List<MemorandumEntity>>() {
-        }.getType();
-        List<MemorandumEntity> list = ToughenGson.fromGson(val, type);
-        if (list != null && list.size() > 0) {
-            adapter.setList(list);
-        }
+//        if (list != null && list.size() > 0) {
+//            adapter.setList(list);
+//        }
     }
 
     @Override

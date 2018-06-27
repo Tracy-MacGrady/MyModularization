@@ -29,17 +29,21 @@ public class DownloadDBDao {
         contentValues.put("ENDLOCATION", entity.getEndLocation());
         contentValues.put("STARTLOCATION", entity.getStartLocation());
         contentValues.put("FILELENGTH", entity.getFileLength());
-        return db.insert(DownloadDBEntity.class.getSimpleName().toUpperCase(), null, contentValues);
+        long returnCode = db.insert(DownloadDBEntity.class.getSimpleName().toUpperCase(), null, contentValues);
+        return returnCode;
+
     }
 
     public long delete(SQLiteDatabase db, DownloadDBEntity entity) {
-        return db.delete(DownloadDBEntity.class.getSimpleName().toUpperCase(), "DOWNLOADPATH=? AND THREADID=? AND FILESAVENAME=?", new String[]{entity.getDownloadPath(), entity.getThreadID() + "", entity.getFileSaveName()});
+        int returnCode = db.delete(DownloadDBEntity.class.getSimpleName().toUpperCase(), "DOWNLOADPATH=? AND THREADID=? AND FILESAVENAME=?", new String[]{entity.getDownloadPath(), entity.getThreadID() + "", entity.getFileSaveName()});
+        return returnCode;
     }
 
     public long update(SQLiteDatabase db, DownloadDBEntity entity) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("DOWNLOADLENGTH", entity.getDownloadLength());
-        return db.update(DownloadDBEntity.class.getSimpleName().toUpperCase(), contentValues, "DOWNLOADPATH=? AND THREADID=? AND FILESAVENAME=?", new String[]{entity.getDownloadPath(), entity.getThreadID() + "", entity.getFileSaveName()});
+        int returnCode = db.update(DownloadDBEntity.class.getSimpleName().toUpperCase(), contentValues, "DOWNLOADPATH=? AND THREADID=? AND FILESAVENAME=?", new String[]{entity.getDownloadPath(), entity.getThreadID() + "", entity.getFileSaveName()});
+        return returnCode;
     }
 
     public List<DownloadDBEntity> selectList(SQLiteDatabase db, String downloadPath, String saveName) {
@@ -62,6 +66,7 @@ public class DownloadDBDao {
                 cursor.moveToNext();
             }
         }
+        cursor.close();
         return list;
     }
 

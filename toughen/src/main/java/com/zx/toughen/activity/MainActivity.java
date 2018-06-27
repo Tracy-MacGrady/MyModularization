@@ -1,21 +1,16 @@
 package com.zx.toughen.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.base.BaseFragmentActivity;
 import com.zx.toughen.fragment.MainFindFragment;
 import com.zx.toughen.fragment.MainMessageFragment;
 import com.zx.toughen.fragment.MainMineFragment;
-import com.zx.toughen.ui.MainFindUI;
-import com.zx.toughen.ui.MainMessageUI;
-import com.zx.toughen.ui.MainMineUI;
 import com.zx.toughen.view.MyTitleBarView;
 
 

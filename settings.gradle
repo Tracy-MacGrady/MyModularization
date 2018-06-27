@@ -1,1 +1,2 @@
-include ':toughenlib', ':toughen', ':mqttlib'
+include ':toughenlib', ':toughen', ':mqttlib', ':test_download'
+include ':downloadlibrary'
