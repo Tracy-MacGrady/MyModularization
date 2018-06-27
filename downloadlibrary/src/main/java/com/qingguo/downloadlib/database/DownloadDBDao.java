@@ -19,6 +19,10 @@ public class DownloadDBDao {
         db.execSQL(sql);
     }
 
+    public void execSql(SQLiteDatabase db, String sql, Object[] where) {
+        db.execSQL(sql, where);
+    }
+
     public long insert(SQLiteDatabase db, DownloadDBEntity entity) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("DOWNLOADPATH", entity.getDownloadPath());
@@ -39,7 +43,7 @@ public class DownloadDBDao {
         return returnCode;
     }
 
-    public long update(SQLiteDatabase db, DownloadDBEntity entity) {
+    public long updateDownloadlength(SQLiteDatabase db, DownloadDBEntity entity) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("DOWNLOADLENGTH", entity.getDownloadLength());
         int returnCode = db.update(DownloadDBEntity.class.getSimpleName().toUpperCase(), contentValues, "DOWNLOADPATH=? AND THREADID=? AND FILESAVENAME=?", new String[]{entity.getDownloadPath(), entity.getThreadID() + "", entity.getFileSaveName()});
@@ -97,5 +101,4 @@ public class DownloadDBDao {
         StringBuffer SQL = new StringBuffer("DROP TABLE IF EXISTS ").append(tableName);
         return SQL.toString();
     }
-
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.qingguo.downloadlib.database.DownloadDBEntity;
 import com.qingguo.downloadlib.database.DownloadDBManager;
 import com.qingguo.downloadlib.listener.DownloadFinishListener;
+import com.qingguo.downloadlib.listener.DownloadStatusListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class DownloadManager {
             String key0 = taskMap.keySet().iterator().next();
             DownLoadTask task = taskMap.get(key0);
             taskMap.remove(key0);
-            task.setHandler(handler);
+            task.setListener(downloadStatusListener);
             task.startTask();
         } else {
             isRunning = false;
@@ -67,40 +68,15 @@ public class DownloadManager {
         }
     }
 
-    private Handler handler = new Handler() {
+    private DownloadStatusListener downloadStatusListener = new DownloadStatusListener() {
         @Override
-        public synchronized void handleMessage(Message msg) {
-            switch (msg.what) {
-                case DownloadConstant.DOWNLOAD_GET_FILELENGTH:
-                    Log.e(DownloadManager.class.getSimpleName(), "DOWNLOAD_GET_FILELENGTH" + msg.obj);
-                    break;
-                case DownloadConstant.DOWNLOAD_PROGRESS:
-                    Bundle bundle = msg.getData();
-                    String DownloadPath = bundle.getString("DownloadPath");
-                    String FileSaveName = bundle.getString("FileSaveName");
-                    long readLen = bundle.getLong("readLen");
-                    DownloadDBEntity entity = DownloadDBManager.getInstance().selectByFileName(DownloadPath, FileSaveName);
-                    entity.setDownloadLength(entity.getDownloadLength() + readLen);
-                    DownloadDBManager.getInstance().update(entity);
-                    Log.e(DownloadManager.class.getSimpleName(), "DOWNLOAD_PROGRESS= " + entity.getDownloadLength());
-                    break;
-                case DownloadConstant.DOWNLOAD_FINISH:
-//                    continueRun();
-                    break;
-                case DownloadConstant.THREAD_DOWNLOAD_FINISH:
-                    DownloadDBEntity entity2 = (DownloadDBEntity) msg.obj;
-                    entity2 = DownloadDBManager.getInstance().selectByFileName(entity2.getDownloadPath(), entity2.getFileSaveName());
-                    Log.e(DownloadManager.class.getSimpleName(), "THREAD_DOWNLOAD_FINISH" + entity2.isDownloadFinished());
-                    if (entity2.isDownloadFinished()) {
-                        DownloadDBManager.getInstance().delete(entity2);
-//                        continueRun();
-                    }
-                    break;
-                case DownloadConstant.DOWNLOAD_FILE_NOT_EXIT:
-                    if (downloadFinishListener != null) downloadFinishListener.fileNotExit(msg.obj);
-//                    continueRun();
-                    break;
-            }
+        public void downloadFinished() {
+            continueRun();
+        }
+
+        @Override
+        public void downloadFileNotExit() {
+            continueRun();
         }
     };
 

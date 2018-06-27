@@ -3,9 +3,11 @@ package com.qingguo.downloadlib;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.qingguo.downloadlib.database.DownloadDBEntity;
 import com.qingguo.downloadlib.database.DownloadDBManager;
+import com.qingguo.downloadlib.listener.DownloadStatusListener;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,8 +21,9 @@ public class DownLoadTask {
     private String downloadPath;
     private String fileSavePath;
     private String saveName;
-    private Handler handler;
     private long fileLength;
+    private long hasDownLoadLength;
+    private DownloadStatusListener listener;
 
     public DownLoadTask(String downloadUrl, String savePath, String saveName) {
         this.downloadPath = downloadUrl;
@@ -52,26 +55,19 @@ public class DownLoadTask {
 
     private void startThread() {
         if (fileLength < 0) {
-            Message msg = Message.obtain();
-            msg.what = DownloadConstant.DOWNLOAD_FILE_NOT_EXIT;
-            msg.obj = "fileLength==" + fileLength;
-            handler.sendMessage(msg);
+            if (listener != null) listener.downloadFileNotExit();
         } else {
-            Message msg = Message.obtain();
-            msg.what = DownloadConstant.DOWNLOAD_GET_FILELENGTH;
-            msg.obj = fileLength;
-            handler.sendMessage(msg);
             for (int i = 0, size = threads.size(); i < size; i++) {
                 DownloadThread thread = threads.get(i);
                 if (thread.getEntity() != null) {
                     if (!thread.getEntity().isDownloadFinished()) {
-                        thread.setHandler(handler);
+                        thread.setHandler(taskHandler);
                         thread.start();
                     } else {
                         DownloadDBManager.getInstance().delete(thread.getEntity());
                         Message msg2 = Message.obtain();
                         msg2.what = DownloadConstant.DOWNLOAD_FINISH;
-                        handler.sendMessage(msg2);
+                        taskHandler.sendMessage(msg2);
                     }
                 }
             }
@@ -133,9 +129,35 @@ public class DownLoadTask {
             }
         }
     };
+    private Handler taskHandler = new Handler() {
+        @Override
+        public synchronized void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case DownloadConstant.DOWNLOAD_PROGRESS:
+                    DownloadDBEntity entity = (DownloadDBEntity) msg.obj;
+                    DownloadDBManager.getInstance().updateDownloadlength(entity);
+                    Log.e(DownloadManager.class.getSimpleName(), "DOWNLOAD_PROGRESS==== " + entity.getDownloadLength());
+                    break;
+                case DownloadConstant.DOWNLOAD_FINISH:
+                    if (listener != null) listener.downloadFinished();
+                    break;
+                case DownloadConstant.DOWNLOAD_FILE_NOT_EXIT:
+                    if (listener != null) listener.downloadFileNotExit();
+                    break;
+                case DownloadConstant.THREAD_DOWNLOAD_FINISH:
+                    DownloadDBEntity entity2 = (DownloadDBEntity) msg.obj;
+                    hasDownLoadLength += entity2.getEndLocation() - entity2.getStartLocation();
+                    DownloadDBManager.getInstance().delete(entity2);
+                    if (hasDownLoadLength >= fileLength) {
+                        if (listener != null) listener.downloadFinished();
+                    }
+                    break;
+            }
+        }
+    };
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setListener(DownloadStatusListener listener) {
+        this.listener = listener;
     }
-
 }

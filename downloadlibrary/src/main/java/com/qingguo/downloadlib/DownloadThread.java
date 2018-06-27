@@ -76,13 +76,10 @@ public class DownloadThread extends Thread {
                         if (timeSpace > 700) {
                             lastTime = System.currentTimeMillis();
                             Log.e("time==", "TIME===" + timeSpace);
+                            entity.setDownloadLength(entity.getDownloadLength() + readLen);
                             Message msg = Message.obtain();
                             msg.what = DownloadConstant.DOWNLOAD_PROGRESS;
-                            Bundle bundle = new Bundle();
-                            bundle.putLong("readLen", readLen);
-                            bundle.putString("DownloadPath", entity.getDownloadPath());
-                            bundle.putString("FileSaveName", entity.getFileSaveName());
-                            msg.setData(bundle);
+                            msg.obj = entity;
                             handler.sendMessage(msg);
                         }
                     }

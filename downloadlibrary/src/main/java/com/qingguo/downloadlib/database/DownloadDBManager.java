@@ -46,9 +46,9 @@ public class DownloadDBManager {
         return downloadDBDao.delete(db, entity);
     }
 
-    public synchronized long update(DownloadDBEntity entity) {
+    public synchronized long updateDownloadlength(DownloadDBEntity entity) {
         if (downloadDBDao == null) return -1;
-        return downloadDBDao.update(db, entity);
+        return downloadDBDao.updateDownloadlength(db, entity);
     }
 
     public synchronized List<DownloadDBEntity> selectList(String downloadPath, String saveName) {
@@ -64,10 +64,7 @@ public class DownloadDBManager {
         this.downloadDBDao = dao;
     }
 
-    public DownloadDBEntity selectByFileName(String downloadPath, String fileSaveName) {
-        if (downloadDBDao == null) return null;
-        List<DownloadDBEntity> list = downloadDBDao.selectList(db, downloadPath, fileSaveName);
-        if (list == null) return null;
-        return list.get(0);
+    public void execSql(String sql, Object[] where) {
+        downloadDBDao.execSql(db, sql, where);
     }
 }
