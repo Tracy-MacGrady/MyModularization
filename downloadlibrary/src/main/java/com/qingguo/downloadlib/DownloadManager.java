@@ -2,6 +2,7 @@ package com.qingguo.downloadlib;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
