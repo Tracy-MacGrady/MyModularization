@@ -37,7 +37,7 @@ public class OkHttpManager {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
 
             }
         });

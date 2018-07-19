@@ -1,30 +1,17 @@
 package com.zx.toughen.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-
 import com.zx.toughen.R;
-import com.zx.toughen.activity.EventsActivity;
-import com.zx.toughen.activity.FindManActivity;
-import com.zx.toughen.activity.GetHelpActivity;
-import com.zx.toughen.activity.HelpActivity;
-import com.zx.toughen.activity.NewsActivity;
 import com.zx.toughen.adapter.FindFragmentAdapter;
 import com.zx.toughen.base.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
  * Created by 李健健 on 2017/2/27.
  */
@@ -62,10 +49,32 @@ public class MainFindFragment extends BaseFragment {
     public void initView() {
         recyclerView = view.findViewById(R.id.recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout);
+        adapter = new FindFragmentAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void setListener() {
-
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
+        recyclerView.addOnScrollListener(recyclerViewScrollListener);
     }
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+
+        }
+    };
+    private RecyclerView.OnScrollListener recyclerViewScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
 }

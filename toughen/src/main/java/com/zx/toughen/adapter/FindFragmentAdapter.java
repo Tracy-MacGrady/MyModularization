@@ -16,10 +16,10 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
+//        View view;
 //        if (viewType == 0)
 //            view = LayoutInflater.from(context).inflate(R.layout.layout_find_fragment_item_ui, parent, false);
-//        else view =new
+////        else view =new
         return null;
     }
 
@@ -36,7 +36,7 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return list == null ? 1 : list.size() + 1;
+        return list == null ? 0 : list.size() + 1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

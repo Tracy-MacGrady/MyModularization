@@ -17,7 +17,6 @@ import com.zx.toughen.dialog.MyProgressDialog;
 public abstract class BaseFragmentActivity extends FragmentActivity {
     private MyProgressDialog progressDialog;
     protected FragmentManager fragmentManager;
-    protected FragmentTransaction fragmentTransaction;
 
     /**
      * 该方法需再次在BaseActivity子类中调用
@@ -37,7 +36,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
         ActivityManagerUtils.getInstance().addActivity(this);
     }
 

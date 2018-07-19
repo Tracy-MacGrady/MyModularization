@@ -1,5 +1,6 @@
 package com.zx.toughen.activity;
 
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -91,20 +92,23 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 titleName = getString(R.string.message);
                 if (mainMessageFragment == null)
                     mainMessageFragment = MainMessageFragment.newInstance();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_layout, mainMessageFragment);
                 fragmentTransaction.commit();
                 break;
             case 1:
                 titleName = getString(R.string.find);
                 if (mainFindFragment == null) mainFindFragment = MainFindFragment.newInstance();
-                fragmentTransaction.replace(R.id.content_layout, mainFindFragment);
-                fragmentTransaction.commit();
+                FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+                fragmentTransaction1.replace(R.id.content_layout, mainFindFragment);
+                fragmentTransaction1.commit();
                 break;
             case 2:
                 titleName = getString(R.string.mine);
                 if (mainMineFragment == null) mainMineFragment = MainMineFragment.newInstance();
-                fragmentTransaction.replace(R.id.content_layout, mainMineFragment);
-                fragmentTransaction.commit();
+                FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
+                fragmentTransaction2.replace(R.id.content_layout, mainMineFragment);
+                fragmentTransaction2.commit();
                 break;
         }
         titleBarView.setTitleViewValue(titleName);

@@ -46,8 +46,8 @@ public class NewsActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     public void initView() {
         initTitleView();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefreshlayout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        swipeRefreshLayout = findViewById(R.id.swiperefreshlayout);
+        recyclerView = findViewById(R.id.recyclerview);
         manager = new LinearLayoutManager(this);
         adapter = new NewsAdapter(this);
         recyclerView.setLayoutManager(manager);
@@ -55,7 +55,7 @@ public class NewsActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     private void initTitleView() {
-        returnHomeView = (ImageView) findViewById(R.id.left_img_view);
+        returnHomeView = findViewById(R.id.left_img_view);
         returnHomeView.setVisibility(View.VISIBLE);
         returnHomeView.setImageResource(R.drawable.selector_return_home);
         returnHomeView.setOnClickListener(this);
