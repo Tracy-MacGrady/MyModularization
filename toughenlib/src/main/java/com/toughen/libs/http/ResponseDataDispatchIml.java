@@ -1,7 +1,12 @@
 package com.toughen.libs.http;
 
-import com.google.gson.Gson;
+import android.os.Handler;
+import android.os.Message;
 
+import com.toughen.libs.libtools.FastJsonUtil;
+import com.toughen.libs.tools.LogUtils;
+
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -14,12 +19,43 @@ import okhttp3.Response;
 public abstract class ResponseDataDispatchIml<T> implements ResponseDataDispatchInterface<T> {
 
     @Override
-    public void parseResponseData(Response response) {
-        T t = null;
-        if (response.message() != null)
-            t = new Gson().fromJson(response.message().toString(), getType());
-        onSuccess(response.headers(), t);
+    public void parseResponseData(Response response) throws IOException {
+        String responseValue = response.body().string();
+        LogUtils.e(responseValue);
+        if (responseValue != null) {
+            BaseHttpResponseEntity entity = FastJsonUtil.JsonStr2Object(responseValue, BaseHttpResponseEntity.class);
+            ToughenLibResponse toughenLibResponse = new ToughenLibResponse();
+            toughenLibResponse.setEntity(entity);
+            toughenLibResponse.setHeaders(response.headers().toMultimap());
+            Message msg = Message.obtain();
+            msg.obj = toughenLibResponse;
+            msg.what = 1000;
+            handler.sendMessage(msg);
+        }
     }
+
+    /**
+     * 将子线程的数据传递到主线程
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1000) {
+                ToughenLibResponse response = (ToughenLibResponse) msg.obj;
+                BaseHttpResponseEntity baseEntity = response.getEntity();
+                switch (baseEntity.getCode()) {
+                    case 1000:
+                        T data = FastJsonUtil.JsonStr2Object(response.getEntity().getData(), getType());
+                        onSuccess(response.getHeaders(), data);
+                        break;
+                    default:
+                        onFailure(baseEntity.getData());
+                        break;
+                }
+            }
+        }
+    };
 
     /**
      * 获取当前的类型

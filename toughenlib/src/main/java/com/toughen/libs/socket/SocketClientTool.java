@@ -1,6 +1,6 @@
 package com.toughen.libs.socket;
 
-import com.google.gson.Gson;
+import com.toughen.libs.libtools.FastJsonUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +22,6 @@ import java.net.UnknownHostException;
  */
 public class SocketClientTool {
     private static Socket socket;
-    private static Gson gson = new Gson();
     private static InetSocketAddress address;// Tcp
     private static boolean is_connected;
     private static DatagramSocket udpSocket;// Udp
@@ -195,7 +194,7 @@ public class SocketClientTool {
                 if (socket.isConnected()) {
                     String printval = obj.toString();
                     if (!obj.equals("r")) {
-                        printval = gson.toJson(obj);
+                        printval = FastJsonUtil.Object2JsonString(obj);
                     }
                     OutputStreamWriter writer = new OutputStreamWriter(
                             socket.getOutputStream(), "UTF-8");
@@ -226,7 +225,7 @@ public class SocketClientTool {
             if (val.equals("r")) {
                 return null;
             }
-            returnObj = gson.fromJson(val, tClass);
+            returnObj = FastJsonUtil.JsonStr2Object(val, tClass);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

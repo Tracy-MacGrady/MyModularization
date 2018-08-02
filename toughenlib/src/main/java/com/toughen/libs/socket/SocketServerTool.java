@@ -1,6 +1,7 @@
 package com.toughen.libs.socket;
 
-import com.google.gson.Gson;
+
+import com.toughen.libs.libtools.FastJsonUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -279,7 +280,7 @@ public class SocketServerTool {
                                     }
                                 }
                                 sendDate("flag=" + value.split("=")[1],
-                                        new Gson().toJson(client_list));
+                                        FastJsonUtil.Object2JsonString(client_list));
                             } else {
                                 sendDate(
                                         value.getClass()

@@ -71,7 +71,6 @@ public class MainMessageUI extends FrameLayout {
         List<MessageEntity> entityList = new ArrayList<>();
         for (int i = 0; i < usernames.size(); i++) {
             MessageEntity entity = new MessageEntity();
-            entity.setUserInfo(new UserInfo(usernames.get(i)));
             entityList.add(entity);
         }
         adapter.setList(entityList);

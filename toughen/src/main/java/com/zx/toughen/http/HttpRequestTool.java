@@ -1,6 +1,7 @@
 package com.zx.toughen.http;
 
-import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
+import com.toughen.libs.http.OkHttpManager;
+import com.toughen.libs.http.ResponseDataDispatchIml;
 
 import java.util.HashMap;
 
@@ -14,11 +15,17 @@ public class HttpRequestTool {
     public static HttpRequestTool getInstance() {
         if (tool == null) {
             synchronized (HttpRequestTool.class) {
-                if (tool == null) {
-                    tool = new HttpRequestTool();
-                }
+                if (tool == null) tool = new HttpRequestTool();
             }
         }
         return tool;
     }
+
+    public void userLogin(String userPhone, String password, ResponseDataDispatchIml<?> dataDispatchIml) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("userphone", userPhone);
+        params.put("password", password);
+        OkHttpManager.getInstance().getRequest(ConstantURL.USER_LOGIN, params, null, dataDispatchIml);
+    }
+
 }

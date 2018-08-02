@@ -6,10 +6,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.toughen.libs.http.ResponseDataDispatchIml;
+import com.toughen.libs.tools.LogUtils;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
+import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
+import com.zx.toughen.http.HttpRequestTool;
+
+import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private View allLayout;
@@ -35,8 +42,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void initView() {
         login_login_view = findViewById(R.id.login_login_view);
         allLayout = findViewById(R.id.activity_login);
-        userPhoneView = (EditText) findViewById(R.id.login_nickname_view);
-        passWordView = (EditText) findViewById(R.id.login_password_view);
+        userPhoneView = findViewById(R.id.login_nickname_view);
+        passWordView = findViewById(R.id.login_password_view);
     }
 
     @Override
@@ -82,6 +89,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void loginMethod() {
+        HttpRequestTool.getInstance().userLogin(userphone, password, new ResponseDataDispatchIml<UserLoginResponceEntity>() {
+            @Override
+            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
+                LogUtils.e(responseData.getUserinfo().getUsername());
+            }
+
+            @Override
+            public void onFailure(String failureMsg) {
+
+            }
+        });
     }
 
 }

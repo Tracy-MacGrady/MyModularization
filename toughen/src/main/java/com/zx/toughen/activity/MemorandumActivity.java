@@ -8,14 +8,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.toughen.libs.libtools.ToughenGson;
-import com.toughen.libs.libtools.gson.ToughenTypeToken;
+import com.toughen.libs.libtools.FastJsonUtil;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.constant.IntentConstant;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,12 +66,13 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
         for (int i = 0; i < 18; i++) {
             list1.add(new MemorandumEntity("title" + i, "time" + System.currentTimeMillis(), "sdddddddddddfff", i % 2 == 0));
         }
-        SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, ToughenGson.toJson(list1), Constant.MEMORANDUM_SP_KEY);
+        SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, FastJsonUtil.Object2JsonString(list1), Constant.MEMORANDUM_SP_KEY);
 
         String val = SPUtils.getInstance().getString(this, Constant.MEMORANDUM_SP_FILE_NAME, Constant.MEMORANDUM_SP_KEY);
-//        if (list != null && list.size() > 0) {
-//            adapter.setList(list);
-//        }
+        List list = FastJsonUtil.JsonStr2List(val, MemorandumEntity.class);
+        if (list != null && list.size() > 0) {
+            adapter.setList(list);
+        }
     }
 
     @Override
