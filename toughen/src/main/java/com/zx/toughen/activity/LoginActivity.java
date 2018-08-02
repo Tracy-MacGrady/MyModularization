@@ -93,6 +93,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 LogUtils.e(responseData.getUserinfo().getUsername());
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
 
             @Override

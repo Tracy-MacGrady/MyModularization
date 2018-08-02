@@ -24,8 +24,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-        titleBarView = (MyTitleBarView) findViewById(R.id.titlebar_view);
-        vCoceView = (TextView) findViewById(R.id.get_vcode_view);
+        titleBarView = findViewById(R.id.titlebar_view);
+        vCoceView = findViewById(R.id.get_vcode_view);
     }
 
     @Override
