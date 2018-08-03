@@ -1,13 +1,6 @@
 package com.qingguo.downloadlib;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-
-import com.qingguo.downloadlib.database.DownloadDBEntity;
 import com.qingguo.downloadlib.database.DownloadDBManager;
 import com.qingguo.downloadlib.listener.DownloadFinishListener;
 import com.qingguo.downloadlib.listener.DownloadStatusListener;

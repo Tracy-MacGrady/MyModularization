@@ -7,3 +7,5 @@
 build
 .idea
 gradle
+test_download/
+toughen/src/main/java/com/zx/toughen/Test.java
