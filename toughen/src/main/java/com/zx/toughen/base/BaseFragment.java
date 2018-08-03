@@ -3,6 +3,7 @@ package com.zx.toughen.base;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.dialog.MyProgressDialog;
 
 /**
@@ -26,6 +27,12 @@ public abstract class BaseFragment extends Fragment {
      * 设置相关控件的监听事件
      */
     public abstract void setListener();
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ToastUtils.destory();
+    }
 
     public void showProgressDialog() {
         if (progressDialog == null) progressDialog = new MyProgressDialog(getContext());

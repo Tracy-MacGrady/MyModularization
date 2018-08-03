@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                     initPermission();
                 else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }
             }
@@ -117,7 +117,7 @@ public class SplashActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         Log.e(SplashActivity.class.getSimpleName(), "permissions==" + permissions);
         Log.e(SplashActivity.class.getSimpleName(), "grantResults==" + grantResults);
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
     }
 }

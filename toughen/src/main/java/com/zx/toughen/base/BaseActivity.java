@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.toughen.libs.tools.ActivityManagerUtils;
+import com.toughen.libs.tools.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zx.toughen.dialog.MyProgressDialog;
 
@@ -40,6 +41,7 @@ public abstract class BaseActivity extends Activity {
         super.onDestroy();
         dissmissProgressDialog();
         progressDialog = null;
+        ToastUtils.destory();
         ActivityManagerUtils.getInstance().removeActivity(this);
     }
 

@@ -39,15 +39,15 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
     @Override
     public void initView() {
         initTitleView();
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
         adapter = new MemorandumAdapter(this);
         listView.setAdapter(adapter);
     }
 
     private void initTitleView() {
-        titleView = (TextView) findViewById(R.id.title_textview);
-        rightView = (TextView) findViewById(R.id.right_textview);
-        returnHomeView = (ImageView) findViewById(R.id.left_img_view);
+        titleView = findViewById(R.id.title_textview);
+        rightView = findViewById(R.id.right_textview);
+        returnHomeView = findViewById(R.id.left_img_view);
         returnHomeView.setImageResource(R.drawable.selector_return_home);
         titleView.setText(getString(R.string.title_memorandum_list));
         rightView.setText("添加");
@@ -69,7 +69,7 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
         SPUtils.getInstance().saveString(this, Constant.MEMORANDUM_SP_FILE_NAME, FastJsonUtil.Object2JsonString(list1), Constant.MEMORANDUM_SP_KEY);
 
         String val = SPUtils.getInstance().getString(this, Constant.MEMORANDUM_SP_FILE_NAME, Constant.MEMORANDUM_SP_KEY);
-        List list = FastJsonUtil.JsonStr2List(val, MemorandumEntity.class);
+        List<MemorandumEntity> list = FastJsonUtil.JsonStr2List(val, MemorandumEntity.class);
         if (list != null && list.size() > 0) {
             adapter.setList(list);
         }

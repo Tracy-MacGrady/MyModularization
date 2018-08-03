@@ -38,12 +38,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.initData(list.get(position));
+//        holder.initData(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        return list == null ? 20 : list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

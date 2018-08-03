@@ -17,7 +17,8 @@ public class FastJsonUtil {
     }
 
     public static <T> List<T> JsonStr2List(String jsonStr, Class<T> tClass) {
-        return JSONObject.parseArray(jsonStr, tClass);
+        List<T> list = JSONObject.parseArray(jsonStr, tClass);
+        return list;
     }
 
     public static <T> String Object2JsonString(T obj) {

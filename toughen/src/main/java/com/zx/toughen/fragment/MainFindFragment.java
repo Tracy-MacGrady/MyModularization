@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.zx.toughen.R;
-import com.zx.toughen.adapter.FindFragmentAdapter;
+import com.zx.toughen.adapter.NewsAdapter;
 import com.zx.toughen.base.BaseFragment;
+
 /**
  * Created by 李健健 on 2017/2/27.
  */
@@ -27,7 +29,7 @@ public class MainFindFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FindFragmentAdapter adapter;
+    private NewsAdapter adapter;
 
     @Nullable
     @Override
@@ -49,7 +51,7 @@ public class MainFindFragment extends BaseFragment {
     public void initView() {
         recyclerView = view.findViewById(R.id.recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout);
-        adapter = new FindFragmentAdapter();
+        adapter = new NewsAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
     }

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.toughen.libs.tools.ActivityManagerUtils;
+import com.toughen.libs.tools.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zx.toughen.dialog.MyProgressDialog;
 
@@ -43,6 +44,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         super.onDestroy();
         dissmissProgressDialog();
         progressDialog = null;
+        ToastUtils.destory();
         ActivityManagerUtils.getInstance().removeActivity(this);
     }
 

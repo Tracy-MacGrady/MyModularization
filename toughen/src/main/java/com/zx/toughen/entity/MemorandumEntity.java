@@ -11,6 +11,9 @@ public class MemorandumEntity implements Serializable {
     private String createTime;
     private String contentValue;
 
+    public MemorandumEntity() {
+    }
+
     public MemorandumEntity(String titleVal, String createTime, String contentValue, boolean b) {
         this.isPassword = b;
         this.titleVal = titleVal;

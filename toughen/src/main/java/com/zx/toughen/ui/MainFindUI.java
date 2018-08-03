@@ -1,22 +1,14 @@
 package com.zx.toughen.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.zx.toughen.R;
-import com.zx.toughen.activity.FindManActivity;
-import com.zx.toughen.activity.HelpActivity;
-import com.zx.toughen.activity.NewsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-import com.zx.toughen.activity.EventsActivity;
-import com.zx.toughen.activity.GetHelpActivity;
 
 
 /**

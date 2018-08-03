@@ -92,14 +92,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HttpRequestTool.getInstance().userLogin(userphone, password, new ResponseDataDispatchIml<UserLoginResponceEntity>() {
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
-                LogUtils.e(responseData.getUserinfo().getUsername());
+                LogUtils.e("====" + headers);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
 
             @Override
             public void onFailure(String failureMsg) {
-
+                ToastUtils.showShort(LoginActivity.this, failureMsg);
             }
         });
     }

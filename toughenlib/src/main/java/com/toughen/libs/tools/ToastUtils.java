@@ -18,29 +18,47 @@ public class ToastUtils {
     }
 
     public static void showShort(Context context, String showValue) {
-        if (shortTast == null) {
-            shortTast = Toast.makeText(context, showValue, Toast.LENGTH_SHORT);
+        if (shortTast != null) {
+            shortTast.cancel();
+            shortTast = null;
         }
-        shortTast.cancel();
+        shortTast = Toast.makeText(context, showValue, Toast.LENGTH_SHORT);
         shortTast.show();
     }
 
     public static void showLong(Context context, String showValue) {
-        if (longTast == null) {
-            longTast = Toast.makeText(context, showValue, Toast.LENGTH_LONG);
+        if (longTast != null) {
+            longTast.cancel();
+            longTast = null;
         }
-        longTast.cancel();
+        longTast = Toast.makeText(context, showValue, Toast.LENGTH_LONG);
         longTast.show();
     }
 
     public static void showUserToast(Context context, View view, int gravity, int xOffset, int yOffset, int showDuration) {
-        if (userToast == null) {
-            userToast = new Toast(context);
+        if (userToast != null) {
+            userToast.cancel();
+            userToast = null;
         }
-        userToast.cancel();
+        userToast = new Toast(context);
         userToast.setView(view);
         userToast.setGravity(gravity, xOffset, yOffset);
         userToast.setDuration(showDuration);
         userToast.show();
+    }
+
+    public static void destory() {
+        if (userToast != null) {
+            userToast.cancel();
+            userToast = null;
+        }
+        if (longTast != null) {
+            longTast.cancel();
+            longTast = null;
+        }
+        if (shortTast != null) {
+            shortTast.cancel();
+            shortTast = null;
+        }
     }
 }

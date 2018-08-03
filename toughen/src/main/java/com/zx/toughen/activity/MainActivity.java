@@ -48,7 +48,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         messageView = findViewById(R.id.message_view);
         findView = findViewById(R.id.find_view);
         mineView = findViewById(R.id.mine_view);
-        clickMessageView();
+        clickFindView();
     }
 
     @Override
@@ -59,8 +59,8 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     }
 
 
-    private void clickMessageView() {
-        onClick(messageView);
+    private void clickFindView() {
+        onClick(findView);
     }
 
     @Override
