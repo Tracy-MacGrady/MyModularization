@@ -20,10 +20,11 @@ import java.util.List;
 import com.zx.toughen.adapter.MemorandumAdapter;
 import com.zx.toughen.constant.Constant;
 import com.zx.toughen.entity.MemorandumEntity;
+import com.zx.toughen.listenerinterface.MyTitleBarViewListenerInterface;
+import com.zx.toughen.view.MyTitleBarView;
 
 public class MemorandumActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private TextView titleView, rightView;
-    private ImageView returnHomeView;
+    private MyTitleBarView titleBarView;
     private ListView listView;
     private MemorandumAdapter adapter;
 
@@ -38,28 +39,33 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
-        initTitleView();
+        titleBarView = findViewById(R.id.titlebar_view);
         listView = findViewById(R.id.listview);
         adapter = new MemorandumAdapter(this);
         listView.setAdapter(adapter);
     }
 
-    private void initTitleView() {
-        titleView = findViewById(R.id.title_textview);
-        rightView = findViewById(R.id.right_textview);
-        returnHomeView = findViewById(R.id.left_img_view);
-        returnHomeView.setImageResource(R.drawable.selector_return_home);
-        titleView.setText(getString(R.string.title_memorandum_list));
-        rightView.setText("添加");
-        rightView.setVisibility(View.VISIBLE);
-        rightView.setOnClickListener(this);
-        returnHomeView.setOnClickListener(this);
-    }
-
     @Override
     public void setListener() {
+        titleBarView.setListener(titleBarViewListener);
         listView.setOnItemClickListener(this);
     }
+    private MyTitleBarViewListenerInterface titleBarViewListener=new MyTitleBarViewListenerInterface() {
+        @Override
+        public void clickLeft() {
+            finish();
+        }
+
+        @Override
+        public void clickTitle() {
+
+        }
+
+        @Override
+        public void clickRight() {
+
+        }
+    };
 
     public void initValue() {
         List<MemorandumEntity> list1 = new ArrayList<>();
@@ -79,7 +85,6 @@ public class MemorandumActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.left_img_view:
-                finish();
                 break;
             case R.id.right_textview:
 

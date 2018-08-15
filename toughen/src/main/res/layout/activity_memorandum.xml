@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,11 @@
     <com.zx.toughen.view.MyTitleBarView
         android:id="@+id/titlebar_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height_titlebar" />
+        android:layout_height="@dimen/view_height_titlebar"
+        android:background="@color/color_f57773"
+        app:left_img_res="@drawable/selector_return_home"
+        app:right_text_val="添加"
+        app:title_name="@string/title_memorandum_list" />
 
     <ListView
         android:id="@+id/listview"

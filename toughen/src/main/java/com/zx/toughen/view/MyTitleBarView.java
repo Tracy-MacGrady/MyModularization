@@ -47,8 +47,7 @@ public class MyTitleBarView extends RelativeLayout implements View.OnClickListen
                 int resId = arrays.getResourceId(R.styleable.MyTitleBarView_left_text_val, 0);
                 if (resId != 0) leftTextVal = context.getString(resId);
             }
-            leftTextView.setText(leftTextVal);
-            leftTextView.setVisibility(VISIBLE);
+            setLeftTextView(leftTextVal);
         }
         if (arrays.getBoolean(R.styleable.MyTitleBarView_show_right_text, false)) {
             String rightTextVal = arrays.getString(R.styleable.MyTitleBarView_right_text_val);
@@ -56,30 +55,26 @@ public class MyTitleBarView extends RelativeLayout implements View.OnClickListen
                 int resId = arrays.getResourceId(R.styleable.MyTitleBarView_right_text_val, 0);
                 if (resId != 0) rightTextVal = context.getString(resId);
             }
-            rightTextView.setText(rightTextVal);
-            rightTextView.setVisibility(VISIBLE);
+            setRightTextView(rightTextVal);
         }
         if (arrays.getBoolean(R.styleable.MyTitleBarView_show_left_img, false)) {
             int resId = arrays.getResourceId(R.styleable.MyTitleBarView_left_img_res, 0);
-            if (resId != 0) leftImageView.setImageResource(resId);
-            leftImageView.setVisibility(VISIBLE);
+            if (resId != 0) setLeftImageView(resId);
         }
         if (arrays.getBoolean(R.styleable.MyTitleBarView_show_right_img, false)) {
             int resId = arrays.getResourceId(R.styleable.MyTitleBarView_right_img_res, 0);
-            if (resId != 0) rightImageView.setImageResource(resId);
-            rightImageView.setVisibility(VISIBLE);
+            if (resId != 0) setRightImageView(resId);
         }
         arrays.recycle();
     }
 
     private void init(Context context) {
-        this.setBackgroundResource(R.color.color_f57773);
         View.inflate(context, R.layout.layout_main_titlebar, this);
-        titleView = (TextView) findViewById(R.id.title_textview);
-        leftTextView = (TextView) findViewById(R.id.left_textview);
-        rightTextView = (TextView) findViewById(R.id.right_textview);
-        leftImageView = (ImageView) findViewById(R.id.left_img_view);
-        rightImageView = (ImageView) findViewById(R.id.right_img_view);
+        titleView = findViewById(R.id.title_textview);
+        leftTextView = findViewById(R.id.left_textview);
+        rightTextView = findViewById(R.id.right_textview);
+        leftImageView = findViewById(R.id.left_img_view);
+        rightImageView = findViewById(R.id.right_img_view);
         titleView.setOnClickListener(this);
         leftTextView.setOnClickListener(this);
         rightTextView.setOnClickListener(this);
@@ -119,18 +114,26 @@ public class MyTitleBarView extends RelativeLayout implements View.OnClickListen
 
     public void setLeftTextView(String value) {
         this.leftTextView.setText(value);
+        this.leftTextView.setVisibility(VISIBLE);
+        this.leftImageView.setVisibility(GONE);
     }
 
     public void setRightTextView(String value) {
         this.rightTextView.setText(value);
+        this.rightTextView.setVisibility(VISIBLE);
+        this.rightImageView.setVisibility(GONE);
     }
 
     public void setLeftImageView(int imgRes) {
         this.leftImageView.setImageResource(imgRes);
+        this.leftImageView.setVisibility(VISIBLE);
+        this.leftTextView.setVisibility(GONE);
     }
 
     public void setRightImageView(int imgRes) {
         this.rightImageView.setImageResource(imgRes);
+        this.rightImageView.setVisibility(VISIBLE);
+        this.rightTextView.setVisibility(GONE);
     }
 
     @Override
