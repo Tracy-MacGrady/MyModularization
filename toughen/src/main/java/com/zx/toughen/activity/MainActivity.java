@@ -2,17 +2,26 @@ package com.zx.toughen.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.toughen.libs.http.ResponseDataDispatchIml;
+import com.toughen.libs.tools.LogUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.base.BaseFragmentActivity;
+import com.zx.toughen.constant.IntentConstant;
+import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
 import com.zx.toughen.fragment.MainFindFragment;
 import com.zx.toughen.fragment.MainMessageFragment;
 import com.zx.toughen.fragment.MainMineFragment;
+import com.zx.toughen.http.HttpRequestTool;
 import com.zx.toughen.view.MyTitleBarView;
+
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
@@ -32,8 +41,32 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initIntentData();
         initView();
         setListener();
+    }
+
+    private void initIntentData() {
+        if (getIntent().getBooleanExtra(IntentConstant.MAIN_ISFROM_SPLASH_KEY, false)) {
+            initUserinfo();
+        }
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void initUserinfo() {
+        HttpRequestTool.getInstance().getUserinfo(new ResponseDataDispatchIml<UserLoginResponceEntity>() {
+            @Override
+            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
+                LogUtils.e("ffffffffffffff");
+            }
+
+            @Override
+            public void onFailure(String failureMsg) {
+
+            }
+        });
     }
 
     @Override

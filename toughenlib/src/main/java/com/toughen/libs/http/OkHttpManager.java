@@ -2,10 +2,15 @@ package com.toughen.libs.http;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -14,6 +19,8 @@ import okhttp3.Request;
  */
 
 public class OkHttpManager {
+    private static final long CONNECT_TIME_OUT = 5;//连接超时限定值
+    private static final long READ_TIME_OUT = 5;//请求超时限定值
     private static volatile OkHttpManager instance;
 
     private OkHttpManager() {
@@ -26,9 +33,25 @@ public class OkHttpManager {
         return instance;
     }
 
+    public void getRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+                .cookieJar(cookieJar)
+                .build();
+        initGetRequest(requestPath, params, headerMap, dispatchListener, client);
+    }
+
     public void getRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient();
-        Headers.Builder builder = new Headers.Builder();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+                .build();
+        initGetRequest(requestPath, params, headerMap, dispatchListener, client);
+    }
+
+    private void initGetRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
+        Headers.Builder headerBuilder = new Headers.Builder();
         if (params != null && params.size() > 0) {
             StringBuffer paramsStr = new StringBuffer();
             Iterator<String> iterator = params.keySet().iterator();
@@ -47,16 +70,32 @@ public class OkHttpManager {
             while (headerIterator.hasNext()) {
                 String key = headerIterator.next();
                 String value = headerMap.get(key);
-                builder.add(key, value);
+                headerBuilder.add(key, value);
             }
         }
-        Request request = new Request.Builder().url(requestPath).headers(builder.build()).get().build();
+        Request request = new Request.Builder().url(requestPath).headers(headerBuilder.build()).get().build();
         Call call = client.newCall(request);
         call.enqueue(new ToughenLibOKHttpCallback(dispatchListener));
     }
 
+    public void postRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+                .cookieJar(cookieJar)
+                .build();
+        initPostRequest(requestPath, params, headerMap, dispatchListener, client);
+    }
+
     public void postRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+                .build();
+        initPostRequest(requestPath, params, headerMap, dispatchListener, client);
+    }
+
+    private void initPostRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
         Headers.Builder builder = new Headers.Builder();
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         if (params != null && params.size() > 0) {

@@ -8,6 +8,10 @@ import android.widget.EditText;
 
 import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.LogUtils;
+import com.zx.toughen.application.MyApplication;
+import com.zx.toughen.constant.IntentConstant;
+import com.zx.toughen.userauth.AuthCookie;
+import com.zx.toughen.userauth.UserAuth;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.ToastUtils;
@@ -93,6 +97,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 LogUtils.e("====" + headers);
+                AuthCookie.getInstance().setCookieList(headers.get("set-cookie"));
+                UserAuth.login(responseData.getUserinfo());
+                MyApplication.getInstance().setUserInfo(responseData.getUserinfo());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }

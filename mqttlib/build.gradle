@@ -28,6 +28,5 @@ dependencies {
     implementation 'com.umeng.analytics:analytics:latest.integration'
     //bugly错误日志统计
     implementation 'com.tencent.bugly:crashreport:2.6.0'
-    implementation 'com.google.code.gson:gson:2.2.4'
-
+    implementation 'com.alibaba:fastjson:1.2.47'
 }

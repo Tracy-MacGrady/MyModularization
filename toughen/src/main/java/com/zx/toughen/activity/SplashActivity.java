@@ -17,6 +17,8 @@ import android.view.animation.BounceInterpolator;
 
 import com.zx.toughen.base.BaseActivity;
 import com.zx.toughen.R;
+import com.zx.toughen.constant.IntentConstant;
+import com.zx.toughen.userauth.UserAuth;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ public class SplashActivity extends BaseActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                     initPermission();
                 else {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -107,17 +109,20 @@ public class SplashActivity extends BaseActivity {
         String tmpList[] = new String[toApplyList.size()];
         if (!toApplyList.isEmpty()) {
             ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), 123);
-        } else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
-        }
+        } else initUserAuthStatus();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         Log.e(SplashActivity.class.getSimpleName(), "permissions==" + permissions);
         Log.e(SplashActivity.class.getSimpleName(), "grantResults==" + grantResults);
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        initUserAuthStatus();
+    }
+
+    private void initUserAuthStatus() {
+        if (UserAuth.authUser())
+            startActivity(new Intent(SplashActivity.this, MainActivity.class).putExtra(IntentConstant.MAIN_ISFROM_SPLASH_KEY, true));
+        else startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         finish();
     }
 }

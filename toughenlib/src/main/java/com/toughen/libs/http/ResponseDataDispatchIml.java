@@ -45,7 +45,7 @@ public abstract class ResponseDataDispatchIml<T> implements ResponseDataDispatch
                 ToughenLibResponse response = (ToughenLibResponse) msg.obj;
                 BaseHttpResponseEntity baseEntity = response.getEntity();
                 switch (baseEntity.getCode()) {
-                    case 1000:
+                    case 10000:
                         T data = FastJsonUtil.JsonStr2Object(response.getEntity().getData(), getType());
                         onSuccess(response.getHeaders(), data);
                         break;

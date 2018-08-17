@@ -10,6 +10,7 @@
         android:id="@+id/titlebar_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_titlebar"
+        android:background="@color/color_main_normal"
         app:left_img_res="@drawable/selector_return_home"
         app:show_left_img="true"
         app:title_name="@string/register" />
