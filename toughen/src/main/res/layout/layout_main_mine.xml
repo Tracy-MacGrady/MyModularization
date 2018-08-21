@@ -17,11 +17,13 @@
         android:paddingRight="@dimen/padding_xl">
 
         <ImageView
+            android:id="@+id/avatar_view"
             android:layout_width="@dimen/view_height_xxl"
             android:layout_height="@dimen/view_height_xxl"
             android:src="@drawable/ic_avatar_default" />
 
         <TextView
+            android:id="@+id/nickname_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_xl"

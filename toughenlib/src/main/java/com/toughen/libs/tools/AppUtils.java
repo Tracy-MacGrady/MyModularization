@@ -89,4 +89,8 @@ public class AppUtils {
         }
         return processName;
     }
+
+    public String getUAString() {
+        return "fffffffffff";
+    }
 }

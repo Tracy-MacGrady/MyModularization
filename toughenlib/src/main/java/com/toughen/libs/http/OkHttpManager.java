@@ -1,5 +1,7 @@
 package com.toughen.libs.http;
 
+import com.toughen.libs.tools.LogUtils;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -73,6 +75,7 @@ public class OkHttpManager {
                 headerBuilder.add(key, value);
             }
         }
+        LogUtils.e("REQUEST_PATH", requestPath);
         Request request = new Request.Builder().url(requestPath).headers(headerBuilder.build()).get().build();
         Call call = client.newCall(request);
         call.enqueue(new ToughenLibOKHttpCallback(dispatchListener));
@@ -114,6 +117,7 @@ public class OkHttpManager {
                 builder.add(key, value);
             }
         }
+        LogUtils.e("REQUEST_PATH", requestPath);
         Request request = new Request.Builder().url(requestPath).headers(builder.build()).post(bodyBuilder.build()).build();
         Call call = client.newCall(request);
         call.enqueue(new ToughenLibOKHttpCallback(dispatchListener));

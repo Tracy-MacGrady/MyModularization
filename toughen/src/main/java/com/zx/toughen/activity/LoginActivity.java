@@ -10,6 +10,7 @@ import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.LogUtils;
 import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.constant.IntentConstant;
+import com.zx.toughen.http.ResponseHasCookieCallBack;
 import com.zx.toughen.userauth.AuthCookie;
 import com.zx.toughen.userauth.UserAuth;
 import com.zx.toughen.base.BaseActivity;
@@ -93,13 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void loginMethod() {
-        HttpRequestTool.getInstance().userLogin(userphone, password, new ResponseDataDispatchIml<UserLoginResponceEntity>() {
+        HttpRequestTool.getInstance().userLogin(userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
+                super.onSuccess(headers, responseData);
                 LogUtils.e("====" + headers);
-                AuthCookie.getInstance().setCookieList(headers.get("set-cookie"));
                 UserAuth.login(responseData.getUserinfo());
-                MyApplication.getInstance().setUserInfo(responseData.getUserinfo());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }

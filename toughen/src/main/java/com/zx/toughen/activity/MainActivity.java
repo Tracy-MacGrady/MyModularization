@@ -11,6 +11,7 @@ import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.LogUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
+import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.base.BaseFragmentActivity;
 import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
@@ -18,6 +19,7 @@ import com.zx.toughen.fragment.MainFindFragment;
 import com.zx.toughen.fragment.MainMessageFragment;
 import com.zx.toughen.fragment.MainMineFragment;
 import com.zx.toughen.http.HttpRequestTool;
+import com.zx.toughen.userauth.UserAuth;
 import com.zx.toughen.view.MyTitleBarView;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         HttpRequestTool.getInstance().getUserinfo(new ResponseDataDispatchIml<UserLoginResponceEntity>() {
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
-                LogUtils.e("ffffffffffffff");
+                UserAuth.update(responseData.getUserinfo());
             }
 
             @Override

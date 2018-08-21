@@ -15,8 +15,14 @@ public class UserAuth {
     private static final String COOKIE_KEY = "COOKIE";
 
     public static void login(UserInfo info) {
+        MyApplication.getInstance().setUserInfo(info);
         SPUtils.getInstance().saveString(MyApplication.getInstance(), SP_FILE_NAME, FastJsonUtil.Object2JsonString(info), USERINFO_KEY);
         SPUtils.getInstance().saveString(MyApplication.getInstance(), SP_FILE_NAME, FastJsonUtil.Object2JsonString(AuthCookie.getInstance().getCookieList()), COOKIE_KEY);
+    }
+
+    public static void update(UserInfo info) {
+        MyApplication.getInstance().setUserInfo(info);
+        SPUtils.getInstance().saveString(MyApplication.getInstance(), SP_FILE_NAME, FastJsonUtil.Object2JsonString(info), USERINFO_KEY);
     }
 
     public static boolean authUser() {
