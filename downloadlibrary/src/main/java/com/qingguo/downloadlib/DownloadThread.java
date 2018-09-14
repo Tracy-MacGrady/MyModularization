@@ -70,18 +70,33 @@ public class DownloadThread extends Thread {
                     byte[] buffer = new byte[10240];
                     int readLen;
                     long lastTime = System.currentTimeMillis();
+                    long progress = 0;
                     while ((readLen = bis.read(buffer)) != -1 && !this.isInterrupted()) {
                         file.write(buffer, 0, readLen);
+                        entity.setDownloadLength(entity.getDownloadLength() + readLen);
                         long timeSpace = System.currentTimeMillis() - lastTime;
                         if (timeSpace > 700) {
+                            long downLoadProgress = entity.getDownloadLength() - progress;
+                            progress = entity.getDownloadLength();
                             lastTime = System.currentTimeMillis();
                             Log.e("time==", "TIME===" + timeSpace);
-                            entity.setDownloadLength(entity.getDownloadLength() + readLen);
                             Message msg = Message.obtain();
                             msg.what = DownloadConstant.DOWNLOAD_PROGRESS;
-                            msg.obj = entity;
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("DOWNLOAD_PROGRESS", downLoadProgress);
+                            msg.setData(bundle);
                             handler.sendMessage(msg);
                         }
+                    }
+                    if (readLen == -1 && !this.isInterrupted() && (entity.getDownloadLength() - progress > 0)) {
+                        Log.e("time==", "");
+                        Message msg = Message.obtain();
+                        msg.what = DownloadConstant.DOWNLOAD_PROGRESS;
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("DOWNLOAD_PROGRESS", entity.getDownloadLength() - progress);
+                        msg.setData(bundle);
+                        msg.obj = entity;
+                        handler.sendMessage(msg);
                     }
                     file.close();
                     bis.close();
@@ -110,7 +125,7 @@ public class DownloadThread extends Thread {
     }
 
     public void stopDownload() {
-        this.interrupt();
+        if (isAlive()) this.interrupt();
     }
 
     public void setHandler(Handler handler) {

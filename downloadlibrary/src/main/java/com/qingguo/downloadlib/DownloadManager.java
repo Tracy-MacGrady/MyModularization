@@ -1,7 +1,10 @@
 package com.qingguo.downloadlib;
 
 import android.content.Context;
+
+import com.qingguo.downloadlib.database.DownloadDBEntity;
 import com.qingguo.downloadlib.database.DownloadDBManager;
+import com.qingguo.downloadlib.entity.DownLoadTaskInfoEntity;
 import com.qingguo.downloadlib.listener.DownloadFinishListener;
 import com.qingguo.downloadlib.listener.DownloadStatusListener;
 
@@ -10,7 +13,7 @@ import java.util.Map;
 
 public class DownloadManager {
     private static volatile DownloadManager instance;
-    private Map<String, DownLoadTask> taskMap = new HashMap();
+    private Map<String, BaseDownLoadTask> taskMap = new HashMap();
     private boolean isRunning = false;
     private DownloadFinishListener downloadFinishListener;
 
@@ -36,6 +39,9 @@ public class DownloadManager {
     }
 
     public void destory() {
+        String key0 = taskMap.keySet().iterator().next();
+        BaseDownLoadTask task = taskMap.get(key0);
+        task.stopTask();
         taskMap.clear();
         isRunning = false;
         DownloadDBManager.getInstance().destory();
@@ -52,7 +58,7 @@ public class DownloadManager {
         if (!isRunning) return;
         if (taskMap.size() > 0) {
             String key0 = taskMap.keySet().iterator().next();
-            DownLoadTask task = taskMap.get(key0);
+            BaseDownLoadTask task = taskMap.get(key0);
             taskMap.remove(key0);
             task.setListener(downloadStatusListener);
             task.startTask();
@@ -62,19 +68,25 @@ public class DownloadManager {
         }
     }
 
-    private DownloadStatusListener downloadStatusListener = new DownloadStatusListener() {
+    private DownloadStatusListener downloadStatusListener = new DownloadStatusListener<DownLoadTaskInfoEntity>() {
         @Override
-        public void downloadFinished() {
+        public void downloadProgress(DownLoadTaskInfoEntity entity) {
+            if (downloadFinishListener != null) downloadFinishListener.downloadProgress(entity);
+        }
+
+        @Override
+        public void downloadFinished(DownLoadTaskInfoEntity entity) {
             continueRun();
         }
 
         @Override
-        public void downloadFileNotExit() {
-            continueRun();
+        public void downloadFileNotExit(DownLoadTaskInfoEntity entity) {
+            if (taskMap.size() > 0) continueRun();
+            else if (downloadFinishListener != null) downloadFinishListener.fileNotExit("");
         }
     };
 
-    public void setDownloadTask(Map<String, DownLoadTask> taskMap1) {
+    public void setDownloadTask(Map<String, BaseDownLoadTask> taskMap1) {
         this.taskMap.putAll(taskMap1);
         if (taskMap.size() > 0 && !isRunning) run();
     }

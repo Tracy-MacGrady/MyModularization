@@ -1,7 +1,9 @@
 package com.qingguo.downloadlib.listener;
 
-public interface DownloadStatusListener {
-    void downloadFinished();
+public interface DownloadStatusListener<T> {
+    void downloadProgress(T entity);
 
-    void downloadFileNotExit();
+    void downloadFinished(T entity);
+
+    void downloadFileNotExit(T entity);
 }

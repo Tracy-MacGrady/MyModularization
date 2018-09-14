@@ -1,6 +1,11 @@
 package com.qingguo.downloadlib.database;
 
-public class DownloadDBEntity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.qingguo.downloadlib.entity.DownLoadTaskInfoEntity;
+
+public class DownloadDBEntity implements Parcelable {
     private int id;
     private String fileSaveName;//文件本地存储名称
     private String fileSavePath;//文件本地存储地址
@@ -10,6 +15,33 @@ public class DownloadDBEntity {
     private long endLocation;//单个线程下载文件的结束位置
     private long startLocation;//单个线程下载文件的开始位置
     private long fileLength;//文件总长度
+
+    public DownloadDBEntity() {
+    }
+
+    protected DownloadDBEntity(Parcel in) {
+        id = in.readInt();
+        fileSaveName = in.readString();
+        fileSavePath = in.readString();
+        downloadPath = in.readString();
+        threadID = in.readInt();
+        downloadLength = in.readLong();
+        endLocation = in.readLong();
+        startLocation = in.readLong();
+        fileLength = in.readLong();
+    }
+
+    public static final Creator<DownloadDBEntity> CREATOR = new Creator<DownloadDBEntity>() {
+        @Override
+        public DownloadDBEntity createFromParcel(Parcel in) {
+            return new DownloadDBEntity(in);
+        }
+
+        @Override
+        public DownloadDBEntity[] newArray(int size) {
+            return new DownloadDBEntity[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -84,7 +116,31 @@ public class DownloadDBEntity {
     }
 
     public boolean isDownloadFinished() {
-        return downloadLength > 0 && downloadLength >= fileLength;
+        return downloadLength > 0 && downloadLength >= (endLocation - startLocation);
     }
 
+    public void setFileInfo(DownLoadTaskInfoEntity taskEntity) {
+        setDownloadPath(taskEntity.getDownloadPath());
+        setFileSavePath(taskEntity.getFileSavePath());
+        setFileSaveName(taskEntity.getSaveName());
+        setFileLength(taskEntity.getFileLength());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(fileSaveName);
+        dest.writeString(fileSavePath);
+        dest.writeString(downloadPath);
+        dest.writeInt(threadID);
+        dest.writeLong(downloadLength);
+        dest.writeLong(endLocation);
+        dest.writeLong(startLocation);
+        dest.writeLong(fileLength);
+    }
 }
