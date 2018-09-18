@@ -2,6 +2,7 @@ package com.zx.toughen.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -64,8 +65,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_login_view:
-                if (checkEdittextValue())
-                    loginMethod();
+                if (checkEdittextValue()) loginMethod();
                 break;
             case R.id.login_forget_view:
                 startActivity(new Intent(this, RegisterActivity.class));
@@ -94,10 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void loginMethod() {
-        HttpRequestTool.getInstance().userLogin(userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
+        showProgressDialog();
+        HttpRequestTool.getInstance().userLogin(this, userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 super.onSuccess(headers, responseData);
+                dissmissProgressDialog();
                 LogUtils.e("====" + headers);
                 UserAuth.login(responseData.getUserinfo());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -106,6 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onFailure(String failureMsg) {
+                dissmissProgressDialog();
                 ToastUtils.showShort(LoginActivity.this, failureMsg);
             }
         });

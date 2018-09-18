@@ -17,7 +17,7 @@
         android:layout_height="@dimen/image_avatar_height_l"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_avatar_default" />
+        android:src="@drawable/icon_avatar_default" />
 
     <View
         android:id="@+id/tip_view"

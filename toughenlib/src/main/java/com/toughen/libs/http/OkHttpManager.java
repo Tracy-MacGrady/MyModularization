@@ -1,6 +1,9 @@
 package com.toughen.libs.http;
 
+import android.content.Context;
+
 import com.toughen.libs.tools.LogUtils;
+import com.toughen.libs.tools.NetworkUtils;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,24 +38,21 @@ public class OkHttpManager {
         return instance;
     }
 
-    public void getRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .cookieJar(cookieJar)
-                .build();
-        initGetRequest(requestPath, params, headerMap, dispatchListener, client);
+    public void getRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS).cookieJar(cookieJar).build();
+        initGetRequest(context, requestPath, params, headerMap, dispatchListener, client);
     }
 
-    public void getRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .build();
-        initGetRequest(requestPath, params, headerMap, dispatchListener, client);
+    public void getRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS).build();
+        initGetRequest(context, requestPath, params, headerMap, dispatchListener, client);
     }
 
-    private void initGetRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
+    private void initGetRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
+        if (!NetworkUtils.getInstance().checkNet(context)) {
+            if (dispatchListener != null) dispatchListener.onFailure("请检查您的网络！");
+            return;
+        }
         Headers.Builder headerBuilder = new Headers.Builder();
         if (params != null && params.size() > 0) {
             StringBuffer paramsStr = new StringBuffer();
@@ -81,24 +81,21 @@ public class OkHttpManager {
         call.enqueue(new ToughenLibOKHttpCallback(dispatchListener));
     }
 
-    public void postRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .cookieJar(cookieJar)
-                .build();
-        initPostRequest(requestPath, params, headerMap, dispatchListener, client);
+    public void postRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, CookieJar cookieJar, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS).cookieJar(cookieJar).build();
+        initPostRequest(context, requestPath, params, headerMap, dispatchListener, client);
     }
 
-    public void postRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .build();
-        initPostRequest(requestPath, params, headerMap, dispatchListener, client);
+    public void postRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener) {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS).build();
+        initPostRequest(context, requestPath, params, headerMap, dispatchListener, client);
     }
 
-    private void initPostRequest(String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
+    private void initPostRequest(Context context, String requestPath, HashMap<String, String> params, HashMap<String, String> headerMap, ResponseDataDispatchInterface dispatchListener, OkHttpClient client) {
+        if (!NetworkUtils.getInstance().checkNet(context)) {
+            if (dispatchListener != null) dispatchListener.onFailure("请检查您的网络！");
+            return;
+        }
         Headers.Builder builder = new Headers.Builder();
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         if (params != null && params.size() > 0) {

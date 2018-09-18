@@ -53,8 +53,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    initPermission();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) initPermission();
                 else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
@@ -93,12 +92,7 @@ public class SplashActivity extends BaseActivity {
      * android 6.0 以上需要动态申请权限
      */
     private void initPermission() {
-        String permissions[] = {Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.INTERNET,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
+        String permissions[] = {Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         ArrayList<String> toApplyList = new ArrayList<String>();
         for (String perm : permissions) {
             if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, perm)) {

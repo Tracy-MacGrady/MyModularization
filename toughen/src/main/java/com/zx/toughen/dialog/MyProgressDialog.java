@@ -34,7 +34,7 @@ public class MyProgressDialog extends Dialog {
     @Override
     public void setContentView(int layoutResID) {
         View view = View.inflate(getContext(), layoutResID, null);
-        tipContentView = (TextView) view.findViewById(R.id.tip_content_view);
+        tipContentView = view.findViewById(R.id.tip_content_view);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         float height = DensityUtils.getInstance().getScreenHeightPX(getContext());

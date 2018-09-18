@@ -16,7 +16,7 @@
             android:layout_height="@dimen/view_height_xxl"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_avatar_default" />
+            android:src="@drawable/icon_avatar_default" />
 
         <View
             android:id="@+id/tip_view"
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_news_img_height"
         android:scaleType="centerCrop"
-        android:src="@drawable/morning_beijing" />
+        android:src="@drawable/img_morning_beijing" />
 
     <RelativeLayout
         android:layout_width="match_parent"

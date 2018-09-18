@@ -12,7 +12,7 @@
     </style>
 
     <style name="AppTheme.SplashTheme" parent="android:Theme.Translucent.NoTitleBar">
-        <item name="android:windowBackground">@drawable/morning_beijing</item>
+        <item name="android:windowBackground">@drawable/img_morning_beijing</item>
     </style>
 
     <style name="Dialog.is_transparent" parent="Dialog">

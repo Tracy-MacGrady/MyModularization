@@ -17,20 +17,27 @@ public class NetworkUtils {
     }
 
     public static NetworkUtils getInstance() {
+        if (instance == null) {
+            synchronized (NetworkUtils.class) {
+                if (instance == null) instance = new NetworkUtils();
+            }
+        }
         return instance;
     }
 
     public boolean checkNet(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-        if (info.isConnected()) return true;
+        if (connectivityManager != null) {
+            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+            if (info != null && info.isConnected()) return true;
+        }
         return false;
     }
 
     public String getNetType(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (!networkInfo.isConnected()) {
+        if (networkInfo == null || !networkInfo.isConnected()) {
             return "没有网络";
         }
         if (ConnectivityManager.TYPE_MOBILE == networkInfo.getType()) {

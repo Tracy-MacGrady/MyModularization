@@ -8,8 +8,8 @@ android {
         applicationId "com.zx.toughen"
         minSdkVersion MIN_SDK_VERSION as int
         targetSdkVersion TARGET_SDK_VERSION as int
-        versionCode 1
-        versionName "1.0"
+        versionCode APP_VERSION_CODE
+        versionName APP_VERSION_NAME as String
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -31,9 +31,8 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //友盟统计
     implementation 'com.umeng.analytics:analytics:latest.integration'
+    implementation "com.android.support:design:${LIB_SDK_VERSION}"
     //bugly错误日志统计
     implementation 'com.tencent.bugly:crashreport:2.6.0'
-
     implementation project(':toughenlib')
-
 }

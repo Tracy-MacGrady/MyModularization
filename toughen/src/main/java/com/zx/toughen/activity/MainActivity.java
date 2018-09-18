@@ -58,7 +58,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
      * 获取用户信息
      */
     private void initUserinfo() {
-        HttpRequestTool.getInstance().getUserinfo(new ResponseDataDispatchIml<UserLoginResponceEntity>() {
+        HttpRequestTool.getInstance().getUserinfo(this, new ResponseDataDispatchIml<UserLoginResponceEntity>() {
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 UserAuth.update(responseData.getUserinfo());

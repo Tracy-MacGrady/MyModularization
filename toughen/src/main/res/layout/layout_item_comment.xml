@@ -20,7 +20,7 @@
         android:layout_height="@dimen/view_height_xxl"
         android:layout_below="@id/space_view"
         android:layout_marginRight="@dimen/margin_xl"
-        android:src="@drawable/ic_avatar_default" />
+        android:src="@drawable/icon_avatar_default" />
 
     <TextView
         android:id="@+id/comment_nickname_view"

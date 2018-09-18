@@ -32,7 +32,7 @@ public class MainFindUI extends FrameLayout implements View.OnClickListener {
         int i = 0;
         while (i < 5) {
             ImageView imageView = new ImageView(getContext());
-            imageView.setImageResource(R.drawable.morning_beijing);
+            imageView.setImageResource(R.drawable.img_morning_beijing);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             list.add(imageView);
             i++;

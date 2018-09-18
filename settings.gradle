@@ -1,2 +1,3 @@
 include ':toughenlib', ':toughen', ':mqttlib'
 include ':downloadlibrary'
+include ':test_download'

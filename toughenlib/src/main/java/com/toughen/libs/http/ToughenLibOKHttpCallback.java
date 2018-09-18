@@ -15,10 +15,11 @@ public class ToughenLibOKHttpCallback implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
+        if (dispatchInterface != null) dispatchInterface.onFailure(e.getMessage());
     }
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-      if (dispatchInterface!=null)dispatchInterface.parseResponseData(response);
+        if (dispatchInterface != null) dispatchInterface.parseResponseData(response);
     }
 }

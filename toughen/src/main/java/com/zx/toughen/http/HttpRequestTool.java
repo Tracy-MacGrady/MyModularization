@@ -1,10 +1,13 @@
 package com.zx.toughen.http;
 
+import android.content.Context;
+
 import com.toughen.libs.http.OkHttpCookieJar;
 import com.toughen.libs.http.OkHttpManager;
 import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.libtools.FastJsonUtil;
 import com.toughen.libs.tools.AppUtils;
+import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.userauth.AuthCookie;
 
 import java.util.HashMap;
@@ -47,19 +50,19 @@ public class HttpRequestTool {
     /**
      * 用户登录接口
      */
-    public void userLogin(String userPhone, String password, ResponseDataDispatchIml<?> dataDispatchIml) {
+    public void userLogin(Context context, String userPhone, String password, ResponseDataDispatchIml<?> dataDispatchIml) {
         HashMap<String, String> params = new HashMap<>();
         params.put("userphone", userPhone);
         params.put("password", password);
-        OkHttpManager.getInstance().getRequest(ConstantURL.USER_LOGIN, params, initHeader(false), dataDispatchIml);
+        OkHttpManager.getInstance().getRequest(context, ConstantURL.USER_LOGIN, params, initHeader(false), dataDispatchIml);
     }
 
     /**
      * 获取用户信息
      */
-    public void getUserinfo(ResponseDataDispatchIml<?> dataDispatchIml) {
+    public void getUserinfo(Context context, ResponseDataDispatchIml<?> dataDispatchIml) {
         HashMap<String, String> headers = initHeader(true);
-        OkHttpManager.getInstance().getRequest(ConstantURL.USER_GET_USERINFO, null, headers, dataDispatchIml);
+        OkHttpManager.getInstance().getRequest(context, ConstantURL.USER_GET_USERINFO, null, headers, dataDispatchIml);
     }
 
 
