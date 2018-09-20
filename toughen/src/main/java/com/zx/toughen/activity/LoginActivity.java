@@ -2,17 +2,12 @@ package com.zx.toughen.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.LogUtils;
-import com.zx.toughen.application.MyApplication;
-import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.http.ResponseHasCookieCallBack;
-import com.zx.toughen.userauth.AuthCookie;
 import com.zx.toughen.userauth.UserAuth;
 import com.zx.toughen.base.BaseActivity;
 import com.toughen.libs.tools.AppUtils;
