@@ -99,4 +99,14 @@ public class SPUtils {
     private SharedPreferences getSharedPreferences(Context context, String spFileName) {
         return context.getSharedPreferences(spFileName, Context.MODE_PRIVATE);
     }
+
+    public boolean removeData(Context context, String mySPFileName, String keyValue) {
+        SharedPreferences.Editor editor = getSPEditor(context, TextUtils.isEmpty(mySPFileName) ? spFileName : mySPFileName);
+        editor.remove(keyValue);
+        return editor.commit();
+    }
+
+    public boolean removeData(Context context, String keyValue) {
+        return removeData(context, "", keyValue);
+    }
 }

@@ -15,7 +15,7 @@ public class ToughenLibOKHttpCallback implements Callback {
 
     @Override
     public void onFailure(Call call, IOException e) {
-        if (dispatchInterface != null) dispatchInterface.onFailure(e.getMessage());
+        if (dispatchInterface != null) dispatchInterface.onRequestFailure(e.getMessage());
     }
 
     @Override

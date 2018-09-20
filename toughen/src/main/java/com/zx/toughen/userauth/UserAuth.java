@@ -3,6 +3,7 @@ package com.zx.toughen.userauth;
 import android.text.TextUtils;
 
 import com.toughen.libs.libtools.FastJsonUtil;
+import com.toughen.libs.tools.ActivityManagerUtils;
 import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.entity.UserInfo;
@@ -18,6 +19,13 @@ public class UserAuth {
         MyApplication.getInstance().setUserInfo(info);
         SPUtils.getInstance().saveString(MyApplication.getInstance(), SP_FILE_NAME, FastJsonUtil.Object2JsonString(info), USERINFO_KEY);
         SPUtils.getInstance().saveString(MyApplication.getInstance(), SP_FILE_NAME, FastJsonUtil.Object2JsonString(AuthCookie.getInstance().getCookieList()), COOKIE_KEY);
+    }
+
+    public static void logout() {
+        MyApplication.getInstance().setUserInfo(null);
+        SPUtils.getInstance().removeData(MyApplication.getInstance(), SP_FILE_NAME, USERINFO_KEY);
+        SPUtils.getInstance().removeData(MyApplication.getInstance(), SP_FILE_NAME, COOKIE_KEY);
+        ActivityManagerUtils.getInstance().removeAllActivity();
     }
 
     public static void update(UserInfo info) {

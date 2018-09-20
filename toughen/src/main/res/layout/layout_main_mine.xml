@@ -90,16 +90,16 @@
         android:textSize="@dimen/text_size_44px" />
 
     <TextView
-        android:id="@+id/setting_view"
+        android:id="@+id/logout_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_xxxl"
-        android:layout_marginTop="@dimen/margin_xl"
+        android:layout_marginTop="@dimen/margin_xxl"
         android:background="@drawable/selector_item_click_bg_color"
         android:drawableRight="@drawable/icon_arrow_right"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingLeft="@dimen/padding_xl"
         android:paddingRight="@dimen/padding_xl"
-        android:text="@string/setting"
+        android:text="@string/logout"
         android:textColor="@color/color_text"
         android:textSize="@dimen/text_size_44px" />
 </LinearLayout>

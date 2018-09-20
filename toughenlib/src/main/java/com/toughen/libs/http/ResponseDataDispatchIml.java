@@ -17,6 +17,13 @@ import okhttp3.Response;
  */
 
 public abstract class ResponseDataDispatchIml<T> implements ResponseDataDispatchInterface<T> {
+    @Override
+    public void onRequestFailure(String failureMsg) {
+        Message msg = Message.obtain();
+        msg.obj = failureMsg;
+        msg.what = 2000;
+        handler.sendMessage(msg);
+    }
 
     @Override
     public void parseResponseData(Response response) throws IOException {
@@ -41,18 +48,24 @@ public abstract class ResponseDataDispatchIml<T> implements ResponseDataDispatch
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == 1000) {
-                ToughenLibResponse response = (ToughenLibResponse) msg.obj;
-                BaseHttpResponseEntity baseEntity = response.getEntity();
-                switch (baseEntity.getCode()) {
-                    case 10000:
-                        T data = FastJsonUtil.JsonStr2Object(response.getEntity().getData(), getType());
-                        onSuccess(response.getHeaders(), data);
-                        break;
-                    default:
-                        onFailure(baseEntity.getData());
-                        break;
-                }
+            switch (msg.what) {
+                case 1000:
+                    ToughenLibResponse response = (ToughenLibResponse) msg.obj;
+                    BaseHttpResponseEntity baseEntity = response.getEntity();
+                    switch (baseEntity.getCode()) {
+                        case 10000:
+                            T data = FastJsonUtil.JsonStr2Object(response.getEntity().getData(), getType());
+                            onSuccess(response.getHeaders(), data);
+                            break;
+                        default:
+                            onFailure(baseEntity.getData());
+                            break;
+                    }
+                    break;
+                case 2000:
+                    String failureMsg = (String) msg.obj;
+                    onFailure(failureMsg);
+                    break;
             }
         }
     };

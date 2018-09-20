@@ -23,7 +23,6 @@ public class MainMineUI extends FrameLayout implements View.OnClickListener {
         findViewById(R.id.my_follow_view).setOnClickListener(this);
         findViewById(R.id.memorandum_view).setOnClickListener(this);
         findViewById(R.id.feedback_view).setOnClickListener(this);
-        findViewById(R.id.setting_view).setOnClickListener(this);
     }
 
     @Override
@@ -42,9 +41,6 @@ public class MainMineUI extends FrameLayout implements View.OnClickListener {
                 getContext().startActivity(new Intent(getContext(), MemorandumActivity.class));
                 break;
             case R.id.feedback_view:
-
-                break;
-            case R.id.setting_view:
 
                 break;
         }

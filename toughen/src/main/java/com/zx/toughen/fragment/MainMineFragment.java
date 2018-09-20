@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.R;
+import com.zx.toughen.activity.LoginActivity;
 import com.zx.toughen.activity.MemorandumActivity;
 import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.base.BaseFragment;
+import com.zx.toughen.userauth.UserAuth;
 
 /**
  * Created by 李健健 on 2017/2/27.
@@ -62,7 +65,7 @@ public class MainMineFragment extends BaseFragment implements View.OnClickListen
         view.findViewById(R.id.my_follow_view).setOnClickListener(this);
         view.findViewById(R.id.memorandum_view).setOnClickListener(this);
         view.findViewById(R.id.feedback_view).setOnClickListener(this);
-        view.findViewById(R.id.setting_view).setOnClickListener(this);
+        view.findViewById(R.id.logout_view).setOnClickListener(this);
     }
 
     @Override
@@ -83,8 +86,9 @@ public class MainMineFragment extends BaseFragment implements View.OnClickListen
             case R.id.feedback_view:
 
                 break;
-            case R.id.setting_view:
-
+            case R.id.logout_view:
+                UserAuth.logout();
+                startActivity(new Intent(this.getContext(), LoginActivity.class));
                 break;
         }
     }

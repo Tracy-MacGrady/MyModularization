@@ -18,4 +18,6 @@ public interface ResponseDataDispatchInterface<T> {
     void onFailure(String failureMsg);
 
     void parseResponseData(Response response) throws IOException;
+
+    void onRequestFailure(String failureMsg);
 }
