@@ -2,6 +2,7 @@ package com.zx.toughen.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -45,7 +46,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         allLayout = findViewById(R.id.activity_login);
         userPhoneView = findViewById(R.id.login_nickname_view);
         passWordView = findViewById(R.id.login_password_view);
+        userPhoneView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
+        passWordView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
     }
+
+    private View.OnFocusChangeListener edittextViewFoucusChangelistener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            switch (v.getId()) {
+                case R.id.login_nickname_view:
+                    ((TextInputLayout) findViewById(R.id.login_nickname_layout)).setHint(hasFocus || !TextUtils.isEmpty(userPhoneView.getText()) ? "手机号" : getString(R.string.login_phone_hint));
+                    break;
+                case R.id.login_password_view:
+                    ((TextInputLayout) findViewById(R.id.login_password_layout)).setHint(hasFocus || !TextUtils.isEmpty(passWordView.getText()) ? "密码" : getString(R.string.login_password_hint));
+                    break;
+            }
+        }
+    };
 
     @Override
     public void setListener() {

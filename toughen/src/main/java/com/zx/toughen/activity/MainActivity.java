@@ -27,8 +27,6 @@ import java.util.Map;
 
 
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
-    //View
-    private MyTitleBarView titleBarView;
     private FrameLayout contentLayout;
     private LinearLayout messageView, findView, mineView;
     private MainMessageFragment mainMessageFragment;
@@ -78,7 +76,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
 
     @Override
     public void initView() {
-        titleBarView = findViewById(R.id.titlebar_view);
         contentLayout = findViewById(R.id.content_layout);
         messageView = findViewById(R.id.message_view);
         findView = findViewById(R.id.find_view);
@@ -146,7 +143,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
                 fragmentTransaction2.commit();
                 break;
         }
-        titleBarView.setTitleViewValue(titleName);
     }
 
     /**

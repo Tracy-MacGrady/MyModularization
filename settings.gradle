@@ -1,3 +1,2 @@
-include ':toughenlib', ':toughen', ':mqttlib'
+include ':toughenlib', ':toughen', ':mqttlib', ':httplib', ':apk_update_lib', ':testupdateapk', ':testmaterialdesign'
 include ':downloadlibrary'
-include ':test_download'

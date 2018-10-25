@@ -3,7 +3,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="registeruser">注册新用户</string>
-    <string name="login_nickname_hint">请输入您的手机号</string>
+    <string name="login_phone_hint">请输入您的手机号</string>
     <string name="login_password_hint">请输入您的密码</string>
     <string name="forget_pass">忘记密码</string>
     <string name="find">发现</string>
@@ -51,4 +51,6 @@
     <string name="loading_data_tip_value">数据加载中...</string>
     <string name="voice_value">开启语音识别</string>
     <string name="logout">退出登录</string>
+    <string name="username_value">用户名</string>
+    <string name="user_login_value">账户登录</string>
 </resources>

@@ -52,4 +52,23 @@
     <style name="Animation.LoginActivity_IN" parent="AppTheme">
         <item name="android:activityOpenEnterAnimation">@anim/anim_activity_in_loginactivity</item>
     </style>
+
+    <style name="Login_EditTextSstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/view_height_xxl</item>
+        <item name="android:textSize">@dimen/text_size_40px</item>
+        <item name="android:background">@drawable/selector_login_edittext_bg</item>
+        <item name="android:textColorHint">@color/color_text_hint</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Login_EditTextSstyle_Hint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:textSize">@dimen/text_size_36px</item>
+        <item name="android:textColor">@color/color_text_hint</item>
+        <item name="android:maxLines">1</item>
+    </style>
 </resources>

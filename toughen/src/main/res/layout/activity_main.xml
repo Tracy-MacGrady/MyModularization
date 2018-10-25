@@ -5,27 +5,25 @@
     android:layout_height="match_parent"
     android:splitMotionEvents="false">
 
-    <com.zx.toughen.view.MyTitleBarView
-        android:id="@+id/titlebar_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height_titlebar"
-        android:background="@color/color_main_normal" />
-
-    <include
-        android:id="@+id/bottom_layout"
-        layout="@layout/layout_main_bottom" />
-
-    <View
-        android:id="@+id/space_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height_line"
-        android:layout_above="@id/bottom_layout"
-        android:background="@color/color_gray" />
-
-    <FrameLayout
-        android:id="@+id/content_layout"
+    <!--<com.zx.toughen.view.MyTitleBarView-->
+    <!--android:id="@+id/titlebar_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/view_height_titlebar"-->
+    <!--android:background="@color/color_main_normal" />-->
+    <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/space_view"
-        android:layout_below="@+id/titlebar_view" />
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/space_view"
+            android:layout_below="@+id/titlebar_view" ></FrameLayout>
+
+        <android.support.design.widget.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
