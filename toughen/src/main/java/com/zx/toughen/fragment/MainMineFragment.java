@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,15 @@ import com.zx.toughen.activity.LoginActivity;
 import com.zx.toughen.activity.MemorandumActivity;
 import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.base.BaseFragment;
+import com.zx.toughen.entity.UserInfo;
 import com.zx.toughen.userauth.UserAuth;
 
 /**
  * Created by 李健健 on 2017/2/27.
  */
 public class MainMineFragment extends BaseFragment implements View.OnClickListener {
-    private TextView nickNameView;
     private ImageView avatarView;
+    private UserInfo userInfo;
 
     public static MainMineFragment newInstance() {
 
@@ -38,23 +40,26 @@ public class MainMineFragment extends BaseFragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) view = inflater.inflate(R.layout.layout_main_mine, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.layout_main_mine, container, false);
+            Log.e("aaa", "this is onCreateView in if");
+        }
+        Log.e("aaa", "this is onCreateView");
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.e("ddd", "this is onViewCreated");
         initData();
     }
 
     private void initData() {
-        nickNameView.setText(MyApplication.getInstance().getUserInfo().getUsername());
     }
 
     @Override
     public void initView() {
-        nickNameView = view.findViewById(R.id.nickname_view);
         avatarView = view.findViewById(R.id.avatar_view);
     }
 

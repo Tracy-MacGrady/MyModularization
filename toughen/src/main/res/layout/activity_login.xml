@@ -43,6 +43,7 @@
             android:maxLength="11" />
     </android.support.design.widget.TextInputLayout>
 
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/login_password_layout"
         android:layout_width="0dp"
@@ -64,6 +65,15 @@
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
+    <ImageView
+        android:id="@+id/show_passwordview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/view_height_xxl"
+        android:paddingLeft="@dimen/padding_xl"
+        android:paddingRight="@dimen/padding_xl"
+        android:src="@drawable/selector_login_password_visibility_src"
+        app:layout_constraintBottom_toBottomOf="@id/login_password_layout"
+        app:layout_constraintRight_toRightOf="@id/login_password_layout" />
 
     <Button
         android:id="@+id/login_login_view"

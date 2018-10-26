@@ -2,25 +2,21 @@ package com.zx.toughen.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.toughen.libs.http.ResponseDataDispatchIml;
-import com.toughen.libs.tools.LogUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
-import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.base.BaseFragmentActivity;
 import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
 import com.zx.toughen.fragment.MainFindFragment;
-import com.zx.toughen.fragment.MainMessageFragment;
+import com.zx.toughen.fragment.MainFriendFragment;
 import com.zx.toughen.fragment.MainMineFragment;
 import com.zx.toughen.http.HttpRequestTool;
 import com.zx.toughen.userauth.UserAuth;
-import com.zx.toughen.view.MyTitleBarView;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +25,7 @@ import java.util.Map;
 public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
     private FrameLayout contentLayout;
     private LinearLayout messageView, findView, mineView;
-    private MainMessageFragment mainMessageFragment;
+    private MainFriendFragment mainFriendFragment;
     private MainFindFragment mainFindFragment;
     private MainMineFragment mainMineFragment;
 
@@ -122,10 +118,10 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
         switch (caseNum) {
             case 0:
                 titleName = getString(R.string.message);
-                if (mainMessageFragment == null)
-                    mainMessageFragment = MainMessageFragment.newInstance();
+                if (mainFriendFragment == null)
+                    mainFriendFragment = MainFriendFragment.newInstance();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_layout, mainMessageFragment);
+                fragmentTransaction.replace(R.id.content_layout, mainFriendFragment);
                 fragmentTransaction.commit();
                 break;
             case 1:

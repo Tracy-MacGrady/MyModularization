@@ -3,9 +3,11 @@ package com.zx.toughen.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.toughen.libs.tools.LogUtils;
 import com.zx.toughen.http.ResponseHasCookieCallBack;
@@ -24,6 +26,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private View allLayout;
     private View login_login_view;
     private EditText userPhoneView, passWordView;
+    private ImageView showPasswordView;
     //edittext text value
     private String userphone, password;
 
@@ -46,8 +49,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         allLayout = findViewById(R.id.activity_login);
         userPhoneView = findViewById(R.id.login_nickname_view);
         passWordView = findViewById(R.id.login_password_view);
-        userPhoneView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
-        passWordView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
+        showPasswordView = findViewById(R.id.show_passwordview);
+
     }
 
     private View.OnFocusChangeListener edittextViewFoucusChangelistener = new View.OnFocusChangeListener() {
@@ -68,6 +71,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void setListener() {
         findViewById(R.id.activity_login).setOnClickListener(this);
         login_login_view.setOnClickListener(this);
+        userPhoneView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
+        passWordView.setOnFocusChangeListener(edittextViewFoucusChangelistener);
         findViewById(R.id.login_forget_view).setOnClickListener(this);
         findViewById(R.id.login_register_view).setOnClickListener(this);
     }
@@ -84,6 +89,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_register_view:
                 startActivity(new Intent(this, RegisterActivity.class));
+                break;
+            case R.id.show_passwordview:
+                if (showPasswordView.isSelected()) {
+                    passWordView.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    passWordView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                showPasswordView.setSelected(!showPasswordView.isSelected());
+
                 break;
             case R.id.activity_login:
                 AppUtils.getInstance().hideKeyboard(this);
@@ -106,24 +120,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void loginMethod() {
-        showProgressDialog();
-        HttpRequestTool.getInstance().userLogin(this, userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
-            @Override
-            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
-                super.onSuccess(headers, responseData);
-                dissmissProgressDialog();
-                LogUtils.e("====" + headers);
-                UserAuth.login(responseData.getUserinfo());
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onFailure(String failureMsg) {
-                dissmissProgressDialog();
-                ToastUtils.showShort(LoginActivity.this, failureMsg);
-            }
-        });
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+//        showProgressDialog();
+//        HttpRequestTool.getInstance().userLogin(this, userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
+//            @Override
+//            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
+//                super.onSuccess(headers, responseData);
+//                dissmissProgressDialog();
+//                LogUtils.e("====" + headers);
+//                UserAuth.login(responseData.getUserinfo());
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                finish();
+//            }
+//
+//            @Override
+//            public void onFailure(String failureMsg) {
+//                dissmissProgressDialog();
+//                ToastUtils.showShort(LoginActivity.this, failureMsg);
+//            }
+//        });
     }
 
 }

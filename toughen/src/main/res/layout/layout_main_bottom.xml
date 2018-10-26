@@ -4,6 +4,7 @@
     android:layout_height="@dimen/view_height_xxxl"
     android:layout_alignParentBottom="true"
     android:background="@color/color_white"
+    android:elevation="@dimen/margin_l"
     android:orientation="horizontal">
 
     <LinearLayout

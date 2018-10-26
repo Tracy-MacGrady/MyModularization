@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/color_white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -27,37 +28,55 @@
         android:textColor="@color/color_main_normal"
         android:textSize="@dimen/text_size_40px" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_height_xxl"
         android:layout_marginTop="@dimen/margin_l"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/padding_l"
-        android:paddingLeft="@dimen/padding_l"
-        android:paddingRight="@dimen/padding_l">
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/space_horizontal_lineview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_height_line"
+            android:background="@color/color_093d5a"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/space_vertical_lineview"
+            android:layout_width="@dimen/view_height_line"
+            android:layout_height="match_parent"
+            android:background="@color/color_093d5a"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_horizontal_lineview" />
 
         <TextView
             android:id="@+id/ok_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/view_height_xxl"
-            android:layout_weight="1"
-            android:background="@drawable/selector_login_forget_view_background"
+            android:layout_height="0dp"
+            android:background="@drawable/selector_ok_cancle_dialog_button_bg"
             android:gravity="center"
             android:text="@string/ok_val"
-            android:textSize="@dimen/text_size_48px" />
-
-        <View
-            android:layout_width="@dimen/padding_l"
-            android:layout_height="0dp" />
+            android:textSize="@dimen/text_size_48px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/space_vertical_lineview"
+            app:layout_constraintTop_toBottomOf="@id/space_horizontal_lineview" />
 
         <TextView
             android:id="@+id/cancel_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/view_height_xxl"
-            android:layout_weight="1"
-            android:background="@drawable/selector_login_forget_view_background"
+            android:layout_height="0dp"
+            android:background="@drawable/selector_ok_cancle_dialog_button_bg"
             android:gravity="center"
             android:text="@string/cancel_val"
-            android:textSize="@dimen/text_size_48px" />
-    </LinearLayout>
+            android:textSize="@dimen/text_size_48px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/space_vertical_lineview"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/space_horizontal_lineview" />
+
+
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

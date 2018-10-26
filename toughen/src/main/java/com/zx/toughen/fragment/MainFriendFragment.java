@@ -15,11 +15,11 @@ import com.zx.toughen.base.BaseFragment;
  * Created by 李健健 on 2017/2/23.
  */
 
-public class MainMessageFragment extends BaseFragment {
+public class MainFriendFragment extends BaseFragment {
 
-    public static MainMessageFragment newInstance() {
+    public static MainFriendFragment newInstance() {
         Bundle args = new Bundle();
-        MainMessageFragment fragment = new MainMessageFragment();
+        MainFriendFragment fragment = new MainFriendFragment();
         fragment.setArguments(args);
         return fragment;
     }

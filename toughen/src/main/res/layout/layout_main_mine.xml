@@ -4,34 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/userinfo_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height_xxxxl"
+        android:layout_height="200dp"
         android:layout_marginBottom="@dimen/margin_xl"
-        android:layout_marginTop="@dimen/margin_xl"
         android:background="@drawable/selector_item_click_bg_color"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/padding_xl"
-        android:paddingRight="@dimen/padding_xl">
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_mine_top_bg" />
 
         <ImageView
             android:id="@+id/avatar_view"
             android:layout_width="@dimen/view_height_xxl"
             android:layout_height="@dimen/view_height_xxl"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_xl"
             android:src="@drawable/icon_avatar_default" />
 
-        <TextView
-            android:id="@+id/nickname_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_xl"
-            android:drawableRight="@drawable/icon_arrow_right"
-            android:text="特雷西-麦克格雷迪"
-            android:textColor="@color/color_text"
-            android:textSize="@dimen/text_size_44px" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/user_home_view"
@@ -95,7 +92,6 @@
         android:layout_height="@dimen/view_height_xxxl"
         android:layout_marginTop="@dimen/margin_xxl"
         android:background="@drawable/selector_item_click_bg_color"
-        android:drawableRight="@drawable/icon_arrow_right"
         android:gravity="center"
         android:paddingLeft="@dimen/padding_xl"
         android:paddingRight="@dimen/padding_xl"
