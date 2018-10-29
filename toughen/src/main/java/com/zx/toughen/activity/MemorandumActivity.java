@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.toughen.libs.libtools.FastJsonUtil;
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.toughen.libs.tools.SPUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.constant.IntentConstant;
@@ -23,7 +21,7 @@ import com.zx.toughen.entity.MemorandumEntity;
 import com.zx.toughen.listenerinterface.MyTitleBarViewListenerInterface;
 import com.zx.toughen.view.MyTitleBarView;
 
-public class MemorandumActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MemorandumActivity extends BaseAppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private MyTitleBarView titleBarView;
     private ListView listView;
     private MemorandumAdapter adapter;

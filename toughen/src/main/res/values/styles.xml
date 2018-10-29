@@ -3,16 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_transparent</item>
-        <item name="colorPrimaryDark">@color/color_transparent</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorPrimary">@color/color_transparent</item>-->
+        <!--<item name="colorPrimaryDark">@color/color_transparent</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
         <item name="android:windowBackground">@color/color_background</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@style/Animation</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.SplashTheme" parent="android:Theme.Translucent.NoTitleBar">
+    <style name="AppTheme.SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/img_morning_beijing</item>
     </style>
 
@@ -71,5 +70,10 @@
         <item name="android:textSize">@dimen/text_size_36px</item>
         <item name="android:textColor">@color/color_text_hint</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Titlebar_Style">
+        <item name="android:textColor">@color/color_2e2e2e</item>
+        <item name="android:textSize">@dimen/text_size_44px</item>
     </style>
 </resources>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.adapter.NewsAdapter;
 import com.zx.toughen.entity.NewsEntity;
@@ -22,7 +22,7 @@ import com.zx.toughen.view.MyLoadDataAnimView;
 /**
  * Created by 李健健 on 2017/4/18.
  */
-public class NewsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MyLoadDataAnimRefreshInterface {
+public class NewsActivity extends BaseAppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MyLoadDataAnimRefreshInterface {
     private ImageView returnHomeView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;

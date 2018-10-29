@@ -3,6 +3,7 @@ package com.zx.toughen.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import com.toughen.libs.tools.ActivityManagerUtils;
 import com.toughen.libs.tools.ToastUtils;
@@ -13,7 +14,7 @@ import com.zx.toughen.dialog.MyProgressDialog;
  * Created by lijianjian on 2018/4/2.
  */
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
     private MyProgressDialog progressDialog;
 
     /**

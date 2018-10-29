@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.listenerinterface.MemorandumAuthListenerInterface;
 
@@ -19,7 +19,7 @@ import com.zx.toughen.entity.MemorandumEntity;
 /**
  * Created by 李健健 on 2017/4/12.
  */
-public class MemorandumInfoActivity extends BaseActivity implements View.OnClickListener {
+public class MemorandumInfoActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private TextView titleView;
     private ImageView returnHomeView;
     private TextView memorandumTitleView, memorandumCreateTimeView, memorandumContentView;

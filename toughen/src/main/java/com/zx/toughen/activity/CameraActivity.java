@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.view.cameraview.CameraPreviewView;
 
@@ -12,7 +12,7 @@ import com.zx.toughen.view.cameraview.CameraPreviewView;
  * Created by 李健健 on 2017/4/17.
  */
 
-public class CameraActivity extends BaseActivity implements View.OnClickListener {
+public class CameraActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private CameraPreviewView cameraPreviewView;
 
     @Override

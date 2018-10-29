@@ -9,20 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.toughen.libs.tools.LogUtils;
-import com.zx.toughen.http.ResponseHasCookieCallBack;
-import com.zx.toughen.userauth.UserAuth;
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
-import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
-import com.zx.toughen.http.HttpRequestTool;
 
-import java.util.List;
-import java.util.Map;
-
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private View allLayout;
     private View login_login_view;
     private EditText userPhoneView, passWordView;

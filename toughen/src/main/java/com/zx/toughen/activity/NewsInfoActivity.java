@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.entity.CommentEntity;
 import com.zx.toughen.entity.NewsEntity;
@@ -23,7 +23,7 @@ import com.zx.toughen.adapter.NewsInfoAdapter;
  * Created by 李健健 on 2017/4/19.
  */
 
-public class NewsInfoActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class NewsInfoActivity extends BaseAppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private TextView titleView;
     private ImageView returnView;
     private SwipeRefreshLayout swipeRefreshLayout;

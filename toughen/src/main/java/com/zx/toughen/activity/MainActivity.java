@@ -1,7 +1,10 @@
 package com.zx.toughen.activity;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -9,7 +12,7 @@ import android.widget.LinearLayout;
 import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
-import com.zx.toughen.base.BaseFragmentActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
 import com.zx.toughen.fragment.MainFindFragment;
@@ -22,13 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class MainActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private FrameLayout contentLayout;
     private LinearLayout messageView, findView, mineView;
     private MainFriendFragment mainFriendFragment;
     private MainFindFragment mainFindFragment;
     private MainMineFragment mainMineFragment;
-
+    private FragmentManager fragmentManager;
     //Data
     private long lastPressedBack = 0;//返回键上次点击的时间
 
@@ -36,10 +39,32 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initIntentData();
         initView();
         setListener();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void initView() {
+        contentLayout = findViewById(R.id.content_layout);
+        messageView = findViewById(R.id.message_view);
+        findView = findViewById(R.id.find_view);
+        mineView = findViewById(R.id.mine_view);
+        clickFindView();
+    }
+
+    @Override
+    public void setListener() {
+        messageView.setOnClickListener(this);
+        findView.setOnClickListener(this);
+        mineView.setOnClickListener(this);
     }
 
     private void initIntentData() {
@@ -63,27 +88,6 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
 
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void initView() {
-        contentLayout = findViewById(R.id.content_layout);
-        messageView = findViewById(R.id.message_view);
-        findView = findViewById(R.id.find_view);
-        mineView = findViewById(R.id.mine_view);
-        clickFindView();
-    }
-
-    @Override
-    public void setListener() {
-        messageView.setOnClickListener(this);
-        findView.setOnClickListener(this);
-        mineView.setOnClickListener(this);
     }
 
 

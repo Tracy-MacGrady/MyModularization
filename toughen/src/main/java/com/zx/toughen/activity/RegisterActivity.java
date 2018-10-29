@@ -5,11 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zx.toughen.R;
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.listenerinterface.MyTitleBarViewListenerInterface;
 import com.zx.toughen.view.MyTitleBarView;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private MyTitleBarView titleBarView;
     private TextView vCoceView;
 

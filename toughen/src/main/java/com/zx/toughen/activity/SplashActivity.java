@@ -15,14 +15,14 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.userauth.UserAuth;
 
 import java.util.ArrayList;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseAppCompatActivity {
     private View app_name_textview;
 
     @Override

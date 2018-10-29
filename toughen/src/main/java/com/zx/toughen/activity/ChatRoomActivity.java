@@ -6,11 +6,11 @@ import android.widget.EditText;
 
 import com.zx.toughen.constant.Constant;
 import com.zx.toughen.entity.MessageEntity;
-import com.zx.toughen.base.BaseActivity;
+import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.view.MyTitleBarView;
 
-public class ChatRoomActivity extends BaseActivity implements View.OnClickListener {
+public class ChatRoomActivity extends BaseAppCompatActivity implements View.OnClickListener {
     //view
     private MyTitleBarView titleBarView;
     private EditText sendValueView;
