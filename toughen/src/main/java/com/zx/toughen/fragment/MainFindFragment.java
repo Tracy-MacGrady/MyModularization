@@ -1,23 +1,30 @@
 package com.zx.toughen.fragment;
 
 import android.content.Context;
+import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.toughen.libs.tools.AppUtils;
 import com.zx.toughen.R;
 import com.zx.toughen.adapter.NewsAdapter;
 import com.zx.toughen.base.BaseFragment;
+import com.zx.toughen.view.MySearchEditTextView;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by 李健健 on 2017/2/27.
  */
-public class MainFindFragment extends BaseFragment {
+public class MainFindFragment extends BaseFragment implements MySearchEditTextView.OnSearchListener {
     public static MainFindFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -27,6 +34,7 @@ public class MainFindFragment extends BaseFragment {
         return fragment;
     }
 
+    private MySearchEditTextView searchEdit;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private NewsAdapter adapter;
@@ -48,7 +56,14 @@ public class MainFindFragment extends BaseFragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        if (swipeRefreshLayout != null) swipeRefreshLayout.requestFocus();
+    }
+
+    @Override
     public void initView() {
+        searchEdit = view.findViewById(R.id.search_edittext);
         recyclerView = view.findViewById(R.id.recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout);
         adapter = new NewsAdapter(getContext());
@@ -58,6 +73,7 @@ public class MainFindFragment extends BaseFragment {
 
     @Override
     public void setListener() {
+        searchEdit.setSearchListener(this);
         swipeRefreshLayout.setOnRefreshListener(refreshListener);
         recyclerView.addOnScrollListener(recyclerViewScrollListener);
     }
@@ -79,4 +95,11 @@ public class MainFindFragment extends BaseFragment {
             super.onScrolled(recyclerView, dx, dy);
         }
     };
+
+    @Override
+    public void toSearch(String searchTipValue) {
+        Log.e("bbbbbbbb" + System.currentTimeMillis(), "dffadfsfadsf" + searchTipValue);
+        AppUtils.getInstance().hideKeyboard(getActivity(), searchEdit);
+        swipeRefreshLayout.requestFocus();
+    }
 }

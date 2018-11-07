@@ -53,4 +53,5 @@
     <string name="logout">退出登录</string>
     <string name="username_value">用户名</string>
     <string name="user_login_value">账户登录</string>
+    <string name="find_top_search_hintval">输入您感兴趣的主题进行搜索</string>
 </resources>

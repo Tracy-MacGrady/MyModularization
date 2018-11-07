@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_alignParentRight="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_titlebar"
+        android:background="@color/color_white">
+
+        <com.zx.toughen.view.MySearchEditTextView
+            android:id="@+id/search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_s"
+            android:layout_marginLeft="@dimen/padding_xl"
+            android:layout_marginRight="@dimen/padding_xl"
+            android:layout_marginTop="@dimen/margin_s"
+            android:background="@drawable/selector_top_search_edit_view_bg"
+            android:paddingLeft="@dimen/padding_xxl"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:text_color="@color/color_2e2e2e"
+            app:text_hint="@string/find_top_search_hintval"
+            app:text_hint_color="@color/color_aab9be"
+            app:text_size="@dimen/text_size_40px" />
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -19,4 +43,4 @@
             android:scrollbars="none" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

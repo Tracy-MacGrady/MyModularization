@@ -11,4 +11,11 @@
         <attr name="show_left_text" format="boolean" />
         <attr name="show_right_text" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="MySearchEditTextView">
+        <attr name="text_color" format="color" />
+        <attr name="text_hint_color" format="color" />
+        <attr name="text" format="string" />
+        <attr name="text_hint" format="string" />
+        <attr name="text_size" format="dimension" />
+    </declare-styleable>
 </resources>

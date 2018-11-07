@@ -32,7 +32,7 @@
             android:name=".activity.MainActivity"
             android:configChanges="screenLayout|keyboard|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="screenLayout|keyboard|orientation"

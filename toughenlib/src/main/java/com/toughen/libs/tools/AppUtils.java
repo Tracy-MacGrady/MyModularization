@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -77,6 +78,14 @@ public class AppUtils {
     public void hideKeyboard(Activity activity) {
         InputMethodManager manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    public void hideKeyboard(Activity activity, View view) {
+        InputMethodManager manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public String getNowProcessName(Context context, int pid) {

@@ -1,5 +1,8 @@
 <resources>
     <!--text size value-->
+    <dimen name="text_size_20px">7sp</dimen>
+    <dimen name="text_size_24px">8sp</dimen>
+    <dimen name="text_size_28px">9sp</dimen>
     <dimen name="text_size_30px">10sp</dimen>
     <dimen name="text_size_36px">12sp</dimen>
     <dimen name="text_size_40px">13sp</dimen>
@@ -10,6 +13,7 @@
     <dimen name="text_size_75px">25sp</dimen>
     <dimen name="text_size_90px">30sp</dimen>
     <!--margin value-->
+    <dimen name="margin_s">6dp</dimen>
     <dimen name="margin_l">8dp</dimen>
     <dimen name="margin_xl">16dp</dimen>
     <dimen name="margin_xxl">24dp</dimen>

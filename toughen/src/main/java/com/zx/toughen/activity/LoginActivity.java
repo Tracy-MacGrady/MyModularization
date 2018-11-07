@@ -9,10 +9,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.toughen.libs.tools.LogUtils;
 import com.zx.toughen.base.BaseAppCompatActivity;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.ToastUtils;
 import com.zx.toughen.R;
+import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
+import com.zx.toughen.http.HttpRequestTool;
+import com.zx.toughen.http.ResponseHasCookieCallBack;
+import com.zx.toughen.userauth.UserAuth;
+
+import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private View allLayout;
@@ -112,26 +120,24 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     }
 
     private void loginMethod() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-//        showProgressDialog();
-//        HttpRequestTool.getInstance().userLogin(this, userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
-//            @Override
-//            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
-//                super.onSuccess(headers, responseData);
-//                dissmissProgressDialog();
-//                LogUtils.e("====" + headers);
-//                UserAuth.login(responseData.getUserinfo());
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                finish();
-//            }
-//
-//            @Override
-//            public void onFailure(String failureMsg) {
-//                dissmissProgressDialog();
-//                ToastUtils.showShort(LoginActivity.this, failureMsg);
-//            }
-//        });
+        showProgressDialog();
+        HttpRequestTool.getInstance().userLogin(this, userphone, password, new ResponseHasCookieCallBack<UserLoginResponceEntity>() {
+            @Override
+            public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
+                super.onSuccess(headers, responseData);
+                dissmissProgressDialog();
+                LogUtils.e("====" + headers);
+                UserAuth.login(responseData.getUserinfo());
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(String failureMsg) {
+                dissmissProgressDialog();
+                ToastUtils.showShort(LoginActivity.this, failureMsg);
+            }
+        });
     }
 
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="false">
+        <shape>
+            <corners android:radius="@dimen/view_height_titlebar" />
+            <solid android:color="@color/color_transparent" />
+            <stroke android:width="@dimen/view_height_line" android:color="@color/color_f39b9c" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape>
+            <corners android:radius="@dimen/view_height_titlebar" />
+            <solid android:color="@color/color_transparent" />
+            <stroke android:width="@dimen/view_height_line" android:color="@color/color_f57773" />
+        </shape>
+    </item>
+</selector>
