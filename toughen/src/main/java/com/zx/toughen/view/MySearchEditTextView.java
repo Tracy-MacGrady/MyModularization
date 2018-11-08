@@ -1,5 +1,6 @@
 package com.zx.toughen.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -11,13 +12,16 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.toughen.libs.tools.AppUtils;
 import com.zx.toughen.R;
 
-public class MySearchEditTextView extends RelativeLayout implements View.OnKeyListener, View.OnClickListener {
+public class MySearchEditTextView extends RelativeLayout implements View.OnClickListener, TextView.OnEditorActionListener {
     private OnSearchListener listener;
     private ImageView searchImgView;
     private EditText editText;
@@ -33,7 +37,6 @@ public class MySearchEditTextView extends RelativeLayout implements View.OnKeyLi
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.MySearchEditTextView);
         editText.setTextColor(array.getColor(R.styleable.MySearchEditTextView_text_color, 0));
         editText.setHintTextColor(array.getColor(R.styleable.MySearchEditTextView_text_hint_color, 0));
-        int dimen = array.getDimensionPixelSize(R.styleable.MySearchEditTextView_text_size, 0);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, array.getDimensionPixelSize(R.styleable.MySearchEditTextView_text_size, 0));
         editText.setText(array.getString(R.styleable.MySearchEditTextView_text));
         editText.setHint(array.getString(R.styleable.MySearchEditTextView_text_hint));
@@ -58,15 +61,7 @@ public class MySearchEditTextView extends RelativeLayout implements View.OnKeyLi
         searchImgView = findViewById(R.id.search_imgview);
         editText = findViewById(R.id.search_view);
         searchImgView.setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-            if (listener != null) listener.toSearch(editText.getText().toString());
-            return true;
-        }
-        return false;
+        editText.setOnEditorActionListener(this);
     }
 
     public void setSearchListener(OnSearchListener searchListener) {
@@ -77,9 +72,22 @@ public class MySearchEditTextView extends RelativeLayout implements View.OnKeyLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_imgview:
+                if (editText.hasFocus())
+                    AppUtils.getInstance().hideKeyboard((Activity) getContext(), editText);
                 if (listener != null) listener.toSearch(editText.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (editText.hasFocus())
+                AppUtils.getInstance().hideKeyboard((Activity) getContext(), editText);
+            if (listener != null) listener.toSearch(editText.getText().toString());
+            return true;
+        }
+        return false;
     }
 
     public interface OnSearchListener {

@@ -99,7 +99,6 @@ public class MainFindFragment extends BaseFragment implements MySearchEditTextVi
     @Override
     public void toSearch(String searchTipValue) {
         Log.e("bbbbbbbb" + System.currentTimeMillis(), "dffadfsfadsf" + searchTipValue);
-        AppUtils.getInstance().hideKeyboard(getActivity(), searchEdit);
         swipeRefreshLayout.requestFocus();
     }
 }

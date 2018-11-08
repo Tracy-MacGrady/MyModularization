@@ -31,7 +31,6 @@ public class GetMqttClientConnect {
     private int connectNum = 0;
     private MyMqttAsyncClient mqttClient;
     private MqttConnectOptions connOpts;
-    private String sign;
     private static GetMqttClientConnect instance;
 
     private GetMqttClientConnect() {
@@ -56,25 +55,18 @@ public class GetMqttClientConnect {
     private synchronized void initMqttAndroidClient() {
         try {
             if (this.mqttClient != null && this.connOpts != null) return;
-            this.sign = MacSignature.macSignature(MqttConstant.MQTT_GROUPID, MqttConstant.MQTT_SECRETKEY);
             String producerClientId = MqttConstant.MQTT_GROUPID + "@@@ClientID_" + clientid;
             MemoryPersistence persistence = new MemoryPersistence();
             this.mqttClient = new MyMqttAsyncClient(MqttConstant.MQTT_BROKER, producerClientId, persistence);
             this.mqttClient.setCallback(callBack);
             this.connOpts = new MqttConnectOptions();
-            this.connOpts.setUserName(MqttConstant.MQTT_ACCESSKEY);
+            this.connOpts.setUserName(MqttConstant.MQTT_USERNAME);
             this.connOpts.setServerURIs(new String[]{MqttConstant.MQTT_BROKER});
-            this.connOpts.setPassword(sign.toCharArray());
+            this.connOpts.setPassword(MqttConstant.MQTT_PASSWORD.toCharArray());
             this.connOpts.setCleanSession(false);
             this.connOpts.setKeepAliveInterval(80);
         } catch (MqttException e) {
             e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-            CrashReport.postCatchedException(e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            CrashReport.postCatchedException(e);
         }
     }
 
