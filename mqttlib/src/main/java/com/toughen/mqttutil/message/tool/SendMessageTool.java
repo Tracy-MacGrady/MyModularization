@@ -55,17 +55,21 @@ public class SendMessageTool {
     }
 
 
-    public void sendToClient(Context context, String messageValue, String clientId) throws MqttException {
-        String consumerClientId = MqttConstant.MQTT_GROUPID + "@@@ClientID_" + clientId;
-        MqttMessage message = new MqttMessage(messageValue.getBytes());
-        message.setQos(2);
-        Log.e("sendToClient", " pushed at " + new Date() + " " + messageValue);
-        /**
-         * 如果发送P2P消息，二级Topic必须是“p2p”,三级topic是目标的ClientID
-         * 此处设置的三级topic需要是接收方的ClientID
-         */
-        String topic = MqttConstant.MQTT_TOPIC + "/p2p/" + consumerClientId;
-        msgPublish(context, messageValue, message, topic);
+    public void sendToClient(Context context, String messageValue, String clientId){
+        try {
+            String consumerClientId = MqttConstant.MQTT_GROUPID + "@@@ClientID_" + clientId;
+            MqttMessage message = new MqttMessage(messageValue.getBytes());
+            message.setQos(2);
+            Log.e("sendToClient", " pushed at " + new Date() + " " + messageValue);
+            /**
+             * 如果发送P2P消息，二级Topic必须是“p2p”,三级topic是目标的ClientID
+             * 此处设置的三级topic需要是接收方的ClientID
+             */
+            String topic = MqttConstant.MQTT_TOPIC + "/p2p/" + consumerClientId;
+            msgPublish(context, messageValue, message, topic);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
     private void msgPublish(Context context, String messageValue, MqttMessage message, String topic) throws MqttException {

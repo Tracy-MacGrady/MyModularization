@@ -26,9 +26,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:recyclerview-v7:${LIB_SDK_VERSION}"
-    implementation "com.android.support:appcompat-v7:${LIB_SDK_VERSION}"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //友盟统计
     implementation 'com.umeng.analytics:analytics:latest.integration'
     implementation "com.android.support:design:${LIB_SDK_VERSION}"

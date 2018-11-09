@@ -3,13 +3,18 @@ package com.zx.toughen.activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.ToastUtils;
+import com.toughen.mqttutil.MqttCallBackManager;
+import com.toughen.mqttutil.MqttClientManager;
+import com.toughen.mqttutil.message.MqttMessageInterfaceIml;
 import com.zx.toughen.R;
+import com.zx.toughen.application.MyApplication;
 import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.constant.IntentConstant;
 import com.zx.toughen.entity.httpresponceentity.UserLoginResponceEntity;
@@ -44,9 +49,27 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
         setListener();
     }
 
+    private MqttMessageInterfaceIml<String> messageListener = new MqttMessageInterfaceIml<String>() {
+        @Override
+        public void msgArrived(String msgModelInfo) {
+            Log.e("message", "message arrived");
+        }
+
+        @Override
+        public void msgSendSuccess(String msgModelInfo) {
+            Log.e("message", "message send success");
+        }
+
+        @Override
+        public void msgSendFailure(String msgModelInfo) {
+            Log.e("message", "message send failure");
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MqttCallBackManager.getInstance().removeMessageListener("", messageListener);
     }
 
     @Override
@@ -79,6 +102,9 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
             @Override
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 UserAuth.update(responseData.getUserinfo());
+                MyApplication.getInstance().initMqtt(String.valueOf(responseData.getUserinfo().getId()));
+                MqttCallBackManager.getInstance().addMessageListener("", messageListener);
+                MqttClientManager.getInstance().startMqttClientConnect();
             }
 
             @Override

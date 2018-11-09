@@ -2,6 +2,7 @@ package com.zx.toughen.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +12,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import com.toughen.libs.base.BaseRecyclerViewAdapter;
 import com.zx.toughen.R;
 import com.zx.toughen.activity.ChatRoomActivity;
 import com.zx.toughen.constant.Constant;
-import com.zx.toughen.entity.MessageEntity;
+import com.zx.toughen.entity.MessageItemInfo;
+import com.zx.toughen.entity.MessageListEntity;
 
 /**
  * Created by 李健健 on 2017/3/10.
  */
-public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MyViewHolder> {
+public class MessageListAdapter extends BaseRecyclerViewAdapter<MessageListAdapter.MyViewHolder> {
     private Context context;
-    private List<MessageEntity> list;
+    private List<MessageItemInfo> list;
 
-    public void setList(List<MessageEntity> list1) {
+    public void setList(List<MessageItemInfo> list1) {
         this.list = list1;
         this.notifyDataSetChanged();
     }
@@ -56,24 +59,24 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         public MyViewHolder(View view) {
             super(view);
             itemView = view.findViewById(R.id.message_item_view);
-            avatarView = (ImageView) view.findViewById(R.id.message_item_avatar_view);
-            nickNameView = (TextView) view.findViewById(R.id.message_item_nickname_view);
-            contentView = (TextView) view.findViewById(R.id.message_item_content_view);
+            avatarView = view.findViewById(R.id.message_item_avatar_view);
+            nickNameView = view.findViewById(R.id.message_item_nickname_view);
+            contentView = view.findViewById(R.id.message_item_content_view);
             itemView.setOnClickListener(this);
         }
 
-        public void initValue(MessageEntity messageEntity) {
-            itemView.setTag(messageEntity);
-            nickNameView.setText(messageEntity.getUserInfo().getUsername());
+        public void initValue(MessageItemInfo messageItemInfo) {
+            itemView.setTag(messageItemInfo);
+            nickNameView.setText(messageItemInfo.getUserInfo().getUsername());
         }
 
         @Override
         public void onClick(View v) {
             if (v.getTag() != null)
                 try {
-                    MessageEntity entity = (MessageEntity) v.getTag();
-                    if (entity != null) {
-                        context.startActivity(new Intent(context, ChatRoomActivity.class).putExtra(Constant.INTENT_MESSAGE_ITEM_KEY,entity));
+                    MessageItemInfo entity = (MessageItemInfo) v.getTag();
+                    if (entity != null&&listener!=null) {
+                        listener.onItemClick(entity);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

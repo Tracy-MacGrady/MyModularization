@@ -60,7 +60,7 @@ public class MainMineFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void initView() {
-        avatarView = view.findViewById(R.id.avatar_view);
+//        avatarView = view.findViewById(R.id.avatar_view);
     }
 
     @Override

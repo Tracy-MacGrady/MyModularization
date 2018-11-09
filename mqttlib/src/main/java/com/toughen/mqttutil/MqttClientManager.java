@@ -142,7 +142,7 @@ public class MqttClientManager {
      */
     public synchronized void restartMqttClientConnect() {
         if (canRepeatConnect) {
-            GetMqttClientConnect.getInstance().setConnectNum(0);
+            GetMqttClientConnect.getInstance().setConnectNum(5);
             GetMqttClientConnect.getInstance().startConnect();
         }
     }

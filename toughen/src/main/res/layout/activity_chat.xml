@@ -49,20 +49,13 @@
             android:textSize="@dimen/text_size_44px" />
     </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefreshlayout"
+    <com.toughen.libs.view.MyLoadAnimRecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_view"
         android:layout_below="@id/titlebar_view"
-        android:background="@color/color_transparent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_transparent"
-            android:overScrollMode="never"
-            android:padding="@dimen/padding_xl" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:background="@color/color_transparent"
+        app:anim_can_show="false"
+        app:empty_can_show="false" />
 </RelativeLayout>

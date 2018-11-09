@@ -17,6 +17,7 @@ public abstract class BaseFragment extends Fragment {
     private MyProgressDialog progressDialog;
     protected View view;
     private boolean isInitView = true;
+    protected boolean hasInitData = false;
 
     /**
      * 该方法需再次在BaseActivity子类中调用
@@ -41,6 +42,7 @@ public abstract class BaseFragment extends Fragment {
             setListener();
         }
     }
+
 
     @Override
     public void onDetach() {

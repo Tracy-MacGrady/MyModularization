@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyLoadAnimRecyclerView">
+        <attr name="anim_can_show" format="boolean" />
+        <attr name="anim_bg" format="color" />
+        <attr name="anim_text_color" format="color" />
+        <attr name="empty_can_show" format="boolean" />
+        <attr name="empty_img_src" format="reference" />
+        <attr name="empty_text_color" format="color" />
+    </declare-styleable>
+</resources>

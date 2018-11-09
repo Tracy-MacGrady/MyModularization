@@ -16,7 +16,11 @@ public abstract class MqttMessageInterfaceIml<T> implements MqttMessageInterface
     @Override
     public void parseMsgFromString(MqttMessageSendStatusEnum statusEnum, String msgValue) {
         if (msgValue == null) msgSendFailure(null);
-        T t = JSONObject.parseObject(msgValue, getType());
+        T t;
+        if (getType() == String.class) {
+            t = (T) msgValue;
+        } else
+            t = JSONObject.parseObject(msgValue, getType());
         switch (statusEnum) {
             case STATUS_MSG_ARRIVED:
                 msgArrived(t);

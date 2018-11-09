@@ -1,12 +1,20 @@
 package com.zx.toughen.application;
 
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.toughen.libs.tools.AppUtils;
 import com.toughen.libs.tools.LogUtils;
+import com.toughen.mqttutil.MqttCallBackManager;
+import com.toughen.mqttutil.MqttClientManager;
+import com.toughen.mqttutil.constant.MqttConstant;
+import com.toughen.mqttutil.constant.MqttConstantParamsEntity;
+import com.toughen.mqttutil.interfaces.MqttClientConnectStatusInterface;
+import com.toughen.mqttutil.message.tool.GetMessageTool;
 import com.umeng.analytics.MobclickAgent;
 import com.zx.toughen.BuildConfig;
+import com.zx.toughen.entity.MyMqttParamsEntity;
 import com.zx.toughen.entity.UserInfo;
 import com.zx.toughen.constant.Constant;
 
@@ -34,12 +42,47 @@ public class MyApplication extends MultiDexApplication {
             MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
             //初始化腾讯bugly
             CrashReport.initCrashReport(this.getApplicationContext(), Constant.BUGLY_APPID, BuildConfig.DEBUG);
+
         }
     }
+
+    public void initMqtt(String clientID) {
+        MqttClientManager.getInstance().init(getApplicationContext(), clientID, new MyMqttParamsEntity());
+        MqttCallBackManager.getInstance().addConnectStatusListener(connectListener);
+    }
+
+    private MqttClientConnectStatusInterface connectListener = new MqttClientConnectStatusInterface() {
+        @Override
+        public void mqttClientConnectSuccess() {
+            Log.e("fffff", "mqttClientConnectSuccess");
+            GetMessageTool.subscribeTopic(0, MqttConstant.MQTT_TOPIC);
+        }
+
+        @Override
+        public void mqttClientRepeatSuccess() {
+            Log.e("fffff", "mqttClientRepeatSuccess");
+        }
+
+        @Override
+        public void mqttClientConnectFailure() {
+            Log.e("fffff", "mqttClientConnectFailure");
+        }
+
+        @Override
+        public void mqttClientDisConnectSuccess() {
+            Log.e("fffff", "mqttClientDisConnectSuccess");
+        }
+
+        @Override
+        public void mqttClientDisConnectFailure() {
+            Log.e("fffff", "mqttClientDisConnectFailure");
+        }
+    };
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
+        MqttClientManager.getInstance().disconnectMqttClientConnect();
     }
 
     @Override

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ToughenLib</string>
+    <string name="no_data_tip_val">没有加载到数据\n点击重新加载试试！</string>
 </resources>

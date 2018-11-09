@@ -2,25 +2,45 @@ package com.zx.toughen.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.toughen.libs.interfaces.ItemClickListener;
+import com.toughen.libs.view.MyLoadAnimRecyclerView;
 import com.toughen.mqttutil.MqttCallBackManager;
 import com.toughen.mqttutil.MqttClientManager;
 import com.toughen.mqttutil.constant.MqttConstantParamsEntity;
 import com.toughen.mqttutil.interfaces.MqttClientConnectStatusInterface;
 import com.zx.toughen.R;
+import com.zx.toughen.activity.ChatRoomActivity;
+import com.zx.toughen.adapter.MessageListAdapter;
 import com.zx.toughen.base.BaseFragment;
+import com.zx.toughen.constant.Constant;
+import com.zx.toughen.entity.MessageInfo;
+import com.zx.toughen.entity.MessageItemInfo;
+import com.zx.toughen.entity.UserInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 李健健 on 2017/2/23.
  */
 
-public class MainMessageFragment extends BaseFragment implements MqttClientConnectStatusInterface {
+public class MainMessageFragment extends BaseFragment {
+    private MyLoadAnimRecyclerView recyclerView;
+    private LinearLayoutManager manager;
+    private MessageListAdapter adapter;
 
     public static MainMessageFragment newInstance() {
         Bundle args = new Bundle();
@@ -41,54 +61,68 @@ public class MainMessageFragment extends BaseFragment implements MqttClientConne
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onResume() {
+        super.onResume();
+        if (hasInitData) return;
+        hasInitData = true;
+        initData();
+    }
+
+    private void initData() {
+        MessageItemInfo itemInfo = new MessageItemInfo();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(123456);
+        userInfo.setUsername("lisi123456");
+        itemInfo.setUserInfo(userInfo);
+        MessageInfo msgInfo = new MessageInfo();
+        msgInfo.setMsgValue("fflkdsajfldsa");
+        msgInfo.setUserName("lisi123456");
+        msgInfo.setUid(String.valueOf(123456));
+        itemInfo.setMsgInfo(msgInfo);
+        List<MessageItemInfo> list = new ArrayList<>();
+        list.add(itemInfo);
+        adapter.setList(list);
     }
 
     @Override
     public void initView() {
-        MqttConstantParamsEntity entity = new MqttConstantParamsEntity();
-        entity.setMqttBroker("tcp://172.16.20.206:61613");
-        entity.setMqttTopic("toughen");
-        entity.setUsername("admin");
-        entity.setPassword("password");
-        entity.setMqttGroupid("group1");
-        MqttClientManager.getInstance().init(getActivity().getApplicationContext(), "aaaaaa", entity);
-        MqttCallBackManager.getInstance().addConnectStatusListener(this);
-        MqttClientManager.getInstance().startMqttClientConnect();
+        recyclerView = view.findViewById(R.id.recyclerview);
+        manager = new LinearLayoutManager(getContext());
+        adapter = new MessageListAdapter(getContext());
+        adapter.setListener(itemClickListener);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void setListener() {
-
+        recyclerView.setOnRefreshListener(refreshListener);
+        recyclerView.addOnScrollListener(scrollListener);
     }
 
-    @Override
-    public void mqttClientConnectSuccess() {
-        Log.e("fffffffffff", "mqttClientConnectSuccess");
-    }
+    private ItemClickListener itemClickListener = new ItemClickListener<MessageItemInfo>() {
+        @Override
+        public void onItemClick(MessageItemInfo info) {
+            startActivity(new Intent(getContext(), ChatRoomActivity.class).putExtra(Constant.INTENT_MESSAGE_ITEM_KEY, info));
 
-    @Override
-    public void mqttClientRepeatSuccess() {
-        Log.e("fffffffffff", "mqttClientRepeatSuccess");
+        }
+    };
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void onRefresh() {
+            recyclerView.setRefreshing(false);
+        }
+    };
+    private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
 
-    }
-
-    @Override
-    public void mqttClientConnectFailure() {
-        Log.e("fffffffffff", "mqttClientConnectFailure");
-
-    }
-
-    @Override
-    public void mqttClientDisConnectSuccess() {
-
-        Log.e("fffffffffff", "mqttClientDisConnectSuccess");
-    }
-
-    @Override
-    public void mqttClientDisConnectFailure() {
-
-        Log.e("fffffffffff", "mqttClientDisConnectFailure");
-    }
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
 }

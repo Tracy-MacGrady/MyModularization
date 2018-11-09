@@ -16,13 +16,12 @@ import com.zx.toughen.base.BaseAppCompatActivity;
 import com.zx.toughen.R;
 import com.zx.toughen.adapter.NewsAdapter;
 import com.zx.toughen.entity.NewsEntity;
-import com.zx.toughen.listenerinterface.MyLoadDataAnimRefreshInterface;
-import com.zx.toughen.view.MyLoadDataAnimView;
+import com.toughen.libs.view.MyLoadDataAnimView;
 
 /**
  * Created by 李健健 on 2017/4/18.
  */
-public class NewsActivity extends BaseAppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MyLoadDataAnimRefreshInterface {
+public class NewsActivity extends BaseAppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private ImageView returnHomeView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
@@ -34,7 +33,7 @@ public class NewsActivity extends BaseAppCompatActivity implements SwipeRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        addContentView(new MyLoadDataAnimView(this, this), params);
+        addContentView(new MyLoadDataAnimView(this), params);
         initView();
         setListener();
     }
@@ -99,8 +98,4 @@ public class NewsActivity extends BaseAppCompatActivity implements SwipeRefreshL
         }
     }
 
-    @Override
-    public void onLoadDataAgainRefresh() {
-
-    }
 }

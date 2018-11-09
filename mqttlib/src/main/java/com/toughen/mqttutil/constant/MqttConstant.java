@@ -9,9 +9,9 @@ import android.text.TextUtils;
 
 public class MqttConstant {
     //mqtt相关参数
-    public static String MQTT_BROKER = "tcp://mqtt-cn-0pp05ulgg0i.mqtt.aliyuncs.com:1883";
-    public static String MQTT_TOPIC = "QingGuoSystem";
-    public static String MQTT_GROUPID = "GID_QGDoubleTeacher";
+    public static String MQTT_BROKER = "";
+    public static String MQTT_TOPIC = "";
+    public static String MQTT_GROUPID = "";
     public static String MQTT_USERNAME = "";
     public static String MQTT_PASSWORD = "";
 
