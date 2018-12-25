@@ -1,7 +1,11 @@
 package com.toughen.apkupdate;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 
 import com.toughen.apkupdate.entity.VersionInfo;
 import com.toughen.apkupdate.listener.ApkDownloadStatusListener;
@@ -43,7 +47,7 @@ public class DownLoadApkManager {
                         downloadStatusListener.downloadProgress(progress);
                     break;
                 case Constant.DOWNLOAD_FILE_FINISH_HANDLER_WHAT:
-                    if (downloadStatusListener != null) downloadStatusListener.onDownloadFinished();
+                    if (downloadStatusListener != null) downloadStatusListener.onDownloadFinished(versionInfo);
                     break;
             }
         }
