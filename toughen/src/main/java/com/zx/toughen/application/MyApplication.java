@@ -55,12 +55,14 @@ public class MyApplication extends MultiDexApplication {
         @Override
         public void mqttClientConnectSuccess() {
             Log.e("fffff", "mqttClientConnectSuccess");
-            GetMessageTool.subscribeTopic(0, MqttConstant.MQTT_TOPIC);
+            GetMessageTool.subscribeTopic(2, MqttConstant.MQTT_TOPIC);
         }
 
         @Override
         public void mqttClientRepeatSuccess() {
             Log.e("fffff", "mqttClientRepeatSuccess");
+            GetMessageTool.unsubscribeTopic(MqttConstant.MQTT_TOPIC);
+            GetMessageTool.subscribeTopic(2, MqttConstant.MQTT_TOPIC);
         }
 
         @Override

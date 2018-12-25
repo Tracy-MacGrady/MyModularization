@@ -92,7 +92,7 @@ public class VersionCheckManager {
         public void onClickDownloadApk() {
             if (versionDialog != null) versionDialog.dismiss();
             if (progressDialog != null) progressDialog.show();
-            downLoadApkManager = new DownLoadApkManager(progressDialog.getDownloadStatusListener(), versionInfo);
+            downLoadApkManager = new DownLoadApkManager(progressDialog, versionInfo);
             downLoadApkManager.getFileLength();
         }
     }

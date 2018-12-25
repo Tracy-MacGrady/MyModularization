@@ -19,12 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:duplicateParentState="true"
             android:src="@drawable/selector_home_bottom_message" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:duplicateParentState="true"
             android:gravity="center"
             android:text="@string/message"
             android:textColor="@color/main_text_color_selector"
@@ -50,12 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
+            android:duplicateParentState="true"
             android:src="@drawable/selector_home_bottom_find" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:duplicateParentState="true"
             android:gravity="center"
             android:text="@string/find"
             android:textColor="@color/main_text_color_selector"
@@ -81,12 +85,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
+            android:duplicateParentState="true"
             android:src="@drawable/selector_home_bottom_personal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:duplicateParentState="true"
             android:gravity="center"
             android:text="@string/mine"
             android:textColor="@color/main_text_color_selector"

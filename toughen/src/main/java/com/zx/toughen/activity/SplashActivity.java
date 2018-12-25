@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.webkit.WebView;
 
 
 import com.zx.toughen.base.BaseAppCompatActivity;
@@ -30,11 +31,18 @@ public class SplashActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         app_name_textview = findViewById(R.id.app_name_textview);
+        WebView webView = findViewById(R.id.webview);
+        webView.loadUrl("file:///android_asset/splash.html");
     }
 
     @Override
     public void onAttachedToWindow() {
-        startAnimation();//Property Animation
+        app_name_textview.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startAnimation();//Property Animation
+            }
+        }, 5000);
     }
 
     private void startAnimation() {

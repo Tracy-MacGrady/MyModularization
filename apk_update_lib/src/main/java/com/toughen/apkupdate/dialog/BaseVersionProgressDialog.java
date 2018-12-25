@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.toughen.apkupdate.listener.ApkDownloadStatusListener;
 
-public abstract class BaseVersionProgressDialog extends Dialog {
-    private ApkDownloadStatusListener downloadStatusListener;
+public abstract class BaseVersionProgressDialog extends Dialog implements ApkDownloadStatusListener {
 
     public BaseVersionProgressDialog(@NonNull Context context) {
         super(context);
@@ -22,7 +21,4 @@ public abstract class BaseVersionProgressDialog extends Dialog {
 
     }
 
-    public ApkDownloadStatusListener getDownloadStatusListener() {
-        return downloadStatusListener;
-    }
 }

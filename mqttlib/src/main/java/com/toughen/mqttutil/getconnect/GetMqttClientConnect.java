@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
-import com.toughen.mqttutil.constant.MacSignature;
 import com.toughen.mqttutil.constant.MqttConstant;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -16,8 +15,6 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by 李健健 on 2017/12/1.
@@ -31,7 +28,7 @@ public class GetMqttClientConnect {
     private int connectNum = 0;
     private MyMqttAsyncClient mqttClient;
     private MqttConnectOptions connOpts;
-    private static GetMqttClientConnect instance;
+    private static volatile GetMqttClientConnect instance;
 
     private GetMqttClientConnect() {
     }
@@ -52,7 +49,7 @@ public class GetMqttClientConnect {
         initMqttAndroidClient();
     }
 
-    private synchronized void initMqttAndroidClient() {
+    private void initMqttAndroidClient() {
         try {
             if (this.mqttClient != null && this.connOpts != null) return;
             String producerClientId = MqttConstant.MQTT_GROUPID + "@@@ClientID_" + clientid;
@@ -86,7 +83,7 @@ public class GetMqttClientConnect {
         }
     }
 
-    private synchronized void getConnect() {
+    private void getConnect() {
         try {
             if (mqttClient.isConnected()) {
                 handler.sendEmptyMessage(102);
@@ -119,7 +116,7 @@ public class GetMqttClientConnect {
         }
     }
 
-    public void disConnect() {
+    public synchronized void disConnect() {
         try {
             if (mqttClient != null && mqttClient.isConnected()) {
                 if (mqttClient.getComms().isDisconnecting()) return;

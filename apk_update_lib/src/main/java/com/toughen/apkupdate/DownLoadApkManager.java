@@ -33,7 +33,7 @@ public class DownLoadApkManager {
             switch (msg.what) {
                 case Constant.GET_FILE_LENGTH_HANDLER_WHAT:
                     int maxProgress = (int) msg.obj;
-                    new DownLoadApkThread(versionInfo,handler).start();
+                    new DownLoadApkThread(versionInfo, handler).start();
                     if (downloadStatusListener != null)
                         downloadStatusListener.onGetFileLength(maxProgress);
                     break;
@@ -48,14 +48,4 @@ public class DownLoadApkManager {
             }
         }
     };
-
-    private HttpURLConnection getConnection(String downloadPath) throws IOException {
-        URL url = new URL(downloadPath);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP) {
-            String headLocation = connection.getHeaderField("Location");
-            connection = (HttpURLConnection) new URL(headLocation).openConnection();
-        }
-        return connection;
-    }
 }

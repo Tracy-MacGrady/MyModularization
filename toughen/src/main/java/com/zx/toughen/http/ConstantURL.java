@@ -5,7 +5,8 @@ package com.zx.toughen.http;
  */
 
 public class ConstantURL {
-    private static final String DOMAIN = "http://toughen.51vip.biz/";
+    //    private static final String DOMAIN = "http://toughen.51vip.biz/";
+    private static final String DOMAIN = "http://16190c78z3.iask.in//";
     //用户登录
     public static final String USER_LOGIN = DOMAIN + "toughen/loginAction";
     //获取用户信息

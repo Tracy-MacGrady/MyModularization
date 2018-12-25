@@ -24,10 +24,7 @@ public class GetDownloadAPKLengthThread extends Thread {
         super.run();
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(downloadPath).openConnection();
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP) {
-                String path = connection.getHeaderField("Location");
-                connection = (HttpURLConnection) new URL(path).openConnection();
-            }
+            connection = getReallyPath(connection);
             int length = connection.getContentLength();
             connection.disconnect();
             if (handler != null) {
@@ -41,5 +38,14 @@ public class GetDownloadAPKLengthThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private HttpURLConnection getReallyPath(HttpURLConnection connection) throws IOException {
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP) {
+            String path = connection.getHeaderField("Location");
+            connection = (HttpURLConnection) new URL(path).openConnection();
+            return getReallyPath(connection);
+        }
+        return connection;
     }
 }

@@ -12,6 +12,7 @@ import com.toughen.libs.http.ResponseDataDispatchIml;
 import com.toughen.libs.tools.ToastUtils;
 import com.toughen.mqttutil.MqttCallBackManager;
 import com.toughen.mqttutil.MqttClientManager;
+import com.toughen.mqttutil.constant.MqttConstant;
 import com.toughen.mqttutil.message.MqttMessageInterfaceIml;
 import com.zx.toughen.R;
 import com.zx.toughen.application.MyApplication;
@@ -103,7 +104,7 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
             public void onSuccess(Map<String, List<String>> headers, UserLoginResponceEntity responseData) {
                 UserAuth.update(responseData.getUserinfo());
                 MyApplication.getInstance().initMqtt(String.valueOf(responseData.getUserinfo().getId()));
-                MqttCallBackManager.getInstance().addMessageListener("", messageListener);
+                MqttCallBackManager.getInstance().addMessageListener(String.format(MqttConstant.MQTT_TOPIC), messageListener);
                 MqttClientManager.getInstance().startMqttClientConnect();
             }
 
@@ -123,14 +124,17 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.message_view:
+                if (messageView.isSelected()) return;
                 setBottomViewSelected(v);
                 initSwitchUI(0);
                 break;
             case R.id.find_view:
+                if (findView.isSelected()) return;
                 setBottomViewSelected(v);
                 initSwitchUI(1);
                 break;
             case R.id.mine_view:
+                if (mineView.isSelected()) return;
                 setBottomViewSelected(v);
                 initSwitchUI(2);
                 break;
@@ -169,12 +173,9 @@ public class MainActivity extends BaseAppCompatActivity implements View.OnClickL
      * 切换底部导航按钮的选中状态
      */
     private void setBottomViewSelected(View v) {
-        messageView.getChildAt(0).setSelected(messageView == v);
-        messageView.getChildAt(1).setSelected(messageView == v);
-        findView.getChildAt(0).setSelected(findView == v);
-        findView.getChildAt(1).setSelected(findView == v);
-        mineView.getChildAt(0).setSelected(mineView == v);
-        mineView.getChildAt(1).setSelected(mineView == v);
+        messageView.setSelected(messageView == v);
+        findView.setSelected(findView == v);
+        mineView.setSelected(mineView == v);
     }
 
     @Override

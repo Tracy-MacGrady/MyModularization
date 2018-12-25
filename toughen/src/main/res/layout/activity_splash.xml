@@ -4,6 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/app_name_textview"
         android:layout_width="wrap_content"
@@ -14,7 +19,8 @@
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_size_90px"
         android:textStyle="bold"
-        android:transitionName="app_name_textview" />
+        android:transitionName="app_name_textview"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"

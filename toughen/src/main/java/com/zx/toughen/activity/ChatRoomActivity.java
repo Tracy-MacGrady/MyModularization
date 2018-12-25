@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.toughen.libs.libtools.FastJsonUtil;
 import com.toughen.mqttutil.MqttCallBackManager;
+import com.toughen.mqttutil.constant.MqttConstant;
 import com.toughen.mqttutil.message.MqttMessageInterfaceIml;
 import com.toughen.mqttutil.message.tool.SendMessageTool;
 import com.zx.toughen.R;
@@ -34,7 +35,8 @@ public class ChatRoomActivity extends BaseAppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         myselfUserinfo = MyApplication.getInstance().getUserInfo();
-        MqttCallBackManager.getInstance().addMessageListener("p2p/" + myselfUserinfo.getId(), messageListener);
+        String topic = String.format("%s/p2p/%s@@@ClientID_%s", MqttConstant.MQTT_TOPIC, MqttConstant.MQTT_GROUPID, myselfUserinfo.getId());
+        MqttCallBackManager.getInstance().addMessageListener(topic, messageListener);
         initView();
         setListener();
         initValue();
@@ -43,7 +45,7 @@ public class ChatRoomActivity extends BaseAppCompatActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MqttCallBackManager.getInstance().removeMessageListener("p2p/" + myselfUserinfo.getId(), messageListener);
+        MqttCallBackManager.getInstance().removeMessageListener("/p2p/" + MqttConstant.MQTT_GROUPID + "@@@ClientID_" + myselfUserinfo.getId(), messageListener);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class ChatRoomActivity extends BaseAppCompatActivity implements View.OnCl
         if (getIntent() != null) {
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
-                MessageItemInfo messageItemInfo = (MessageItemInfo) bundle.getSerializable(Constant.INTENT_MESSAGE_ITEM_KEY);
+                MessageItemInfo messageItemInfo = bundle.getParcelable(Constant.INTENT_MESSAGE_ITEM_KEY);
                 if (messageItemInfo != null) chatUserInfo = messageItemInfo.getUserInfo();
             }
             if (chatUserInfo != null)
@@ -85,7 +87,7 @@ public class ChatRoomActivity extends BaseAppCompatActivity implements View.OnCl
 
     private void sendChatMessage() {
         String sendValue = getMessageInfo();
-        SendMessageTool.getInstance().sendToClient(this, sendValue, String.valueOf(MyApplication.getInstance().getUserInfo().getId()));
+        SendMessageTool.getInstance().sendToTopic(this, sendValue, "");
     }
 
     @NonNull

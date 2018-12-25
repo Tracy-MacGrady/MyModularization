@@ -18,8 +18,11 @@ import java.util.List;
  */
 
 public class MqttCallBackManager {
+    //MQTT消息观察者容器 （用来存储所有的消息监听）
     private HashMap<String, List<MqttMessageInterface>> messageListenerMap;
+    //MQTT连接状态的观察者容器（用来存储所有的连接状态的监听）
     private List<MqttClientConnectStatusInterface> connectStatusListeners;
+    //
     private static volatile MqttCallBackManager instance;
 
     private MqttCallBackManager() {
@@ -31,7 +34,9 @@ public class MqttCallBackManager {
         }
         return instance;
     }
-
+    /**
+     * listener MQTT 连接状态的观察者
+     */
     public synchronized void addConnectStatusListener(MqttClientConnectStatusInterface listener) {
         if (connectStatusListeners == null) connectStatusListeners = new ArrayList<>();
         connectStatusListeners.add(listener);
@@ -42,25 +47,36 @@ public class MqttCallBackManager {
         connectStatusListeners.remove(listener);
     }
 
-    public synchronized void addMessageListener(String secondTopic, MqttMessageInterface listener) {
-        String key = MqttConstant.MQTT_TOPIC + secondTopic;
+    /**
+     * @param topic    所需要监听的消息主题
+     * @param listener 消息监听
+     */
+    public synchronized void addMessageListener(String topic, MqttMessageInterface listener) {
+        topic=topic.replace("/","");
         if (messageListenerMap == null) messageListenerMap = new HashMap<>();
-        List<MqttMessageInterface> list = messageListenerMap.get(key);
+        List<MqttMessageInterface> list = messageListenerMap.get(topic);
         if (list == null) list = new ArrayList<>();
         list.add(listener);
-        messageListenerMap.put(key, list);
+        messageListenerMap.put(topic, list);
     }
 
-    public synchronized void removeMessageListener(String secondTopic, MqttMessageInterface listener) {
+    public synchronized void removeMessageListener(String topic, MqttMessageInterface listener) {
+        topic=topic.replace("/","");
         if (messageListenerMap == null) return;
-        String key = MqttConstant.MQTT_TOPIC + secondTopic;
-        List<MqttMessageInterface> list = messageListenerMap.get(key);
+        List<MqttMessageInterface> list = messageListenerMap.get(topic);
         if (list == null) return;
         list.remove(listener);
-        if (list.size() == 0) messageListenerMap.remove(secondTopic);
-        else messageListenerMap.put(key, list);
+        if (list.size() == 0) messageListenerMap.remove(topic);
+        else messageListenerMap.put(topic, list);
     }
 
+    /**
+     * @param entity
+     * @param msgStatusEnum 消息状态
+     *                      STATUS_SEND_SUCCESS,//消息发送成功
+     *                      STATUS_SEND_FAILURE,//消息发送失败
+     *                      STATUS_MSG_ARRIVED;//消息接受成功
+     */
     public synchronized void callbackMessage(MqttTopicAndMsgValEntity entity, MqttMessageSendStatusEnum msgStatusEnum) {
         if (messageListenerMap == null || messageListenerMap.size() == 0 || entity == null) return;
         List<MqttMessageInterface> list = messageListenerMap.get(entity.getTopic());

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.zip.CheckedOutputStream;
 
 public class DownLoadApkThread extends Thread {
 
@@ -36,6 +37,7 @@ public class DownLoadApkThread extends Thread {
         try {
             URL url = new URL(apkUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = getReallyConnection(conn);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Charset", "UTF-8");
             conn.setConnectTimeout(5000);
@@ -44,8 +46,7 @@ public class DownLoadApkThread extends Thread {
             conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)");
             conn.setRequestProperty("Accept", "image/gif, image/jpeg, image/pjpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*");
             conn.setReadTimeout(20000);  //设置读取流的等待时间,必须设置该参数
-            int responseCode = conn.getResponseCode();
-            if (responseCode == 206) {
+            if (conn.getResponseCode() == 206) {
                 InputStream is = conn.getInputStream();
                 if (is != null) {
                     File file = new File(versionInfo.getSaveFilePath(), versionInfo.getSaveFileName());
@@ -72,13 +73,18 @@ public class DownLoadApkThread extends Thread {
                     msg.what = Constant.DOWNLOAD_FILE_FINISH_HANDLER_WHAT;
                     handler.sendMessage(msg);
                 }
-            } else if (responseCode == 302) {
-                String headerLocation = conn.getHeaderField("Location");
-                conn.disconnect();
-                loadFile(headerLocation);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public HttpURLConnection getReallyConnection(HttpURLConnection connection) throws IOException {
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP) {
+            String path = connection.getHeaderField("Location");
+            connection = (HttpURLConnection) new URL(path).openConnection();
+            return getReallyConnection(connection);
+        }
+        return connection;
     }
 }

@@ -183,7 +183,7 @@ public class MqttClientManager {
         @Override
         public void handleMessage(Message msg) {
             synchronized (msg) {
-                //TODO 消息到达后的操作
+                //TODO 消息到达后的操作  通过观察者模式来实现 讲收到的消息分发给所有的观察者
                 MqttTopicAndMsgValEntity entity = (MqttTopicAndMsgValEntity) msg.obj;
                 MqttCallBackManager.getInstance().callbackMessage(entity, MqttMessageSendStatusEnum.STATUS_MSG_ARRIVED);
             }

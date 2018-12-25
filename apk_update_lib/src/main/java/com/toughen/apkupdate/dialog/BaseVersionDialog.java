@@ -18,6 +18,10 @@ public abstract class BaseVersionDialog extends Dialog {
         super(context, themeResId);
     }
 
+    protected void onClickOK() {
+        if (downloadListener != null) downloadListener.onClickDownloadApk();
+    }
+
     @Override
     public void onBackPressed() {
         if (canCloseDialog) super.onBackPressed();
