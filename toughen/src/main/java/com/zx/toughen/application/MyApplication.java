@@ -9,8 +9,7 @@ import com.toughen.libs.tools.LogUtils;
 import com.toughen.mqttutil.MqttCallBackManager;
 import com.toughen.mqttutil.MqttClientManager;
 import com.toughen.mqttutil.constant.MqttConstant;
-import com.toughen.mqttutil.constant.MqttConstantParamsEntity;
-import com.toughen.mqttutil.interfaces.MqttClientConnectStatusInterface;
+import com.toughen.mqttutil.interfaces.MqttClientConnectStatusListener;
 import com.toughen.mqttutil.message.tool.GetMessageTool;
 import com.umeng.analytics.MobclickAgent;
 import com.zx.toughen.BuildConfig;
@@ -42,7 +41,6 @@ public class MyApplication extends MultiDexApplication {
             MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
             //初始化腾讯bugly
             CrashReport.initCrashReport(this.getApplicationContext(), Constant.BUGLY_APPID, BuildConfig.DEBUG);
-
         }
     }
 
@@ -51,7 +49,7 @@ public class MyApplication extends MultiDexApplication {
         MqttCallBackManager.getInstance().addConnectStatusListener(connectListener);
     }
 
-    private MqttClientConnectStatusInterface connectListener = new MqttClientConnectStatusInterface() {
+    private MqttClientConnectStatusListener connectListener = new MqttClientConnectStatusListener() {
         @Override
         public void mqttClientConnectSuccess() {
             Log.e("fffff", "mqttClientConnectSuccess");

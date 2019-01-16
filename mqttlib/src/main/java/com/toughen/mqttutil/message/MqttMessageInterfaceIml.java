@@ -2,7 +2,7 @@ package com.toughen.mqttutil.message;
 
 import com.alibaba.fastjson.JSONObject;
 import com.toughen.mqttutil.enums.MqttMessageSendStatusEnum;
-import com.toughen.mqttutil.interfaces.MqttMessageInterface;
+import com.toughen.mqttutil.interfaces.MqttMessageListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
  * Created by Administrator on 2017/12/26.
  */
 
-public abstract class MqttMessageInterfaceIml<T> implements MqttMessageInterface<T> {
+public abstract class MqttMessageInterfaceIml<T> implements MqttMessageListener<T> {
 
     @Override
     public void parseMsgFromString(MqttMessageSendStatusEnum statusEnum, String msgValue) {

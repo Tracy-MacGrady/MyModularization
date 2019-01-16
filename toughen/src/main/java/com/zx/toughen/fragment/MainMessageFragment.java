@@ -1,7 +1,6 @@
 package com.zx.toughen.fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,17 +9,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.toughen.libs.interfaces.ItemClickListener;
 import com.toughen.libs.view.MyLoadAnimRecyclerView;
-import com.toughen.mqttutil.MqttCallBackManager;
-import com.toughen.mqttutil.MqttClientManager;
-import com.toughen.mqttutil.constant.MqttConstantParamsEntity;
-import com.toughen.mqttutil.interfaces.MqttClientConnectStatusInterface;
 import com.zx.toughen.R;
 import com.zx.toughen.activity.ChatRoomActivity;
 import com.zx.toughen.adapter.MessageListAdapter;

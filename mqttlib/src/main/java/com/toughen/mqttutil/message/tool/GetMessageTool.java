@@ -2,6 +2,7 @@ package com.toughen.mqttutil.message.tool;
 
 
 import com.toughen.mqttutil.MqttClientManager;
+import com.toughen.mqttutil.constant.MqttConstant;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -14,14 +15,22 @@ import java.util.List;
  */
 
 public class GetMessageTool {
-    private static List<String> subscribeTopicList = new ArrayList<>();
+    private static GetMessageTool instance = new GetMessageTool();
+    private List<String> subscribeTopicList = new ArrayList<>();
 
-    public static void subscribeTopic(int qos, String... topics) {
+    private GetMessageTool() {
+    }
+
+    public static GetMessageTool getInstance() {
+        return instance;
+    }
+
+    public void subscribeTopic(int qos, String... secondTopics) {
         try {
-            for (int i = 0; i < topics.length; i++) {
-                if (!subscribeTopicList.contains(topics[i]))
-                    subscribeTopicList.add(topics[i]);
-                String topicFilter = topics[i];
+            for (int i = 0; i < secondTopics.length; i++) {
+                if (!subscribeTopicList.contains(secondTopics[i]))
+                    subscribeTopicList.add(secondTopics[i]);
+                String topicFilter = MqttConstant.MQTT_TOPIC + "/" + secondTopics[i];
                 MqttAsyncClient client = MqttClientManager.getInstance().getMqttClient();
                 if (client != null && client.isConnected()) {
                     client.subscribe(topicFilter, qos);
@@ -32,7 +41,7 @@ public class GetMessageTool {
         }
     }
 
-    public static void unsubscribeTopic(String... topics) {
+    public void unsubscribeTopic(String... topics) {
         try {
             if (subscribeTopicList.size() <= 0) return;
             for (int i = 0; i < topics.length; i++) {
@@ -49,7 +58,7 @@ public class GetMessageTool {
         }
     }
 
-    public static void clearAllTopic() {
+    public void clearAllTopic() {
         subscribeTopicList.clear();
     }
 }

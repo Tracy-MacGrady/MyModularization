@@ -1,28 +1,25 @@
 package com.toughen.mqttutil;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
-import com.toughen.mqttutil.connectstatus.MqttConnectionStatusReceiver;
-import com.toughen.mqttutil.connectstatus.MqttConnectionStatusService;
 import com.toughen.mqttutil.constant.MqttConstant;
 import com.toughen.mqttutil.constant.MqttConstantParamsEntity;
 import com.toughen.mqttutil.enums.MqttConnectStatusEnum;
 import com.toughen.mqttutil.enums.MqttMessageSendStatusEnum;
 import com.toughen.mqttutil.getconnect.GetMqttClientConnect;
-import com.toughen.mqttutil.handlers.MqttConnectHandler;
+import com.toughen.mqttutil.handlers.MqttConnectListener;
 import com.toughen.mqttutil.message.MqttTopicAndMsgValEntity;
 import com.toughen.mqttutil.message.tool.GetMessageTool;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 
@@ -32,10 +29,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MqttClientManager {
     private Context context;
-    private boolean canRepeatConnect = false;
     private MqttCallbackExtended mqttCallback;
-    private MqttConnectionStatusReceiver myMqttConnReceiver;
-    private MqttConnectHandler mqttStatusHandler;
+    private MqttConnectListener mqttConnectListener;
 
 
     private static MqttClientManager instance;
@@ -60,28 +55,15 @@ public class MqttClientManager {
             throw new NullPointerException();
         } else {
             this.context = context1;
-            this.mqttStatusHandler = new MqttConnectHandler();
+            this.mqttConnectListener = new MqttConnectListener();
             initMqttCallBack();
-            initMqttConnReceiver();
             initMqttConstant(entity);
-            GetMqttClientConnect.getInstance().init(clientId, mqttCallback, mqttStatusHandler, context);
+            GetMqttClientConnect.getInstance().init(clientId, mqttCallback, mqttConnectListener, context);
         }
     }
 
     private synchronized void initMqttConstant(MqttConstantParamsEntity entity) {
         MqttConstant.init(entity);
-    }
-
-    /**
-     * 监听MQTT 连接状态的广播
-     */
-    private void initMqttConnReceiver() {
-        if (myMqttConnReceiver == null) myMqttConnReceiver = new MqttConnectionStatusReceiver() {
-            @Override
-            public void toRepeatConnect() {
-                restartMqttClientConnect();
-            }
-        };
     }
 
     /**
@@ -93,13 +75,9 @@ public class MqttClientManager {
             public void connectComplete(boolean reconnect, String serverURI) {
                 //TODO 连接成功
                 Log.e("MqttClientManager", "connectComplete ======" + reconnect);
-                if (reconnect || canRepeatConnect) {
+                if (reconnect) {
                     MqttCallBackManager.getInstance().callbackConnectStatus(MqttConnectStatusEnum.STATUS_RECONNECT_SUCCESS);
                 } else {
-                    canRepeatConnect = true;
-                    IntentFilter filter = new IntentFilter();
-                    filter.addAction(MqttConnectionStatusService.REPEAT_ACTION);
-                    LocalBroadcastManager.getInstance(context).registerReceiver(myMqttConnReceiver, filter);
                     MqttCallBackManager.getInstance().callbackConnectStatus(MqttConnectStatusEnum.STATUS_CONNECT_SUCCESS);
                 }
             }
@@ -108,13 +86,14 @@ public class MqttClientManager {
             public void connectionLost(Throwable cause) {
                 //TODO 连接已经断开
                 Log.e("MqttClientManager", "connection lost======");
-                GetMessageTool.clearAllTopic();
+                GetMessageTool.getInstance().clearAllTopic();
+                MqttCallBackManager.getInstance().callbackConnectStatus(MqttConnectStatusEnum.STATUS_DISCONNECT_SUCCESS);
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 //TODO 消息到达
-                Log.e("MqttClientManager", topic + "msg arrived===" + message);
+                Log.e("MqttClientManager", topic + " msg arrived===" + message);
                 Message msg = Message.obtain();
                 MqttTopicAndMsgValEntity entity = new MqttTopicAndMsgValEntity();
                 entity.setTopic(topic);
@@ -126,6 +105,7 @@ public class MqttClientManager {
 
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
+                Log.e("MqttClientManager", "deliveryComplete===");
             }
         };
     }
@@ -141,10 +121,7 @@ public class MqttClientManager {
      * 重连MQTT client
      */
     public synchronized void restartMqttClientConnect() {
-        if (canRepeatConnect) {
-            GetMqttClientConnect.getInstance().setConnectNum(5);
-            GetMqttClientConnect.getInstance().startConnect();
-        }
+        GetMqttClientConnect.getInstance().reConnect();
     }
 
     /**
@@ -156,11 +133,7 @@ public class MqttClientManager {
 
     public synchronized void clearMqttListener() {
         MqttCallBackManager.getInstance().removeAllConnectStatusListenr();
-        if (context != null && myMqttConnReceiver != null)
-            LocalBroadcastManager.getInstance(context).unregisterReceiver(myMqttConnReceiver);
         mqttCallback = null;
-        canRepeatConnect = false;
-        myMqttConnReceiver = null;
     }
 
     /**

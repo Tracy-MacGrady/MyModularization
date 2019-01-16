@@ -1,11 +1,13 @@
 package com.toughen.mqttutil.getconnect;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.toughen.mqttutil.constant.MqttConstant;
+import com.toughen.mqttutil.enums.MqttConnectStatusEnum;
+import com.toughen.mqttutil.handlers.MqttConnectListener;
+import com.toughen.mqttutil.interfaces.MqttClientConnectStatusListener;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -23,11 +25,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class GetMqttClientConnect {
     private String clientid;
     private MqttCallbackExtended callBack;
-    private Handler handler;
     private Context context;
     private int connectNum = 0;
     private MyMqttAsyncClient mqttClient;
     private MqttConnectOptions connOpts;
+    private MqttConnectListener mqttConnectListener;
     private static volatile GetMqttClientConnect instance;
 
     private GetMqttClientConnect() {
@@ -40,10 +42,10 @@ public class GetMqttClientConnect {
         return instance;
     }
 
-    public synchronized void init(String clientid, MqttCallbackExtended callBack, Handler handler, Context context) {
+    public synchronized void init(String clientid, MqttCallbackExtended callBack, MqttConnectListener listener, Context context) {
         this.clientid = clientid;
         this.callBack = callBack;
-        this.handler = handler;
+        this.mqttConnectListener = listener;
         this.context = context;
         this.connectNum = 0;
         initMqttAndroidClient();
@@ -60,23 +62,22 @@ public class GetMqttClientConnect {
             this.connOpts.setUserName(MqttConstant.MQTT_USERNAME);
             this.connOpts.setServerURIs(new String[]{MqttConstant.MQTT_BROKER});
             this.connOpts.setPassword(MqttConstant.MQTT_PASSWORD.toCharArray());
-            this.connOpts.setCleanSession(false);
+            this.connOpts.setCleanSession(true);
             this.connOpts.setKeepAliveInterval(80);
+            this.connOpts.setAutomaticReconnect(true);
         } catch (MqttException e) {
             e.printStackTrace();
         }
     }
 
-    public void setConnectNum(int connectNum) {
-        this.connectNum = connectNum;
-    }
 
     public synchronized void startConnect() {
         try {
             if (mqttClient == null || connOpts == null) initMqttAndroidClient();
             if (!mqttClient.isConnected())
                 getConnect();
-            else handler.sendEmptyMessage(102);
+            else
+                mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_RECONNECT_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             CrashReport.postCatchedException(e);
@@ -86,7 +87,7 @@ public class GetMqttClientConnect {
     private void getConnect() {
         try {
             if (mqttClient.isConnected()) {
-                handler.sendEmptyMessage(102);
+                mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_RECONNECT_SUCCESS);
                 return;
             }
             if (mqttClient.getComms().isConnecting() || mqttClient.getComms().isDisconnecting())
@@ -106,7 +107,7 @@ public class GetMqttClientConnect {
                         startConnect();
                     } else {
                         CrashReport.postCatchedException(throwable);
-                        handler.sendEmptyMessage(101);
+                        mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_CONNECT_FAILURE);
                     }
                 }
             });
@@ -126,7 +127,7 @@ public class GetMqttClientConnect {
                         Log.e("GetMqttClientConnect", "come in the method disconnect onSuccess");
                         mqttClient = null;
                         connOpts = null;
-                        handler.sendEmptyMessage(200);
+//                        mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_DISCONNECT_SUCCESS);
                     }
 
                     @Override
@@ -134,19 +135,19 @@ public class GetMqttClientConnect {
                         Log.e("GetMqttClientConnect", "come in the method disconnect onFailure");
                         mqttClient = null;
                         connOpts = null;
-                        handler.sendEmptyMessage(201);
+                        mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_DISCONNECT_FAILURE);
                     }
                 });
             } else {
                 mqttClient = null;
                 connOpts = null;
-                if (handler != null) handler.sendEmptyMessage(200);
+                mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_DISCONNECT_SUCCESS);
             }
         } catch (Exception e) {
             e.printStackTrace();
             mqttClient = null;
             connOpts = null;
-            if (handler != null) handler.sendEmptyMessage(201);
+            mqttConnectListener.handleMessage(MqttConnectStatusEnum.STATUS_DISCONNECT_FAILURE);
         }
     }
 
@@ -154,4 +155,11 @@ public class GetMqttClientConnect {
         return mqttClient;
     }
 
+    public synchronized void reConnect() {
+        try {
+            mqttClient.reconnect();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 }
